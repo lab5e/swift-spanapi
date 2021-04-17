@@ -1,0 +1,14 @@
+name: Span
+targets:
+  Span:
+    type: framework
+    platform: iOS
+    deploymentTarget: "9.0"
+    sources: [Span]
+    info:
+      path: ./Info.plist
+      version: 4.1.7
+    settings:
+      APPLICATION_EXTENSION_API_ONLY: true
+    scheme: {}
+    
