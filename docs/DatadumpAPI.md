@@ -4,12 +4,12 @@ All URIs are relative to *https://api.lab5e.com/span*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**spanDataDump**](DatadumpAPI.md#spandatadump) | **POST** /datadump | Data dump
+[**dataDump**](DatadumpAPI.md#datadump) | **POST** /datadump | Data dump
 
 
-# **spanDataDump**
+# **dataDump**
 ```swift
-    open class func spanDataDump(body: DataDumpRequest, completion: @escaping (_ data: DataDumpResponse?, _ error: Error?) -> Void)
+    open class func dataDump(body: DataDumpRequest, completion: @escaping (_ data: DataDumpResponse?, _ error: Error?) -> Void)
 ```
 
 Data dump
@@ -24,7 +24,7 @@ import Span
 let body = DataDumpRequest(comment: "comment_example") // DataDumpRequest | 
 
 // Data dump
-DatadumpAPI.spanDataDump(body: body) { (response, error) in
+DatadumpAPI.dataDump(body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return

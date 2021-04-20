@@ -15,8 +15,8 @@ open class DatadumpAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func spanDataDump(body: DataDumpRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: DataDumpResponse?, _ error: Error?) -> Void)) {
-        spanDataDumpWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
+    open class func dataDump(body: DataDumpRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: DataDumpResponse?, _ error: Error?) -> Void)) {
+        dataDumpWithRequestBuilder(body: body).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -36,7 +36,7 @@ open class DatadumpAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<DataDumpResponse> 
      */
-    open class func spanDataDumpWithRequestBuilder(body: DataDumpRequest) -> RequestBuilder<DataDumpResponse> {
+    open class func dataDumpWithRequestBuilder(body: DataDumpRequest) -> RequestBuilder<DataDumpResponse> {
         let path = "/datadump"
         let URLString = SpanAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
