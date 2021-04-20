@@ -1,5 +1,5 @@
 # Swift5 API client for Span
-Dummy
+
 API for device, collection, output and firmware management
 
 ## Overview
