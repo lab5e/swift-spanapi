@@ -4,18 +4,18 @@ All URIs are relative to *https://api.lab5e.com/span*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createDevice**](DevicesAPI.md#createdevice) | **POST** /collections/{collectionId}/devices | Create device
-[**deleteDevice**](DevicesAPI.md#deletedevice) | **DELETE** /collections/{collectionId}/devices/{deviceId} | Remove device
-[**listDeviceData**](DevicesAPI.md#listdevicedata) | **GET** /collections/{collectionId}/devices/{deviceId}/data | Get payloads
-[**listDevices**](DevicesAPI.md#listdevices) | **GET** /collections/{collectionId}/devices | List devices
-[**retrieveDevice**](DevicesAPI.md#retrievedevice) | **GET** /collections/{collectionId}/devices/{deviceId} | Retrieve device
-[**sendMessage**](DevicesAPI.md#sendmessage) | **POST** /collections/{collectionId}/devices/{deviceId}/to | Send message
-[**updateDevice**](DevicesAPI.md#updatedevice) | **PATCH** /collections/{existingCollectionId}/devices/{deviceId} | Update device
+[**spanCreateDevice**](DevicesAPI.md#spancreatedevice) | **POST** /collections/{collectionId}/devices | Create device
+[**spanDeleteDevice**](DevicesAPI.md#spandeletedevice) | **DELETE** /collections/{collectionId}/devices/{deviceId} | Remove device
+[**spanListDeviceData**](DevicesAPI.md#spanlistdevicedata) | **GET** /collections/{collectionId}/devices/{deviceId}/data | Get payloads
+[**spanListDevices**](DevicesAPI.md#spanlistdevices) | **GET** /collections/{collectionId}/devices | List devices
+[**spanRetrieveDevice**](DevicesAPI.md#spanretrievedevice) | **GET** /collections/{collectionId}/devices/{deviceId} | Retrieve device
+[**spanSendMessage**](DevicesAPI.md#spansendmessage) | **POST** /collections/{collectionId}/devices/{deviceId}/to | Send message
+[**spanUpdateDevice**](DevicesAPI.md#spanupdatedevice) | **PATCH** /collections/{existingCollectionId}/devices/{deviceId} | Update device
 
 
-# **createDevice**
+# **spanCreateDevice**
 ```swift
-    open class func createDevice(collectionId: String, body: Device, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
+    open class func spanCreateDevice(collectionId: String, body: Device, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
 ```
 
 Create device
@@ -31,7 +31,7 @@ let collectionId = "collectionId_example" // String | This is the containing col
 let body = Device(deviceId: "deviceId_example", collectionId: "collectionId_example", imsi: "imsi_example", imei: "imei_example", tags: "TODO", network: NetworkMetadata(allocatedIp: "allocatedIp_example", allocatedAt: "allocatedAt_example", cellId: "cellId_example"), firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example")) // Device | 
 
 // Create device
-DevicesAPI.createDevice(collectionId: collectionId, body: body) { (response, error) in
+DevicesAPI.spanCreateDevice(collectionId: collectionId, body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -65,9 +65,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **deleteDevice**
+# **spanDeleteDevice**
 ```swift
-    open class func deleteDevice(collectionId: String, deviceId: String, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
+    open class func spanDeleteDevice(collectionId: String, deviceId: String, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
 ```
 
 Remove device
@@ -81,7 +81,7 @@ let collectionId = "collectionId_example" // String |
 let deviceId = "deviceId_example" // String | 
 
 // Remove device
-DevicesAPI.deleteDevice(collectionId: collectionId, deviceId: deviceId) { (response, error) in
+DevicesAPI.spanDeleteDevice(collectionId: collectionId, deviceId: deviceId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -115,9 +115,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **listDeviceData**
+# **spanListDeviceData**
 ```swift
-    open class func listDeviceData(collectionId: String, deviceId: String, limit: Int? = nil, start: String? = nil, end: String? = nil, offset: String? = nil, completion: @escaping (_ data: ListDataResponse?, _ error: Error?) -> Void)
+    open class func spanListDeviceData(collectionId: String, deviceId: String, limit: Int? = nil, start: String? = nil, end: String? = nil, offset: String? = nil, completion: @escaping (_ data: ListDataResponse?, _ error: Error?) -> Void)
 ```
 
 Get payloads
@@ -137,7 +137,7 @@ let end = "end_example" // String | End of time range. The default is the curren
 let offset = "offset_example" // String | The message offset based on the message ID. This parameter can't be combined with the start and end parameters. If no parameter is set the first N messages will be returned. If this parameter is set the next N messages (from newest to oldest) with message ID less than the offset will be returned. (optional)
 
 // Get payloads
-DevicesAPI.listDeviceData(collectionId: collectionId, deviceId: deviceId, limit: limit, start: start, end: end, offset: offset) { (response, error) in
+DevicesAPI.spanListDeviceData(collectionId: collectionId, deviceId: deviceId, limit: limit, start: start, end: end, offset: offset) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -175,9 +175,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **listDevices**
+# **spanListDevices**
 ```swift
-    open class func listDevices(collectionId: String, completion: @escaping (_ data: ListDevicesResponse?, _ error: Error?) -> Void)
+    open class func spanListDevices(collectionId: String, completion: @escaping (_ data: ListDevicesResponse?, _ error: Error?) -> Void)
 ```
 
 List devices
@@ -190,7 +190,7 @@ import Span
 let collectionId = "collectionId_example" // String | 
 
 // List devices
-DevicesAPI.listDevices(collectionId: collectionId) { (response, error) in
+DevicesAPI.spanListDevices(collectionId: collectionId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -223,9 +223,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **retrieveDevice**
+# **spanRetrieveDevice**
 ```swift
-    open class func retrieveDevice(collectionId: String, deviceId: String, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
+    open class func spanRetrieveDevice(collectionId: String, deviceId: String, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
 ```
 
 Retrieve device
@@ -241,7 +241,7 @@ let collectionId = "collectionId_example" // String |
 let deviceId = "deviceId_example" // String | 
 
 // Retrieve device
-DevicesAPI.retrieveDevice(collectionId: collectionId, deviceId: deviceId) { (response, error) in
+DevicesAPI.spanRetrieveDevice(collectionId: collectionId, deviceId: deviceId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -275,9 +275,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **sendMessage**
+# **spanSendMessage**
 ```swift
-    open class func sendMessage(collectionId: String, deviceId: String, body: SendMessageRequest, completion: @escaping (_ data: SendMessageResponse?, _ error: Error?) -> Void)
+    open class func spanSendMessage(collectionId: String, deviceId: String, body: SendMessageRequest, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
 ```
 
 Send message
@@ -294,7 +294,7 @@ let deviceId = "deviceId_example" // String |
 let body = SendMessageRequest(collectionId: "collectionId_example", deviceId: "deviceId_example", port: 123, payload: 123, transport: "transport_example", coapPath: "coapPath_example") // SendMessageRequest | 
 
 // Send message
-DevicesAPI.sendMessage(collectionId: collectionId, deviceId: deviceId, body: body) { (response, error) in
+DevicesAPI.spanSendMessage(collectionId: collectionId, deviceId: deviceId, body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -316,7 +316,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SendMessageResponse**](SendMessageResponse.md)
+**Any**
 
 ### Authorization
 
@@ -329,9 +329,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **updateDevice**
+# **spanUpdateDevice**
 ```swift
-    open class func updateDevice(existingCollectionId: String, deviceId: String, body: UpdateDeviceRequest, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
+    open class func spanUpdateDevice(existingCollectionId: String, deviceId: String, body: UpdateDeviceRequest, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
 ```
 
 Update device
@@ -346,7 +346,7 @@ let deviceId = "deviceId_example" // String |
 let body = UpdateDeviceRequest(existingCollectionId: "existingCollectionId_example", deviceId: "deviceId_example", collectionId: "collectionId_example", imsi: "imsi_example", imei: "imei_example", tags: "TODO", firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example")) // UpdateDeviceRequest | 
 
 // Update device
-DevicesAPI.updateDevice(existingCollectionId: existingCollectionId, deviceId: deviceId, body: body) { (response, error) in
+DevicesAPI.spanUpdateDevice(existingCollectionId: existingCollectionId, deviceId: deviceId, body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return

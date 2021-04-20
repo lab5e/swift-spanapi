@@ -16,8 +16,8 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func clearFirmwareError(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ClearFirmwareErrorResponse?, _ error: Error?) -> Void)) {
-        clearFirmwareErrorWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result -> Void in
+    open class func spanClearFirmwareError(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Any?, _ error: Error?) -> Void)) {
+        spanClearFirmwareErrorWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -35,9 +35,9 @@ open class FotaAPI {
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
-     - returns: RequestBuilder<ClearFirmwareErrorResponse> 
+     - returns: RequestBuilder<Any> 
      */
-    open class func clearFirmwareErrorWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<ClearFirmwareErrorResponse> {
+    open class func spanClearFirmwareErrorWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<Any> {
         var path = "/collections/{collectionId}/devices/{deviceId}/fwerror"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -56,7 +56,7 @@ open class FotaAPI {
 
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<ClearFirmwareErrorResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<Any>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
@@ -69,8 +69,8 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createFirmware(collectionId: String, body: CreateFirmwareRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
-        createFirmwareWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result -> Void in
+    open class func spanCreateFirmware(collectionId: String, body: CreateFirmwareRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
+        spanCreateFirmwareWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -91,7 +91,7 @@ open class FotaAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Firmware> 
      */
-    open class func createFirmwareWithRequestBuilder(collectionId: String, body: CreateFirmwareRequest) -> RequestBuilder<Firmware> {
+    open class func spanCreateFirmwareWithRequestBuilder(collectionId: String, body: CreateFirmwareRequest) -> RequestBuilder<Firmware> {
         var path = "/collections/{collectionId}/firmware"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -120,8 +120,8 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteFirmware(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
-        deleteFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result -> Void in
+    open class func spanDeleteFirmware(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
+        spanDeleteFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -141,7 +141,7 @@ open class FotaAPI {
      - parameter imageId: (path)  
      - returns: RequestBuilder<Firmware> 
      */
-    open class func deleteFirmwareWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<Firmware> {
+    open class func spanDeleteFirmwareWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<Firmware> {
         var path = "/collections/{collectionId}/firmware/{imageId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -173,8 +173,8 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func firmwareUsage(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: FirmwareUsageResponse?, _ error: Error?) -> Void)) {
-        firmwareUsageWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result -> Void in
+    open class func spanFirmwareUsage(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: FirmwareUsageResponse?, _ error: Error?) -> Void)) {
+        spanFirmwareUsageWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -195,7 +195,7 @@ open class FotaAPI {
      - parameter imageId: (path)  
      - returns: RequestBuilder<FirmwareUsageResponse> 
      */
-    open class func firmwareUsageWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<FirmwareUsageResponse> {
+    open class func spanFirmwareUsageWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<FirmwareUsageResponse> {
         var path = "/collections/{collectionId}/firmware/{imageId}/usage"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -226,8 +226,8 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listFirmware(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListFirmwareResponse?, _ error: Error?) -> Void)) {
-        listFirmwareWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result -> Void in
+    open class func spanListFirmware(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListFirmwareResponse?, _ error: Error?) -> Void)) {
+        spanListFirmwareWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -247,7 +247,7 @@ open class FotaAPI {
      - parameter collectionId: (path)  
      - returns: RequestBuilder<ListFirmwareResponse> 
      */
-    open class func listFirmwareWithRequestBuilder(collectionId: String) -> RequestBuilder<ListFirmwareResponse> {
+    open class func spanListFirmwareWithRequestBuilder(collectionId: String) -> RequestBuilder<ListFirmwareResponse> {
         var path = "/collections/{collectionId}/firmware"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -276,8 +276,8 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func retrieveFirmware(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
-        retrieveFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result -> Void in
+    open class func spanRetrieveFirmware(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
+        spanRetrieveFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -298,7 +298,7 @@ open class FotaAPI {
      - parameter imageId: (path)  
      - returns: RequestBuilder<Firmware> 
      */
-    open class func retrieveFirmwareWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<Firmware> {
+    open class func spanRetrieveFirmwareWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<Firmware> {
         var path = "/collections/{collectionId}/firmware/{imageId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -331,8 +331,8 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateFirmware(collectionId: String, imageId: String, body: Firmware, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
-        updateFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId, body: body).execute(apiResponseQueue) { result -> Void in
+    open class func spanUpdateFirmware(collectionId: String, imageId: String, body: Firmware, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
+        spanUpdateFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId, body: body).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -353,7 +353,7 @@ open class FotaAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Firmware> 
      */
-    open class func updateFirmwareWithRequestBuilder(collectionId: String, imageId: String, body: Firmware) -> RequestBuilder<Firmware> {
+    open class func spanUpdateFirmwareWithRequestBuilder(collectionId: String, imageId: String, body: Firmware) -> RequestBuilder<Firmware> {
         var path = "/collections/{collectionId}/firmware/{imageId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""

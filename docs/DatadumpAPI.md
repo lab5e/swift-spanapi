@@ -4,12 +4,12 @@ All URIs are relative to *https://api.lab5e.com/span*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**dataDump**](DatadumpAPI.md#datadump) | **POST** /datadump | Data dump
+[**spanDataDump**](DatadumpAPI.md#spandatadump) | **POST** /datadump | Data dump
 
 
-# **dataDump**
+# **spanDataDump**
 ```swift
-    open class func dataDump(body: DataDumpRequest, completion: @escaping (_ data: DataDumpResponse?, _ error: Error?) -> Void)
+    open class func spanDataDump(body: Any, completion: @escaping (_ data: DataDumpResponse?, _ error: Error?) -> Void)
 ```
 
 Data dump
@@ -21,10 +21,10 @@ Do a complete data dump of your data, devices, outputs and collections.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import Span
 
-let body = DataDumpRequest(comment: "comment_example") // DataDumpRequest | 
+let body = 987 // Any | 
 
 // Data dump
-DatadumpAPI.dataDump(body: body) { (response, error) in
+DatadumpAPI.spanDataDump(body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -40,7 +40,7 @@ DatadumpAPI.dataDump(body: body) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**DataDumpRequest**](DataDumpRequest.md) |  | 
+ **body** | **Any** |  | 
 
 ### Return type
 

@@ -16,8 +16,8 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createOutput(collectionId: String, body: Output, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
-        createOutputWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result -> Void in
+    open class func spanCreateOutput(collectionId: String, body: Output, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
+        spanCreateOutputWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -37,7 +37,7 @@ open class OutputsAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Output> 
      */
-    open class func createOutputWithRequestBuilder(collectionId: String, body: Output) -> RequestBuilder<Output> {
+    open class func spanCreateOutputWithRequestBuilder(collectionId: String, body: Output) -> RequestBuilder<Output> {
         var path = "/collections/{collectionId}/outputs"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -66,8 +66,8 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteOutput(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
-        deleteOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
+    open class func spanDeleteOutput(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
+        spanDeleteOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -87,7 +87,7 @@ open class OutputsAPI {
      - parameter outputId: (path)  
      - returns: RequestBuilder<Output> 
      */
-    open class func deleteOutputWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<Output> {
+    open class func spanDeleteOutputWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<Output> {
         var path = "/collections/{collectionId}/outputs/{outputId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -118,8 +118,8 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listOutputs(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListOutputResponse?, _ error: Error?) -> Void)) {
-        listOutputsWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result -> Void in
+    open class func spanListOutputs(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListOutputResponse?, _ error: Error?) -> Void)) {
+        spanListOutputsWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -138,7 +138,7 @@ open class OutputsAPI {
      - parameter collectionId: (path)  
      - returns: RequestBuilder<ListOutputResponse> 
      */
-    open class func listOutputsWithRequestBuilder(collectionId: String) -> RequestBuilder<ListOutputResponse> {
+    open class func spanListOutputsWithRequestBuilder(collectionId: String) -> RequestBuilder<ListOutputResponse> {
         var path = "/collections/{collectionId}/outputs"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -167,8 +167,8 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func logs(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: OutputLogResponse?, _ error: Error?) -> Void)) {
-        logsWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
+    open class func spanLogs(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: OutputLogResponse?, _ error: Error?) -> Void)) {
+        spanLogsWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -188,7 +188,7 @@ open class OutputsAPI {
      - parameter outputId: (path)  
      - returns: RequestBuilder<OutputLogResponse> 
      */
-    open class func logsWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<OutputLogResponse> {
+    open class func spanLogsWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<OutputLogResponse> {
         var path = "/collections/{collectionId}/outputs/{outputId}/logs"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -220,8 +220,8 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func retrieveOutput(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
-        retrieveOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
+    open class func spanRetrieveOutput(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
+        spanRetrieveOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -241,7 +241,7 @@ open class OutputsAPI {
      - parameter outputId: (path)  
      - returns: RequestBuilder<Output> 
      */
-    open class func retrieveOutputWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<Output> {
+    open class func spanRetrieveOutputWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<Output> {
         var path = "/collections/{collectionId}/outputs/{outputId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -273,8 +273,8 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func status(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: OutputStatusResponse?, _ error: Error?) -> Void)) {
-        statusWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
+    open class func spanStatus(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: OutputStatusResponse?, _ error: Error?) -> Void)) {
+        spanStatusWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -294,7 +294,7 @@ open class OutputsAPI {
      - parameter outputId: (path)  
      - returns: RequestBuilder<OutputStatusResponse> 
      */
-    open class func statusWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<OutputStatusResponse> {
+    open class func spanStatusWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<OutputStatusResponse> {
         var path = "/collections/{collectionId}/outputs/{outputId}/status"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -327,8 +327,8 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateOutput(collectionId: String, outputId: String, body: Output, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
-        updateOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId, body: body).execute(apiResponseQueue) { result -> Void in
+    open class func spanUpdateOutput(collectionId: String, outputId: String, body: Output, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
+        spanUpdateOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId, body: body).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -350,7 +350,7 @@ open class OutputsAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Output> 
      */
-    open class func updateOutputWithRequestBuilder(collectionId: String, outputId: String, body: Output) -> RequestBuilder<Output> {
+    open class func spanUpdateOutputWithRequestBuilder(collectionId: String, outputId: String, body: Output) -> RequestBuilder<Output> {
         var path = "/collections/{collectionId}/outputs/{outputId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
