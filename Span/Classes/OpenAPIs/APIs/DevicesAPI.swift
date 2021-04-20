@@ -291,7 +291,7 @@ open class DevicesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func spanSendMessage(collectionId: String, deviceId: String, body: SendMessageRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Any?, _ error: Error?) -> Void)) {
+    open class func spanSendMessage(collectionId: String, deviceId: String, body: SendMessageRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: SendMessageResponse?, _ error: Error?) -> Void)) {
         spanSendMessageWithRequestBuilder(collectionId: collectionId, deviceId: deviceId, body: body).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -312,9 +312,9 @@ open class DevicesAPI {
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
      - parameter body: (body)  
-     - returns: RequestBuilder<Any> 
+     - returns: RequestBuilder<SendMessageResponse> 
      */
-    open class func spanSendMessageWithRequestBuilder(collectionId: String, deviceId: String, body: SendMessageRequest) -> RequestBuilder<Any> {
+    open class func spanSendMessageWithRequestBuilder(collectionId: String, deviceId: String, body: SendMessageRequest) -> RequestBuilder<SendMessageResponse> {
         var path = "/collections/{collectionId}/devices/{deviceId}/to"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -333,7 +333,7 @@ open class DevicesAPI {
 
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<Any>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<SendMessageResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }

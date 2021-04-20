@@ -277,7 +277,7 @@ Name | Type | Description  | Notes
 
 # **spanSendMessage**
 ```swift
-    open class func spanSendMessage(collectionId: String, deviceId: String, body: SendMessageRequest, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
+    open class func spanSendMessage(collectionId: String, deviceId: String, body: SendMessageRequest, completion: @escaping (_ data: SendMessageResponse?, _ error: Error?) -> Void)
 ```
 
 Send message
@@ -316,7 +316,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Any**
+[**SendMessageResponse**](SendMessageResponse.md)
 
 ### Authorization
 

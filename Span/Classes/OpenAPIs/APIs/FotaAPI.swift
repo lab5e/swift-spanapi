@@ -16,7 +16,7 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func spanClearFirmwareError(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Any?, _ error: Error?) -> Void)) {
+    open class func spanClearFirmwareError(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ClearFirmwareErrorResponse?, _ error: Error?) -> Void)) {
         spanClearFirmwareErrorWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
@@ -35,9 +35,9 @@ open class FotaAPI {
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
-     - returns: RequestBuilder<Any> 
+     - returns: RequestBuilder<ClearFirmwareErrorResponse> 
      */
-    open class func spanClearFirmwareErrorWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<Any> {
+    open class func spanClearFirmwareErrorWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<ClearFirmwareErrorResponse> {
         var path = "/collections/{collectionId}/devices/{deviceId}/fwerror"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -56,7 +56,7 @@ open class FotaAPI {
 
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
-        let requestBuilder: RequestBuilder<Any>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<ClearFirmwareErrorResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }

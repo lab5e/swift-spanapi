@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 # **spanClearFirmwareError**
 ```swift
-    open class func spanClearFirmwareError(collectionId: String, deviceId: String, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
+    open class func spanClearFirmwareError(collectionId: String, deviceId: String, completion: @escaping (_ data: ClearFirmwareErrorResponse?, _ error: Error?) -> Void)
 ```
 
 Clear FOTA error
@@ -50,7 +50,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Any**
+[**ClearFirmwareErrorResponse**](ClearFirmwareErrorResponse.md)
 
 ### Authorization
 
