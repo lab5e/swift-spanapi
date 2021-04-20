@@ -14,8 +14,8 @@ open class SystemAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func spanGetSystemInfo(apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: SystemInfoResponse?, _ error: Error?) -> Void)) {
-        spanGetSystemInfoWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+    open class func getSystemInfo(apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: SystemInfoResponse?, _ error: Error?) -> Void)) {
+        getSystemInfoWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -33,7 +33,7 @@ open class SystemAPI {
        - name: APIToken
      - returns: RequestBuilder<SystemInfoResponse> 
      */
-    open class func spanGetSystemInfoWithRequestBuilder() -> RequestBuilder<SystemInfoResponse> {
+    open class func getSystemInfoWithRequestBuilder() -> RequestBuilder<SystemInfoResponse> {
         let path = "/system"
         let URLString = SpanAPI.basePath + path
         let parameters: [String: Any]? = nil

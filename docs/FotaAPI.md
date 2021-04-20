@@ -4,18 +4,18 @@ All URIs are relative to *https://api.lab5e.com/span*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**spanClearFirmwareError**](FotaAPI.md#spanclearfirmwareerror) | **DELETE** /collections/{collectionId}/devices/{deviceId}/fwerror | Clear FOTA error
-[**spanCreateFirmware**](FotaAPI.md#spancreatefirmware) | **POST** /collections/{collectionId}/firmware | Create firmware
-[**spanDeleteFirmware**](FotaAPI.md#spandeletefirmware) | **DELETE** /collections/{collectionId}/firmware/{imageId} | Delete firmware
-[**spanFirmwareUsage**](FotaAPI.md#spanfirmwareusage) | **PATCH** /collections/{collectionId}/firmware/{imageId}/usage | Firmware usage
-[**spanListFirmware**](FotaAPI.md#spanlistfirmware) | **GET** /collections/{collectionId}/firmware | List firmware
-[**spanRetrieveFirmware**](FotaAPI.md#spanretrievefirmware) | **GET** /collections/{collectionId}/firmware/{imageId} | Retrieve firmware
-[**spanUpdateFirmware**](FotaAPI.md#spanupdatefirmware) | **PATCH** /collections/{collectionId}/firmware/{imageId} | Update firmware
+[**clearFirmwareError**](FotaAPI.md#clearfirmwareerror) | **DELETE** /collections/{collectionId}/devices/{deviceId}/fwerror | Clear FOTA error
+[**createFirmware**](FotaAPI.md#createfirmware) | **POST** /collections/{collectionId}/firmware | Create firmware
+[**deleteFirmware**](FotaAPI.md#deletefirmware) | **DELETE** /collections/{collectionId}/firmware/{imageId} | Delete firmware
+[**firmwareUsage**](FotaAPI.md#firmwareusage) | **PATCH** /collections/{collectionId}/firmware/{imageId}/usage | Firmware usage
+[**listFirmware**](FotaAPI.md#listfirmware) | **GET** /collections/{collectionId}/firmware | List firmware
+[**retrieveFirmware**](FotaAPI.md#retrievefirmware) | **GET** /collections/{collectionId}/firmware/{imageId} | Retrieve firmware
+[**updateFirmware**](FotaAPI.md#updatefirmware) | **PATCH** /collections/{collectionId}/firmware/{imageId} | Update firmware
 
 
-# **spanClearFirmwareError**
+# **clearFirmwareError**
 ```swift
-    open class func spanClearFirmwareError(collectionId: String, deviceId: String, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
+    open class func clearFirmwareError(collectionId: String, deviceId: String, completion: @escaping (_ data: ClearFirmwareErrorResponse?, _ error: Error?) -> Void)
 ```
 
 Clear FOTA error
@@ -29,7 +29,7 @@ let collectionId = "collectionId_example" // String |
 let deviceId = "deviceId_example" // String | 
 
 // Clear FOTA error
-FotaAPI.spanClearFirmwareError(collectionId: collectionId, deviceId: deviceId) { (response, error) in
+FotaAPI.clearFirmwareError(collectionId: collectionId, deviceId: deviceId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -50,7 +50,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Any**
+[**ClearFirmwareErrorResponse**](ClearFirmwareErrorResponse.md)
 
 ### Authorization
 
@@ -63,9 +63,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanCreateFirmware**
+# **createFirmware**
 ```swift
-    open class func spanCreateFirmware(collectionId: String, body: CreateFirmwareRequest, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
+    open class func createFirmware(collectionId: String, body: CreateFirmwareRequest, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
 ```
 
 Create firmware
@@ -81,7 +81,7 @@ let collectionId = "collectionId_example" // String |
 let body = CreateFirmwareRequest(collectionId: "collectionId_example", image: 123, version: "version_example", filename: "filename_example", tags: "TODO") // CreateFirmwareRequest | 
 
 // Create firmware
-FotaAPI.spanCreateFirmware(collectionId: collectionId, body: body) { (response, error) in
+FotaAPI.createFirmware(collectionId: collectionId, body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -115,9 +115,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanDeleteFirmware**
+# **deleteFirmware**
 ```swift
-    open class func spanDeleteFirmware(collectionId: String, imageId: String, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
+    open class func deleteFirmware(collectionId: String, imageId: String, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
 ```
 
 Delete firmware
@@ -131,7 +131,7 @@ let collectionId = "collectionId_example" // String |
 let imageId = "imageId_example" // String | 
 
 // Delete firmware
-FotaAPI.spanDeleteFirmware(collectionId: collectionId, imageId: imageId) { (response, error) in
+FotaAPI.deleteFirmware(collectionId: collectionId, imageId: imageId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -165,9 +165,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanFirmwareUsage**
+# **firmwareUsage**
 ```swift
-    open class func spanFirmwareUsage(collectionId: String, imageId: String, completion: @escaping (_ data: FirmwareUsageResponse?, _ error: Error?) -> Void)
+    open class func firmwareUsage(collectionId: String, imageId: String, completion: @escaping (_ data: FirmwareUsageResponse?, _ error: Error?) -> Void)
 ```
 
 Firmware usage
@@ -183,7 +183,7 @@ let collectionId = "collectionId_example" // String |
 let imageId = "imageId_example" // String | 
 
 // Firmware usage
-FotaAPI.spanFirmwareUsage(collectionId: collectionId, imageId: imageId) { (response, error) in
+FotaAPI.firmwareUsage(collectionId: collectionId, imageId: imageId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -217,9 +217,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanListFirmware**
+# **listFirmware**
 ```swift
-    open class func spanListFirmware(collectionId: String, completion: @escaping (_ data: ListFirmwareResponse?, _ error: Error?) -> Void)
+    open class func listFirmware(collectionId: String, completion: @escaping (_ data: ListFirmwareResponse?, _ error: Error?) -> Void)
 ```
 
 List firmware
@@ -234,7 +234,7 @@ import Span
 let collectionId = "collectionId_example" // String | 
 
 // List firmware
-FotaAPI.spanListFirmware(collectionId: collectionId) { (response, error) in
+FotaAPI.listFirmware(collectionId: collectionId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -267,9 +267,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanRetrieveFirmware**
+# **retrieveFirmware**
 ```swift
-    open class func spanRetrieveFirmware(collectionId: String, imageId: String, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
+    open class func retrieveFirmware(collectionId: String, imageId: String, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
 ```
 
 Retrieve firmware
@@ -285,7 +285,7 @@ let collectionId = "collectionId_example" // String |
 let imageId = "imageId_example" // String | 
 
 // Retrieve firmware
-FotaAPI.spanRetrieveFirmware(collectionId: collectionId, imageId: imageId) { (response, error) in
+FotaAPI.retrieveFirmware(collectionId: collectionId, imageId: imageId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -319,9 +319,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanUpdateFirmware**
+# **updateFirmware**
 ```swift
-    open class func spanUpdateFirmware(collectionId: String, imageId: String, body: Firmware, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
+    open class func updateFirmware(collectionId: String, imageId: String, body: Firmware, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
 ```
 
 Update firmware
@@ -336,7 +336,7 @@ let imageId = "imageId_example" // String | Firmware image ID
 let body = Firmware(imageId: "imageId_example", version: "version_example", filename: "filename_example", sha256: "sha256_example", length: 123, collectionId: "collectionId_example", created: "created_example", tags: "TODO") // Firmware | 
 
 // Update firmware
-FotaAPI.spanUpdateFirmware(collectionId: collectionId, imageId: imageId, body: body) { (response, error) in
+FotaAPI.updateFirmware(collectionId: collectionId, imageId: imageId, body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return

@@ -4,12 +4,12 @@ All URIs are relative to *https://api.lab5e.com/span*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**spanGetSystemInfo**](SystemAPI.md#spangetsysteminfo) | **GET** /system | System information
+[**getSystemInfo**](SystemAPI.md#getsysteminfo) | **GET** /system | System information
 
 
-# **spanGetSystemInfo**
+# **getSystemInfo**
 ```swift
-    open class func spanGetSystemInfo(completion: @escaping (_ data: SystemInfoResponse?, _ error: Error?) -> Void)
+    open class func getSystemInfo(completion: @escaping (_ data: SystemInfoResponse?, _ error: Error?) -> Void)
 ```
 
 System information
@@ -21,7 +21,7 @@ import Span
 
 
 // System information
-SystemAPI.spanGetSystemInfo() { (response, error) in
+SystemAPI.getSystemInfo() { (response, error) in
     guard error == nil else {
         print(error)
         return

@@ -18,11 +18,13 @@ Span/Classes/OpenAPIs/JSONDataEncoding.swift
 Span/Classes/OpenAPIs/JSONEncodingHelper.swift
 Span/Classes/OpenAPIs/Models.swift
 Span/Classes/OpenAPIs/Models/BroadcastMessageRequest.swift
+Span/Classes/OpenAPIs/Models/ClearFirmwareErrorResponse.swift
 Span/Classes/OpenAPIs/Models/CoAPMetadata.swift
 Span/Classes/OpenAPIs/Models/Collection.swift
 Span/Classes/OpenAPIs/Models/CollectionFirmware.swift
 Span/Classes/OpenAPIs/Models/CollectionFirmwareFirmwareManagement.swift
 Span/Classes/OpenAPIs/Models/CreateFirmwareRequest.swift
+Span/Classes/OpenAPIs/Models/DataDumpRequest.swift
 Span/Classes/OpenAPIs/Models/DataDumpResponse.swift
 Span/Classes/OpenAPIs/Models/Device.swift
 Span/Classes/OpenAPIs/Models/DumpedCollection.swift
@@ -50,6 +52,7 @@ Span/Classes/OpenAPIs/Models/OutputType.swift
 Span/Classes/OpenAPIs/Models/ProtobufAny.swift
 Span/Classes/OpenAPIs/Models/RpcStatus.swift
 Span/Classes/OpenAPIs/Models/SendMessageRequest.swift
+Span/Classes/OpenAPIs/Models/SendMessageResponse.swift
 Span/Classes/OpenAPIs/Models/SystemInfoResponse.swift
 Span/Classes/OpenAPIs/Models/UDPMetadata.swift
 Span/Classes/OpenAPIs/Models/UpdateDeviceRequest.swift
@@ -57,12 +60,14 @@ Span/Classes/OpenAPIs/OpenISO8601DateFormatter.swift
 Span/Classes/OpenAPIs/SynchronizedDictionary.swift
 Span/Classes/OpenAPIs/URLSessionImplementations.swift
 docs/BroadcastMessageRequest.md
+docs/ClearFirmwareErrorResponse.md
 docs/CoAPMetadata.md
 docs/Collection.md
 docs/CollectionFirmware.md
 docs/CollectionFirmwareFirmwareManagement.md
 docs/CollectionsAPI.md
 docs/CreateFirmwareRequest.md
+docs/DataDumpRequest.md
 docs/DataDumpResponse.md
 docs/DatadumpAPI.md
 docs/Device.md
@@ -94,6 +99,7 @@ docs/OutputsAPI.md
 docs/ProtobufAny.md
 docs/RpcStatus.md
 docs/SendMessageRequest.md
+docs/SendMessageResponse.md
 docs/SystemAPI.md
 docs/SystemInfoResponse.md
 docs/UDPMetadata.md

@@ -4,18 +4,18 @@ All URIs are relative to *https://api.lab5e.com/span*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**spanCreateOutput**](OutputsAPI.md#spancreateoutput) | **POST** /collections/{collectionId}/outputs | Create output
-[**spanDeleteOutput**](OutputsAPI.md#spandeleteoutput) | **DELETE** /collections/{collectionId}/outputs/{outputId} | Delete output
-[**spanListOutputs**](OutputsAPI.md#spanlistoutputs) | **GET** /collections/{collectionId}/outputs | List outputs
-[**spanLogs**](OutputsAPI.md#spanlogs) | **GET** /collections/{collectionId}/outputs/{outputId}/logs | Output logs
-[**spanRetrieveOutput**](OutputsAPI.md#spanretrieveoutput) | **GET** /collections/{collectionId}/outputs/{outputId} | Retrieve output
-[**spanStatus**](OutputsAPI.md#spanstatus) | **GET** /collections/{collectionId}/outputs/{outputId}/status | Output status
-[**spanUpdateOutput**](OutputsAPI.md#spanupdateoutput) | **PATCH** /collections/{collectionId}/outputs/{outputId} | Update output
+[**createOutput**](OutputsAPI.md#createoutput) | **POST** /collections/{collectionId}/outputs | Create output
+[**deleteOutput**](OutputsAPI.md#deleteoutput) | **DELETE** /collections/{collectionId}/outputs/{outputId} | Delete output
+[**listOutputs**](OutputsAPI.md#listoutputs) | **GET** /collections/{collectionId}/outputs | List outputs
+[**logs**](OutputsAPI.md#logs) | **GET** /collections/{collectionId}/outputs/{outputId}/logs | Output logs
+[**retrieveOutput**](OutputsAPI.md#retrieveoutput) | **GET** /collections/{collectionId}/outputs/{outputId} | Retrieve output
+[**status**](OutputsAPI.md#status) | **GET** /collections/{collectionId}/outputs/{outputId}/status | Output status
+[**updateOutput**](OutputsAPI.md#updateoutput) | **PATCH** /collections/{collectionId}/outputs/{outputId} | Update output
 
 
-# **spanCreateOutput**
+# **createOutput**
 ```swift
-    open class func spanCreateOutput(collectionId: String, body: Output, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
+    open class func createOutput(collectionId: String, body: Output, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
 ```
 
 Create output
@@ -29,7 +29,7 @@ let collectionId = "collectionId_example" // String |
 let body = Output(outputId: "outputId_example", collectionId: "collectionId_example", type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example"), enabled: false, tags: "TODO") // Output | 
 
 // Create output
-OutputsAPI.spanCreateOutput(collectionId: collectionId, body: body) { (response, error) in
+OutputsAPI.createOutput(collectionId: collectionId, body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -63,9 +63,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanDeleteOutput**
+# **deleteOutput**
 ```swift
-    open class func spanDeleteOutput(collectionId: String, outputId: String, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
+    open class func deleteOutput(collectionId: String, outputId: String, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
 ```
 
 Delete output
@@ -79,7 +79,7 @@ let collectionId = "collectionId_example" // String |
 let outputId = "outputId_example" // String | 
 
 // Delete output
-OutputsAPI.spanDeleteOutput(collectionId: collectionId, outputId: outputId) { (response, error) in
+OutputsAPI.deleteOutput(collectionId: collectionId, outputId: outputId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -113,9 +113,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanListOutputs**
+# **listOutputs**
 ```swift
-    open class func spanListOutputs(collectionId: String, completion: @escaping (_ data: ListOutputResponse?, _ error: Error?) -> Void)
+    open class func listOutputs(collectionId: String, completion: @escaping (_ data: ListOutputResponse?, _ error: Error?) -> Void)
 ```
 
 List outputs
@@ -128,7 +128,7 @@ import Span
 let collectionId = "collectionId_example" // String | 
 
 // List outputs
-OutputsAPI.spanListOutputs(collectionId: collectionId) { (response, error) in
+OutputsAPI.listOutputs(collectionId: collectionId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -161,9 +161,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanLogs**
+# **logs**
 ```swift
-    open class func spanLogs(collectionId: String, outputId: String, completion: @escaping (_ data: OutputLogResponse?, _ error: Error?) -> Void)
+    open class func logs(collectionId: String, outputId: String, completion: @escaping (_ data: OutputLogResponse?, _ error: Error?) -> Void)
 ```
 
 Output logs
@@ -177,7 +177,7 @@ let collectionId = "collectionId_example" // String |
 let outputId = "outputId_example" // String | 
 
 // Output logs
-OutputsAPI.spanLogs(collectionId: collectionId, outputId: outputId) { (response, error) in
+OutputsAPI.logs(collectionId: collectionId, outputId: outputId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -211,9 +211,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanRetrieveOutput**
+# **retrieveOutput**
 ```swift
-    open class func spanRetrieveOutput(collectionId: String, outputId: String, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
+    open class func retrieveOutput(collectionId: String, outputId: String, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
 ```
 
 Retrieve output
@@ -227,7 +227,7 @@ let collectionId = "collectionId_example" // String |
 let outputId = "outputId_example" // String | 
 
 // Retrieve output
-OutputsAPI.spanRetrieveOutput(collectionId: collectionId, outputId: outputId) { (response, error) in
+OutputsAPI.retrieveOutput(collectionId: collectionId, outputId: outputId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -261,9 +261,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanStatus**
+# **status**
 ```swift
-    open class func spanStatus(collectionId: String, outputId: String, completion: @escaping (_ data: OutputStatusResponse?, _ error: Error?) -> Void)
+    open class func status(collectionId: String, outputId: String, completion: @escaping (_ data: OutputStatusResponse?, _ error: Error?) -> Void)
 ```
 
 Output status
@@ -277,7 +277,7 @@ let collectionId = "collectionId_example" // String |
 let outputId = "outputId_example" // String | 
 
 // Output status
-OutputsAPI.spanStatus(collectionId: collectionId, outputId: outputId) { (response, error) in
+OutputsAPI.status(collectionId: collectionId, outputId: outputId) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -311,9 +311,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **spanUpdateOutput**
+# **updateOutput**
 ```swift
-    open class func spanUpdateOutput(collectionId: String, outputId: String, body: Output, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
+    open class func updateOutput(collectionId: String, outputId: String, body: Output, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
 ```
 
 Update output
@@ -330,7 +330,7 @@ let outputId = "outputId_example" // String |
 let body = Output(outputId: "outputId_example", collectionId: "collectionId_example", type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example"), enabled: false, tags: "TODO") // Output | 
 
 // Update output
-OutputsAPI.spanUpdateOutput(collectionId: collectionId, outputId: outputId, body: body) { (response, error) in
+OutputsAPI.updateOutput(collectionId: collectionId, outputId: outputId, body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return
