@@ -20,8 +20,9 @@ public struct Device: Codable {
     public var tags: [String: String]?
     public var network: NetworkMetadata?
     public var firmware: FirmwareMetadata?
+    public var metadata: DeviceMetadata?
 
-    public init(deviceId: String? = nil, collectionId: String? = nil, imsi: String? = nil, imei: String? = nil, tags: [String: String]? = nil, network: NetworkMetadata? = nil, firmware: FirmwareMetadata? = nil) {
+    public init(deviceId: String? = nil, collectionId: String? = nil, imsi: String? = nil, imei: String? = nil, tags: [String: String]? = nil, network: NetworkMetadata? = nil, firmware: FirmwareMetadata? = nil, metadata: DeviceMetadata? = nil) {
         self.deviceId = deviceId
         self.collectionId = collectionId
         self.imsi = imsi
@@ -29,6 +30,7 @@ public struct Device: Codable {
         self.tags = tags
         self.network = network
         self.firmware = firmware
+        self.metadata = metadata
     }
 
 }

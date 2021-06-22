@@ -186,7 +186,7 @@ open class FotaAPI {
 
     /**
      Firmware usage
-     - PATCH /collections/{collectionId}/firmware/{imageId}/usage
+     - GET /collections/{collectionId}/firmware/{imageId}/usage
      - Shows the firmware usage for devices in the collection
      - API Key:
        - type: apiKey X-API-Token 
@@ -216,7 +216,7 @@ open class FotaAPI {
 
         let requestBuilder: RequestBuilder<FirmwareUsageResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
     }
 
     /**

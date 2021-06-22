@@ -27,6 +27,7 @@ Span/Classes/OpenAPIs/Models/CreateFirmwareRequest.swift
 Span/Classes/OpenAPIs/Models/DataDumpRequest.swift
 Span/Classes/OpenAPIs/Models/DataDumpResponse.swift
 Span/Classes/OpenAPIs/Models/Device.swift
+Span/Classes/OpenAPIs/Models/DeviceMetadata.swift
 Span/Classes/OpenAPIs/Models/DumpedCollection.swift
 Span/Classes/OpenAPIs/Models/DumpedDevice.swift
 Span/Classes/OpenAPIs/Models/FieldMask.swift
@@ -41,6 +42,7 @@ Span/Classes/OpenAPIs/Models/ListOutputResponse.swift
 Span/Classes/OpenAPIs/Models/MessageSendResult.swift
 Span/Classes/OpenAPIs/Models/MultiSendMessageResponse.swift
 Span/Classes/OpenAPIs/Models/NetworkMetadata.swift
+Span/Classes/OpenAPIs/Models/NetworkOperator.swift
 Span/Classes/OpenAPIs/Models/Output.swift
 Span/Classes/OpenAPIs/Models/OutputConfig.swift
 Span/Classes/OpenAPIs/Models/OutputDataMessage.swift
@@ -71,6 +73,7 @@ docs/DataDumpRequest.md
 docs/DataDumpResponse.md
 docs/DatadumpAPI.md
 docs/Device.md
+docs/DeviceMetadata.md
 docs/DevicesAPI.md
 docs/DumpedCollection.md
 docs/DumpedDevice.md
@@ -87,6 +90,7 @@ docs/ListOutputResponse.md
 docs/MessageSendResult.md
 docs/MultiSendMessageResponse.md
 docs/NetworkMetadata.md
+docs/NetworkOperator.md
 docs/Output.md
 docs/OutputConfig.md
 docs/OutputDataMessage.md
