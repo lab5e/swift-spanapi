@@ -60,7 +60,7 @@ open class DevicesAPI {
     }
 
     /**
-     Remove device
+     Remove device.
      
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
@@ -79,8 +79,9 @@ open class DevicesAPI {
     }
 
     /**
-     Remove device
+     Remove device.
      - DELETE /collections/{collectionId}/devices/{deviceId}
+     - Remove device from collection
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -138,7 +139,7 @@ open class DevicesAPI {
     /**
      Get payloads
      - GET /collections/{collectionId}/devices/{deviceId}/data
-     - List the data received from the device. Use the query parameters to control what data you retrieve.
+     - List the data received from the device. Use the query parameters to control what data you retrieve. The maximumnumber of data points is 100.
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -181,7 +182,7 @@ open class DevicesAPI {
     }
 
     /**
-     List devices
+     List devices in collection.
      
      - parameter collectionId: (path)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
@@ -199,8 +200,9 @@ open class DevicesAPI {
     }
 
     /**
-     List devices
+     List devices in collection.
      - GET /collections/{collectionId}/devices
+     - List devices in collection
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -283,7 +285,7 @@ open class DevicesAPI {
     }
 
     /**
-     Send message
+     Send message to a device.
      
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
@@ -303,7 +305,7 @@ open class DevicesAPI {
     }
 
     /**
-     Send message
+     Send message to a device.
      - POST /collections/{collectionId}/devices/{deviceId}/to
      - Send a message to the device
      - API Key:
@@ -339,7 +341,7 @@ open class DevicesAPI {
     }
 
     /**
-     Update device
+     Update device. The device can be moved from one collection to another by setting the collection ID field to the new collection. You must have administrative access to both collections.
      
      - parameter existingCollectionId: (path)  
      - parameter deviceId: (path)  
@@ -359,8 +361,9 @@ open class DevicesAPI {
     }
 
     /**
-     Update device
+     Update device. The device can be moved from one collection to another by setting the collection ID field to the new collection. You must have administrative access to both collections.
      - PATCH /collections/{existingCollectionId}/devices/{deviceId}
+     - Update device. The device can be moved from one collection to another by setting the collection ID field to the new collection. You must have administrative access to both collections.
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken

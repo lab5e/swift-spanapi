@@ -6,7 +6,6 @@ Span.podspec
 Span/Classes/OpenAPIs/APIHelper.swift
 Span/Classes/OpenAPIs/APIs.swift
 Span/Classes/OpenAPIs/APIs/CollectionsAPI.swift
-Span/Classes/OpenAPIs/APIs/DatadumpAPI.swift
 Span/Classes/OpenAPIs/APIs/DevicesAPI.swift
 Span/Classes/OpenAPIs/APIs/FotaAPI.swift
 Span/Classes/OpenAPIs/APIs/OutputsAPI.swift
@@ -24,12 +23,8 @@ Span/Classes/OpenAPIs/Models/Collection.swift
 Span/Classes/OpenAPIs/Models/CollectionFirmware.swift
 Span/Classes/OpenAPIs/Models/CollectionFirmwareFirmwareManagement.swift
 Span/Classes/OpenAPIs/Models/CreateFirmwareRequest.swift
-Span/Classes/OpenAPIs/Models/DataDumpRequest.swift
-Span/Classes/OpenAPIs/Models/DataDumpResponse.swift
 Span/Classes/OpenAPIs/Models/Device.swift
 Span/Classes/OpenAPIs/Models/DeviceMetadata.swift
-Span/Classes/OpenAPIs/Models/DumpedCollection.swift
-Span/Classes/OpenAPIs/Models/DumpedDevice.swift
 Span/Classes/OpenAPIs/Models/FieldMask.swift
 Span/Classes/OpenAPIs/Models/Firmware.swift
 Span/Classes/OpenAPIs/Models/FirmwareMetadata.swift
@@ -69,14 +64,9 @@ docs/CollectionFirmware.md
 docs/CollectionFirmwareFirmwareManagement.md
 docs/CollectionsAPI.md
 docs/CreateFirmwareRequest.md
-docs/DataDumpRequest.md
-docs/DataDumpResponse.md
-docs/DatadumpAPI.md
 docs/Device.md
 docs/DeviceMetadata.md
 docs/DevicesAPI.md
-docs/DumpedCollection.md
-docs/DumpedDevice.md
 docs/FieldMask.md
 docs/Firmware.md
 docs/FirmwareMetadata.md

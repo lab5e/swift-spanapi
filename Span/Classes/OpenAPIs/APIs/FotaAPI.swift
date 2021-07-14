@@ -323,7 +323,7 @@ open class FotaAPI {
     }
 
     /**
-     Update firmware
+     Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
      
      - parameter collectionId: (path) Collection ID  Collection ID for the collection owning the firmware image. 
      - parameter imageId: (path) Firmware image ID 
@@ -343,7 +343,7 @@ open class FotaAPI {
     }
 
     /**
-     Update firmware
+     Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
      - PATCH /collections/{collectionId}/firmware/{imageId}
      - API Key:
        - type: apiKey X-API-Token 

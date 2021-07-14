@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**firmwareUsage**](FotaAPI.md#firmwareusage) | **GET** /collections/{collectionId}/firmware/{imageId}/usage | Firmware usage
 [**listFirmware**](FotaAPI.md#listfirmware) | **GET** /collections/{collectionId}/firmware | List firmware
 [**retrieveFirmware**](FotaAPI.md#retrievefirmware) | **GET** /collections/{collectionId}/firmware/{imageId} | Retrieve firmware
-[**updateFirmware**](FotaAPI.md#updatefirmware) | **PATCH** /collections/{collectionId}/firmware/{imageId} | Update firmware
+[**updateFirmware**](FotaAPI.md#updatefirmware) | **PATCH** /collections/{collectionId}/firmware/{imageId} | Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
 
 
 # **clearFirmwareError**
@@ -324,7 +324,7 @@ Name | Type | Description  | Notes
     open class func updateFirmware(collectionId: String, imageId: String, body: Firmware, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
 ```
 
-Update firmware
+Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
 
 ### Example 
 ```swift
@@ -335,7 +335,7 @@ let collectionId = "collectionId_example" // String | Collection ID  Collection 
 let imageId = "imageId_example" // String | Firmware image ID
 let body = Firmware(imageId: "imageId_example", version: "version_example", filename: "filename_example", sha256: "sha256_example", length: 123, collectionId: "collectionId_example", created: "created_example", tags: "TODO") // Firmware | 
 
-// Update firmware
+// Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
 FotaAPI.updateFirmware(collectionId: collectionId, imageId: imageId, body: body) { (response, error) in
     guard error == nil else {
         print(error)
