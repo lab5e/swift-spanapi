@@ -15,12 +15,14 @@ public struct NetworkOperator: Codable {
     public var mnc: Int?
     public var country: String?
     public var network: String?
+    public var countryCode: String?
 
-    public init(mcc: Int? = nil, mnc: Int? = nil, country: String? = nil, network: String? = nil) {
+    public init(mcc: Int? = nil, mnc: Int? = nil, country: String? = nil, network: String? = nil, countryCode: String? = nil) {
         self.mcc = mcc
         self.mnc = mnc
         self.country = country
         self.network = network
+        self.countryCode = countryCode
     }
 
 }

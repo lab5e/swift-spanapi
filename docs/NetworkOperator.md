@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **mnc** | **Int** |  | [optional] 
 **country** | **String** |  | [optional] 
 **network** | **String** |  | [optional] 
+**countryCode** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

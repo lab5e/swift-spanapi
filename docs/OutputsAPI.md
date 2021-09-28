@@ -26,7 +26,7 @@ Create output
 import Span
 
 let collectionId = "collectionId_example" // String | 
-let body = Output(outputId: "outputId_example", collectionId: "collectionId_example", type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example"), enabled: false, tags: "TODO") // Output | 
+let body = Output(outputId: "outputId_example", collectionId: "collectionId_example", type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example", topicTemplate: 123, payloadFormat: "payloadFormat_example", payloadTemplate: 123), enabled: false, tags: "TODO") // Output | 
 
 // Create output
 OutputsAPI.createOutput(collectionId: collectionId, body: body) { (response, error) in
@@ -327,7 +327,7 @@ import Span
 
 let collectionId = "collectionId_example" // String | 
 let outputId = "outputId_example" // String | 
-let body = Output(outputId: "outputId_example", collectionId: "collectionId_example", type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example"), enabled: false, tags: "TODO") // Output | 
+let body = Output(outputId: "outputId_example", collectionId: "collectionId_example", type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example", topicTemplate: 123, payloadFormat: "payloadFormat_example", payloadTemplate: 123), enabled: false, tags: "TODO") // Output | 
 
 // Update output
 OutputsAPI.updateOutput(collectionId: collectionId, outputId: outputId, body: body) { (response, error) in

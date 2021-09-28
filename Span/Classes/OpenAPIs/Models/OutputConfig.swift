@@ -27,8 +27,11 @@ public struct OutputConfig: Codable {
     public var password: String?
     public var clientId: String?
     public var topicName: String?
+    public var topicTemplate: Data?
+    public var payloadFormat: String?
+    public var payloadTemplate: Data?
 
-    public init(url: String? = nil, basicAuthUser: String? = nil, basicAuthPass: String? = nil, customHeaderName: String? = nil, customHeaderValue: String? = nil, host: String? = nil, port: Int? = nil, key: String? = nil, eventName: String? = nil, asIsPayload: Bool? = nil, endpoint: String? = nil, disableCertCheck: Bool? = nil, username: String? = nil, password: String? = nil, clientId: String? = nil, topicName: String? = nil) {
+    public init(url: String? = nil, basicAuthUser: String? = nil, basicAuthPass: String? = nil, customHeaderName: String? = nil, customHeaderValue: String? = nil, host: String? = nil, port: Int? = nil, key: String? = nil, eventName: String? = nil, asIsPayload: Bool? = nil, endpoint: String? = nil, disableCertCheck: Bool? = nil, username: String? = nil, password: String? = nil, clientId: String? = nil, topicName: String? = nil, topicTemplate: Data? = nil, payloadFormat: String? = nil, payloadTemplate: Data? = nil) {
         self.url = url
         self.basicAuthUser = basicAuthUser
         self.basicAuthPass = basicAuthPass
@@ -45,6 +48,9 @@ public struct OutputConfig: Codable {
         self.password = password
         self.clientId = clientId
         self.topicName = topicName
+        self.topicTemplate = topicTemplate
+        self.payloadFormat = payloadFormat
+        self.payloadTemplate = payloadTemplate
     }
 
 }

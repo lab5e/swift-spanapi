@@ -13,4 +13,5 @@ public enum OutputType: String, Codable, CaseIterable {
     case udp = "udp"
     case mqtt = "mqtt"
     case ifttt = "ifttt"
+    case mqttbroker = "mqttbroker"
 }
