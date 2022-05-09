@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct FirmwareUsageResponse: Codable {
+/** Firmware usage report */
+public struct FirmwareUsageResponse: Codable, JSONEncodable, Hashable {
 
     public var imageId: String?
     public var targeted: [String]?
@@ -19,4 +23,19 @@ public struct FirmwareUsageResponse: Codable {
         self.current = current
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case imageId
+        case targeted
+        case current
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(imageId, forKey: .imageId)
+        try container.encodeIfPresent(targeted, forKey: .targeted)
+        try container.encodeIfPresent(current, forKey: .current)
+    }
 }
+

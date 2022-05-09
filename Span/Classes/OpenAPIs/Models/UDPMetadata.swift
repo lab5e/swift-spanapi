@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct UDPMetadata: Codable {
+/** UDP metadata for messages receveied through one of the UDP endpoints */
+public struct UDPMetadata: Codable, JSONEncodable, Hashable {
 
     public var localPort: Int?
     public var remotePort: Int?
@@ -17,4 +21,17 @@ public struct UDPMetadata: Codable {
         self.remotePort = remotePort
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case localPort
+        case remotePort
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(localPort, forKey: .localPort)
+        try container.encodeIfPresent(remotePort, forKey: .remotePort)
+    }
 }
+

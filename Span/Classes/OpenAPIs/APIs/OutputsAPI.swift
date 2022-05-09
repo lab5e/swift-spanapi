@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class OutputsAPI {
+
     /**
      Create output
      
@@ -16,8 +20,9 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createOutput(collectionId: String, body: Output, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
-        createOutputWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func createOutput(collectionId: String, body: CreateOutputRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) -> RequestTask {
+        return createOutputWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -29,7 +34,7 @@ open class OutputsAPI {
 
     /**
      Create output
-     - POST /collections/{collectionId}/outputs
+     - POST /span/collections/{collectionId}/outputs
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -37,25 +42,25 @@ open class OutputsAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Output> 
      */
-    open class func createOutputWithRequestBuilder(collectionId: String, body: Output) -> RequestBuilder<Output> {
-        var path = "/collections/{collectionId}/outputs"
+    open class func createOutputWithRequestBuilder(collectionId: String, body: CreateOutputRequest) -> RequestBuilder<Output> {
+        var localVariablePath = "/span/collections/{collectionId}/outputs"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -66,8 +71,9 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteOutput(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
-        deleteOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func deleteOutput(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) -> RequestTask {
+        return deleteOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -79,7 +85,7 @@ open class OutputsAPI {
 
     /**
      Delete output
-     - DELETE /collections/{collectionId}/outputs/{outputId}
+     - DELETE /span/collections/{collectionId}/outputs/{outputId}
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -88,27 +94,27 @@ open class OutputsAPI {
      - returns: RequestBuilder<Output> 
      */
     open class func deleteOutputWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<Output> {
-        var path = "/collections/{collectionId}/outputs/{outputId}"
+        var localVariablePath = "/span/collections/{collectionId}/outputs/{outputId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let outputIdPreEscape = "\(APIHelper.mapValueToPathItem(outputId))"
         let outputIdPostEscape = outputIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -118,8 +124,9 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listOutputs(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListOutputResponse?, _ error: Error?) -> Void)) {
-        listOutputsWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func listOutputs(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListOutputResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return listOutputsWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -131,7 +138,7 @@ open class OutputsAPI {
 
     /**
      List outputs
-     - GET /collections/{collectionId}/outputs
+     - GET /span/collections/{collectionId}/outputs
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -139,24 +146,24 @@ open class OutputsAPI {
      - returns: RequestBuilder<ListOutputResponse> 
      */
     open class func listOutputsWithRequestBuilder(collectionId: String) -> RequestBuilder<ListOutputResponse> {
-        var path = "/collections/{collectionId}/outputs"
+        var localVariablePath = "/span/collections/{collectionId}/outputs"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ListOutputResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ListOutputResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -167,8 +174,9 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func logs(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: OutputLogResponse?, _ error: Error?) -> Void)) {
-        logsWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func logs(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: OutputLogResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return logsWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -180,7 +188,7 @@ open class OutputsAPI {
 
     /**
      Output logs
-     - GET /collections/{collectionId}/outputs/{outputId}/logs
+     - GET /span/collections/{collectionId}/outputs/{outputId}/logs
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -189,27 +197,27 @@ open class OutputsAPI {
      - returns: RequestBuilder<OutputLogResponse> 
      */
     open class func logsWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<OutputLogResponse> {
-        var path = "/collections/{collectionId}/outputs/{outputId}/logs"
+        var localVariablePath = "/span/collections/{collectionId}/outputs/{outputId}/logs"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let outputIdPreEscape = "\(APIHelper.mapValueToPathItem(outputId))"
         let outputIdPostEscape = outputIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<OutputLogResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<OutputLogResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -220,8 +228,9 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func retrieveOutput(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
-        retrieveOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func retrieveOutput(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -233,7 +242,7 @@ open class OutputsAPI {
 
     /**
      Retrieve output
-     - GET /collections/{collectionId}/outputs/{outputId}
+     - GET /span/collections/{collectionId}/outputs/{outputId}
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -242,27 +251,27 @@ open class OutputsAPI {
      - returns: RequestBuilder<Output> 
      */
     open class func retrieveOutputWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<Output> {
-        var path = "/collections/{collectionId}/outputs/{outputId}"
+        var localVariablePath = "/span/collections/{collectionId}/outputs/{outputId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let outputIdPreEscape = "\(APIHelper.mapValueToPathItem(outputId))"
         let outputIdPostEscape = outputIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -273,8 +282,9 @@ open class OutputsAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func status(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: OutputStatusResponse?, _ error: Error?) -> Void)) {
-        statusWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func status(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: OutputStatusResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return statusWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -286,7 +296,7 @@ open class OutputsAPI {
 
     /**
      Output status
-     - GET /collections/{collectionId}/outputs/{outputId}/status
+     - GET /span/collections/{collectionId}/outputs/{outputId}/status
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -295,40 +305,41 @@ open class OutputsAPI {
      - returns: RequestBuilder<OutputStatusResponse> 
      */
     open class func statusWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<OutputStatusResponse> {
-        var path = "/collections/{collectionId}/outputs/{outputId}/status"
+        var localVariablePath = "/span/collections/{collectionId}/outputs/{outputId}/status"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let outputIdPreEscape = "\(APIHelper.mapValueToPathItem(outputId))"
         let outputIdPostEscape = outputIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<OutputStatusResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<OutputStatusResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
      Update output
      
-     - parameter collectionId: (path)  
+     - parameter existingCollectionId: (path)  
      - parameter outputId: (path)  
      - parameter body: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateOutput(collectionId: String, outputId: String, body: Output, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) {
-        updateOutputWithRequestBuilder(collectionId: collectionId, outputId: outputId, body: body).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func updateOutput(existingCollectionId: String, outputId: String, body: UpdateOutputRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) -> RequestTask {
+        return updateOutputWithRequestBuilder(existingCollectionId: existingCollectionId, outputId: outputId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -340,38 +351,36 @@ open class OutputsAPI {
 
     /**
      Update output
-     - PATCH /collections/{collectionId}/outputs/{outputId}
-     - Running outputs will be restarted if required. Note that the collection ID can't be changed on an existing output.
+     - PATCH /span/collections/{existingCollectionId}/outputs/{outputId}
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
-     - parameter collectionId: (path)  
+     - parameter existingCollectionId: (path)  
      - parameter outputId: (path)  
      - parameter body: (body)  
      - returns: RequestBuilder<Output> 
      */
-    open class func updateOutputWithRequestBuilder(collectionId: String, outputId: String, body: Output) -> RequestBuilder<Output> {
-        var path = "/collections/{collectionId}/outputs/{outputId}"
-        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
-        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+    open class func updateOutputWithRequestBuilder(existingCollectionId: String, outputId: String, body: UpdateOutputRequest) -> RequestBuilder<Output> {
+        var localVariablePath = "/span/collections/{existingCollectionId}/outputs/{outputId}"
+        let existingCollectionIdPreEscape = "\(APIHelper.mapValueToPathItem(existingCollectionId))"
+        let existingCollectionIdPostEscape = existingCollectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{existingCollectionId}", with: existingCollectionIdPostEscape, options: .literal, range: nil)
         let outputIdPreEscape = "\(APIHelper.mapValueToPathItem(outputId))"
         let outputIdPostEscape = outputIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

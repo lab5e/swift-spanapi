@@ -1,16 +1,16 @@
 # FotaAPI
 
-All URIs are relative to *https://api.lab5e.com/span*
+All URIs are relative to *https://api.lab5e.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**clearFirmwareError**](FotaAPI.md#clearfirmwareerror) | **DELETE** /collections/{collectionId}/devices/{deviceId}/fwerror | Clear FOTA error
-[**createFirmware**](FotaAPI.md#createfirmware) | **POST** /collections/{collectionId}/firmware | Create firmware
-[**deleteFirmware**](FotaAPI.md#deletefirmware) | **DELETE** /collections/{collectionId}/firmware/{imageId} | Delete firmware
-[**firmwareUsage**](FotaAPI.md#firmwareusage) | **GET** /collections/{collectionId}/firmware/{imageId}/usage | Firmware usage
-[**listFirmware**](FotaAPI.md#listfirmware) | **GET** /collections/{collectionId}/firmware | List firmware
-[**retrieveFirmware**](FotaAPI.md#retrievefirmware) | **GET** /collections/{collectionId}/firmware/{imageId} | Retrieve firmware
-[**updateFirmware**](FotaAPI.md#updatefirmware) | **PATCH** /collections/{collectionId}/firmware/{imageId} | Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
+[**clearFirmwareError**](FotaAPI.md#clearfirmwareerror) | **DELETE** /span/collections/{collectionId}/devices/{deviceId}/fwerror | Clear FOTA error
+[**createFirmware**](FotaAPI.md#createfirmware) | **POST** /span/collections/{collectionId}/firmware | Create firmware
+[**deleteFirmware**](FotaAPI.md#deletefirmware) | **DELETE** /span/collections/{collectionId}/firmware/{imageId} | Delete firmware
+[**firmwareUsage**](FotaAPI.md#firmwareusage) | **GET** /span/collections/{collectionId}/firmware/{imageId}/usage | Firmware usage
+[**listFirmware**](FotaAPI.md#listfirmware) | **GET** /span/collections/{collectionId}/firmware | List firmware
+[**retrieveFirmware**](FotaAPI.md#retrievefirmware) | **GET** /span/collections/{collectionId}/firmware/{imageId} | Retrieve firmware
+[**updateFirmware**](FotaAPI.md#updatefirmware) | **PATCH** /span/collections/{existingCollectionId}/firmware/{imageId} | Update firmware
 
 
 # **clearFirmwareError**
@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 Clear FOTA error
 
-### Example 
+### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import Span
@@ -70,15 +70,13 @@ Name | Type | Description  | Notes
 
 Create firmware
 
-Create a new firmware image. This is also invoked by the custom HTTP uploader if the POST uses multipart/formdata for the request.
-
-### Example 
+### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import Span
 
 let collectionId = "collectionId_example" // String | 
-let body = CreateFirmwareRequest(collectionId: "collectionId_example", image: 123, version: "version_example", filename: "filename_example", tags: "TODO") // CreateFirmwareRequest | 
+let body = CreateFirmwareRequest(image: 123, version: "version_example", filename: "filename_example", tags: "TODO") // CreateFirmwareRequest | 
 
 // Create firmware
 FotaAPI.createFirmware(collectionId: collectionId, body: body) { (response, error) in
@@ -122,7 +120,7 @@ Name | Type | Description  | Notes
 
 Delete firmware
 
-### Example 
+### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import Span
@@ -172,9 +170,7 @@ Name | Type | Description  | Notes
 
 Firmware usage
 
-Shows the firmware usage for devices in the collection
-
-### Example 
+### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import Span
@@ -224,9 +220,7 @@ Name | Type | Description  | Notes
 
 List firmware
 
-Lists available firmware images in collection
-
-### Example 
+### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import Span
@@ -274,9 +268,7 @@ Name | Type | Description  | Notes
 
 Retrieve firmware
 
-Retrieve information on a firmware image
-
-### Example 
+### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import Span
@@ -321,22 +313,24 @@ Name | Type | Description  | Notes
 
 # **updateFirmware**
 ```swift
-    open class func updateFirmware(collectionId: String, imageId: String, body: Firmware, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
+    open class func updateFirmware(existingCollectionId: String, imageId: String, body: UpdateFirmwareRequest, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
 ```
 
-Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
+Update firmware
 
-### Example 
+Only the version and tags fields can be updated. The other fields will be ignored.
+
+### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import Span
 
-let collectionId = "collectionId_example" // String | Collection ID  Collection ID for the collection owning the firmware image.
-let imageId = "imageId_example" // String | Firmware image ID
-let body = Firmware(imageId: "imageId_example", version: "version_example", filename: "filename_example", sha256: "sha256_example", length: 123, collectionId: "collectionId_example", created: "created_example", tags: "TODO") // Firmware | 
+let existingCollectionId = "existingCollectionId_example" // String | 
+let imageId = "imageId_example" // String | 
+let body = UpdateFirmwareRequest(collectionId: "collectionId_example", version: "version_example", tags: "TODO") // UpdateFirmwareRequest | 
 
-// Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
-FotaAPI.updateFirmware(collectionId: collectionId, imageId: imageId, body: body) { (response, error) in
+// Update firmware
+FotaAPI.updateFirmware(existingCollectionId: existingCollectionId, imageId: imageId, body: body) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -352,9 +346,9 @@ FotaAPI.updateFirmware(collectionId: collectionId, imageId: imageId, body: body)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **collectionId** | **String** | Collection ID  Collection ID for the collection owning the firmware image. | 
- **imageId** | **String** | Firmware image ID | 
- **body** | [**Firmware**](Firmware.md) |  | 
+ **existingCollectionId** | **String** |  | 
+ **imageId** | **String** |  | 
+ **body** | [**UpdateFirmwareRequest**](UpdateFirmwareRequest.md) |  | 
 
 ### Return type
 

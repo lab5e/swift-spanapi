@@ -6,12 +6,15 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 /** Firmware images aren&#39;t served back out through the API, only the metadata. */
-public struct Firmware: Codable {
+public struct Firmware: Codable, JSONEncodable, Hashable {
 
     public var imageId: String?
-    /** Make sure that the firmware image reports this version. If the version reported by this image is different the FOTA process won&#39;t be reported as successful since the device will report a version different from this. */
+    /** Make sure that the firmware image reports this version. If the version reported by this image is different the FOTA process won't be reported as successful since the device will report a version different from this. */
     public var version: String?
     /** This is just for internal house keeping, making it potentially easier to identify the firmware image. */
     public var filename: String?
@@ -35,4 +38,29 @@ public struct Firmware: Codable {
         self.tags = tags
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case imageId
+        case version
+        case filename
+        case sha256
+        case length
+        case collectionId
+        case created
+        case tags
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(imageId, forKey: .imageId)
+        try container.encodeIfPresent(version, forKey: .version)
+        try container.encodeIfPresent(filename, forKey: .filename)
+        try container.encodeIfPresent(sha256, forKey: .sha256)
+        try container.encodeIfPresent(length, forKey: .length)
+        try container.encodeIfPresent(collectionId, forKey: .collectionId)
+        try container.encodeIfPresent(created, forKey: .created)
+        try container.encodeIfPresent(tags, forKey: .tags)
+    }
 }
+

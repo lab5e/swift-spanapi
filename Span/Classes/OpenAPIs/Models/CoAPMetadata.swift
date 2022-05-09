@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct CoAPMetadata: Codable {
+/** CoAP metadata for messages received through one of the CoAP endpoints */
+public struct CoAPMetadata: Codable, JSONEncodable, Hashable {
 
     public var code: String?
     public var path: String?
@@ -17,4 +21,17 @@ public struct CoAPMetadata: Codable {
         self.path = path
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case code
+        case path
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(code, forKey: .code)
+        try container.encodeIfPresent(path, forKey: .path)
+    }
 }
+

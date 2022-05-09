@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct ListDevicesResponse: Codable {
+/** List device response */
+public struct ListDevicesResponse: Codable, JSONEncodable, Hashable {
 
     public var devices: [Device]?
 
@@ -15,4 +19,15 @@ public struct ListDevicesResponse: Codable {
         self.devices = devices
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case devices
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(devices, forKey: .devices)
+    }
 }
+

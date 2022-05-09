@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct OutputLogEntry: Codable {
+/** Log entries for outputs */
+public struct OutputLogEntry: Codable, JSONEncodable, Hashable {
 
     public var time: String?
     public var message: String?
@@ -19,4 +23,19 @@ public struct OutputLogEntry: Codable {
         self.repeated = repeated
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case time
+        case message
+        case repeated
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(time, forKey: .time)
+        try container.encodeIfPresent(message, forKey: .message)
+        try container.encodeIfPresent(repeated, forKey: .repeated)
+    }
 }
+

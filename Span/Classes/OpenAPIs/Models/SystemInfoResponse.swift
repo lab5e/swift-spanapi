@@ -6,21 +6,39 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct SystemInfoResponse: Codable {
+/** Response object for system information. This contains system-level information. */
+public struct SystemInfoResponse: Codable, JSONEncodable, Hashable {
 
+    /** This is the system version */
     public var version: String?
+    /** The build time for this version. */
     public var buildDate: String?
+    /** Human-readable code name for this release. This can be easier to remember than the version number. */
     public var releaseName: String?
-    public var defaultFieldMask: FieldMask?
-    public var forcedFieldMask: FieldMask?
 
-    public init(version: String? = nil, buildDate: String? = nil, releaseName: String? = nil, defaultFieldMask: FieldMask? = nil, forcedFieldMask: FieldMask? = nil) {
+    public init(version: String? = nil, buildDate: String? = nil, releaseName: String? = nil) {
         self.version = version
         self.buildDate = buildDate
         self.releaseName = releaseName
-        self.defaultFieldMask = defaultFieldMask
-        self.forcedFieldMask = forcedFieldMask
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case version
+        case buildDate
+        case releaseName
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(version, forKey: .version)
+        try container.encodeIfPresent(buildDate, forKey: .buildDate)
+        try container.encodeIfPresent(releaseName, forKey: .releaseName)
+    }
 }
+

@@ -6,13 +6,36 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct DeviceMetadata: Codable {
+/** This is the metadata for devices. */
+public struct DeviceMetadata: Codable, JSONEncodable, Hashable {
 
     public var simOperator: NetworkOperator?
+    public var ciot: CellularIoTMetadata?
+    public var inet: InetMetadata?
 
-    public init(simOperator: NetworkOperator? = nil) {
+    public init(simOperator: NetworkOperator? = nil, ciot: CellularIoTMetadata? = nil, inet: InetMetadata? = nil) {
         self.simOperator = simOperator
+        self.ciot = ciot
+        self.inet = inet
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case simOperator
+        case ciot
+        case inet
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(simOperator, forKey: .simOperator)
+        try container.encodeIfPresent(ciot, forKey: .ciot)
+        try container.encodeIfPresent(inet, forKey: .inet)
+    }
 }
+

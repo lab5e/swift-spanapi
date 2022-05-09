@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**OutputDataMessageOutputMessageType**](OutputDataMessageOutputMessageType.md) |  | [optional] 
+**type** | [**OutputMessageType**](OutputMessageType.md) |  | [optional] 
 **device** | [**Device**](Device.md) |  | [optional] 
 **payload** | **Data** |  | [optional] 
 **received** | **String** | Received time for message. Value is ms since epoch. | [optional] 

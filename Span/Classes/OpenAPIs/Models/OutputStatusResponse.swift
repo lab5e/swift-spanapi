@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct OutputStatusResponse: Codable {
+/** Show status of output */
+public struct OutputStatusResponse: Codable, JSONEncodable, Hashable {
 
     public var collectionId: String?
     public var outputId: String?
@@ -27,4 +31,27 @@ public struct OutputStatusResponse: Codable {
         self.retransmits = retransmits
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case collectionId
+        case outputId
+        case enabled
+        case errorCount
+        case forwarded
+        case received
+        case retransmits
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(collectionId, forKey: .collectionId)
+        try container.encodeIfPresent(outputId, forKey: .outputId)
+        try container.encodeIfPresent(enabled, forKey: .enabled)
+        try container.encodeIfPresent(errorCount, forKey: .errorCount)
+        try container.encodeIfPresent(forwarded, forKey: .forwarded)
+        try container.encodeIfPresent(received, forKey: .received)
+        try container.encodeIfPresent(retransmits, forKey: .retransmits)
+    }
 }
+

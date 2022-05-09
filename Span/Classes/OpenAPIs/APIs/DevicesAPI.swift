@@ -6,8 +6,69 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class DevicesAPI {
+
+    /**
+     Add message to oubox
+     
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - parameter body: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func addDownstreamMessage(collectionId: String, deviceId: String, body: AddDownstreamMessageRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: MessageDownstream?, _ error: Error?) -> Void)) -> RequestTask {
+        return addDownstreamMessageWithRequestBuilder(collectionId: collectionId, deviceId: deviceId, body: body).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Add message to oubox
+     - POST /span/collections/{collectionId}/devices/{deviceId}/outbox
+     - Add a new message in the outgoing queue to the device. If there is other messages in the outbox these messages will be sent first.
+     - API Key:
+       - type: apiKey X-API-Token 
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - parameter body: (body)  
+     - returns: RequestBuilder<MessageDownstream> 
+     */
+    open class func addDownstreamMessageWithRequestBuilder(collectionId: String, deviceId: String, body: AddDownstreamMessageRequest) -> RequestBuilder<MessageDownstream> {
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}/outbox"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
+        let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<MessageDownstream>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
     /**
      Create device
      
@@ -16,8 +77,9 @@ open class DevicesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createDevice(collectionId: String, body: Device, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) {
-        createDeviceWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func createDevice(collectionId: String, body: CreateDeviceRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) -> RequestTask {
+        return createDeviceWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -29,8 +91,7 @@ open class DevicesAPI {
 
     /**
      Create device
-     - POST /collections/{collectionId}/devices
-     - Create a new device. This will add a device to the collection. You must have write access to the collection.
+     - POST /span/collections/{collectionId}/devices
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -38,37 +99,38 @@ open class DevicesAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Device> 
      */
-    open class func createDeviceWithRequestBuilder(collectionId: String, body: Device) -> RequestBuilder<Device> {
-        var path = "/collections/{collectionId}/devices"
+    open class func createDeviceWithRequestBuilder(collectionId: String, body: CreateDeviceRequest) -> RequestBuilder<Device> {
+        var localVariablePath = "/span/collections/{collectionId}/devices"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
      Remove device.
      
-     - parameter collectionId: (path)  
-     - parameter deviceId: (path)  
+     - parameter collectionId: (path) This is the containing collection 
+     - parameter deviceId: (path) The device ID is assigned by the backend. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteDevice(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) {
-        deleteDeviceWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func deleteDevice(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) -> RequestTask {
+        return deleteDeviceWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -80,41 +142,154 @@ open class DevicesAPI {
 
     /**
      Remove device.
-     - DELETE /collections/{collectionId}/devices/{deviceId}
-     - Remove device from collection
+     - DELETE /span/collections/{collectionId}/devices/{deviceId}
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
-     - parameter collectionId: (path)  
-     - parameter deviceId: (path)  
+     - parameter collectionId: (path) This is the containing collection 
+     - parameter deviceId: (path) The device ID is assigned by the backend. 
      - returns: RequestBuilder<Device> 
      */
     open class func deleteDeviceWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<Device> {
-        var path = "/collections/{collectionId}/devices/{deviceId}"
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
         let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
-     Get payloads
+     Delete outgoing message
+     
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - parameter messageId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func deleteDownstreamMessage(collectionId: String, deviceId: String, messageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: DeleteDownstreamMessageResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return deleteDownstreamMessageWithRequestBuilder(collectionId: collectionId, deviceId: deviceId, messageId: messageId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Delete outgoing message
+     - DELETE /span/collections/{collectionId}/devices/{deviceId}/outbox/{messageId}
+     - Delete an outgoing (ie downstream) message from the outbox.
+     - API Key:
+       - type: apiKey X-API-Token 
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - parameter messageId: (path)  
+     - returns: RequestBuilder<DeleteDownstreamMessageResponse> 
+     */
+    open class func deleteDownstreamMessageWithRequestBuilder(collectionId: String, deviceId: String, messageId: String) -> RequestBuilder<DeleteDownstreamMessageResponse> {
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}/outbox/{messageId}"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
+        let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let messageIdPreEscape = "\(APIHelper.mapValueToPathItem(messageId))"
+        let messageIdPostEscape = messageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{messageId}", with: messageIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<DeleteDownstreamMessageResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
+     Get issued certificate(s) for device
+     
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func deviceCertificate(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: DeviceCertificateResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return deviceCertificateWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Get issued certificate(s) for device
+     - GET /span/collections/{collectionId}/devices/{deviceId}/certs
+     - API Key:
+       - type: apiKey X-API-Token 
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - returns: RequestBuilder<DeviceCertificateResponse> 
+     */
+    open class func deviceCertificateWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<DeviceCertificateResponse> {
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}/certs"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
+        let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<DeviceCertificateResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
+     Retrieve data from device
      
      - parameter collectionId: (path) The collection ID. This is included in the request path. 
      - parameter deviceId: (path) The device ID. This is included in the request path. 
@@ -125,8 +300,9 @@ open class DevicesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listDeviceData(collectionId: String, deviceId: String, limit: Int? = nil, start: String? = nil, end: String? = nil, offset: String? = nil, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListDataResponse?, _ error: Error?) -> Void)) {
-        listDeviceDataWithRequestBuilder(collectionId: collectionId, deviceId: deviceId, limit: limit, start: start, end: end, offset: offset).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func listDeviceData(collectionId: String, deviceId: String, limit: Int? = nil, start: String? = nil, end: String? = nil, offset: String? = nil, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListDataResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return listDeviceDataWithRequestBuilder(collectionId: collectionId, deviceId: deviceId, limit: limit, start: start, end: end, offset: offset).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -137,9 +313,9 @@ open class DevicesAPI {
     }
 
     /**
-     Get payloads
-     - GET /collections/{collectionId}/devices/{deviceId}/data
-     - List the data received from the device. Use the query parameters to control what data you retrieve. The maximumnumber of data points is 100.
+     Retrieve data from device
+     - GET /span/collections/{collectionId}/devices/{deviceId}/data
+     - List the data received from the device. Use the query parameters to control what data you retrieve. The  maximum number of data points is 100.
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -152,33 +328,33 @@ open class DevicesAPI {
      - returns: RequestBuilder<ListDataResponse> 
      */
     open class func listDeviceDataWithRequestBuilder(collectionId: String, deviceId: String, limit: Int? = nil, start: String? = nil, end: String? = nil, offset: String? = nil) -> RequestBuilder<ListDataResponse> {
-        var path = "/collections/{collectionId}/devices/{deviceId}/data"
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}/data"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
         let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "limit": limit?.encodeToJSON(),
             "start": start?.encodeToJSON(),
             "end": end?.encodeToJSON(),
             "offset": offset?.encodeToJSON(),
         ])
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ListDataResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ListDataResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -188,8 +364,9 @@ open class DevicesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listDevices(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListDevicesResponse?, _ error: Error?) -> Void)) {
-        listDevicesWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func listDevices(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListDevicesResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return listDevicesWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -201,8 +378,7 @@ open class DevicesAPI {
 
     /**
      List devices in collection.
-     - GET /collections/{collectionId}/devices
-     - List devices in collection
+     - GET /span/collections/{collectionId}/devices
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -210,36 +386,175 @@ open class DevicesAPI {
      - returns: RequestBuilder<ListDevicesResponse> 
      */
     open class func listDevicesWithRequestBuilder(collectionId: String) -> RequestBuilder<ListDevicesResponse> {
-        var path = "/collections/{collectionId}/devices"
+        var localVariablePath = "/span/collections/{collectionId}/devices"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ListDevicesResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ListDevicesResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
+     List the messages in the outbox
+     
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - parameter limit: (query)  (optional)
+     - parameter start: (query) Start of time range. The default is 24 hours ago. Value is in milliseconds since epoch. (optional)
+     - parameter end: (query) End of time range. The default is the current time stamp. Value is in milliseconds since epoch. (optional)
+     - parameter offset: (query) The message offset based on the message ID. This parameter can&#39;t be combined with the start and end parameters. If no parameter is set the first N messages will be returned. If this parameter is set the next N messages (from newest to oldest) with message ID less than the offset will be returned. (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func listDownstreamMessages(collectionId: String, deviceId: String, limit: Int? = nil, start: String? = nil, end: String? = nil, offset: String? = nil, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListDownstreamMessagesResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return listDownstreamMessagesWithRequestBuilder(collectionId: collectionId, deviceId: deviceId, limit: limit, start: start, end: end, offset: offset).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     List the messages in the outbox
+     - GET /span/collections/{collectionId}/devices/{deviceId}/outbox
+     - List messages that should be sent to the device when it connects to the service. The messages are sent to the device when it connects to the service and either sends a message (via UDP or CoAP) or requests a message via CoAP GET request.option
+     - API Key:
+       - type: apiKey X-API-Token 
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - parameter limit: (query)  (optional)
+     - parameter start: (query) Start of time range. The default is 24 hours ago. Value is in milliseconds since epoch. (optional)
+     - parameter end: (query) End of time range. The default is the current time stamp. Value is in milliseconds since epoch. (optional)
+     - parameter offset: (query) The message offset based on the message ID. This parameter can&#39;t be combined with the start and end parameters. If no parameter is set the first N messages will be returned. If this parameter is set the next N messages (from newest to oldest) with message ID less than the offset will be returned. (optional)
+     - returns: RequestBuilder<ListDownstreamMessagesResponse> 
+     */
+    open class func listDownstreamMessagesWithRequestBuilder(collectionId: String, deviceId: String, limit: Int? = nil, start: String? = nil, end: String? = nil, offset: String? = nil) -> RequestBuilder<ListDownstreamMessagesResponse> {
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}/outbox"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
+        let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "limit": limit?.encodeToJSON(),
+            "start": start?.encodeToJSON(),
+            "end": end?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<ListDownstreamMessagesResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
+     List incoming messages
+     
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - parameter limit: (query)  (optional)
+     - parameter start: (query) Start of time range. The default is 24 hours ago. Value is in milliseconds since epoch. (optional)
+     - parameter end: (query) End of time range. The default is the current time stamp. Value is in milliseconds since epoch. (optional)
+     - parameter offset: (query) The message offset based on the message ID. This parameter can&#39;t be combined with the start and end parameters. If no parameter is set the first N messages will be returned. If this parameter is set the next N messages (from newest to oldest) with message ID less than the offset will be returned. (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func listUpstreamMessages(collectionId: String, deviceId: String, limit: Int? = nil, start: String? = nil, end: String? = nil, offset: String? = nil, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListUpstreamMessagesResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return listUpstreamMessagesWithRequestBuilder(collectionId: collectionId, deviceId: deviceId, limit: limit, start: start, end: end, offset: offset).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     List incoming messages
+     - GET /span/collections/{collectionId}/devices/{deviceId}/inbox
+     - Retrieve a list of incoming (ie upstream) messages, ie messages sent from the device to the service.  These messages are buffered in the service until they expire.   Use the query parameters to limit the number of messages to return. If no limit is specified the default limit of 250 is used.
+     - API Key:
+       - type: apiKey X-API-Token 
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter deviceId: (path)  
+     - parameter limit: (query)  (optional)
+     - parameter start: (query) Start of time range. The default is 24 hours ago. Value is in milliseconds since epoch. (optional)
+     - parameter end: (query) End of time range. The default is the current time stamp. Value is in milliseconds since epoch. (optional)
+     - parameter offset: (query) The message offset based on the message ID. This parameter can&#39;t be combined with the start and end parameters. If no parameter is set the first N messages will be returned. If this parameter is set the next N messages (from newest to oldest) with message ID less than the offset will be returned. (optional)
+     - returns: RequestBuilder<ListUpstreamMessagesResponse> 
+     */
+    open class func listUpstreamMessagesWithRequestBuilder(collectionId: String, deviceId: String, limit: Int? = nil, start: String? = nil, end: String? = nil, offset: String? = nil) -> RequestBuilder<ListUpstreamMessagesResponse> {
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}/inbox"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
+        let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "limit": limit?.encodeToJSON(),
+            "start": start?.encodeToJSON(),
+            "end": end?.encodeToJSON(),
+            "offset": offset?.encodeToJSON(),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<ListUpstreamMessagesResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
      Retrieve device
      
-     - parameter collectionId: (path)  
-     - parameter deviceId: (path)  
+     - parameter collectionId: (path) This is the containing collection 
+     - parameter deviceId: (path) The device ID is assigned by the backend. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func retrieveDevice(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) {
-        retrieveDeviceWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func retrieveDevice(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveDeviceWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -251,97 +566,40 @@ open class DevicesAPI {
 
     /**
      Retrieve device
-     - GET /collections/{collectionId}/devices/{deviceId}
-     - Retrieve a single device
+     - GET /span/collections/{collectionId}/devices/{deviceId}
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
-     - parameter collectionId: (path)  
-     - parameter deviceId: (path)  
+     - parameter collectionId: (path) This is the containing collection 
+     - parameter deviceId: (path) The device ID is assigned by the backend. 
      - returns: RequestBuilder<Device> 
      */
     open class func retrieveDeviceWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<Device> {
-        var path = "/collections/{collectionId}/devices/{deviceId}"
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
         let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
-     Send message to a device.
-     
-     - parameter collectionId: (path)  
-     - parameter deviceId: (path)  
-     - parameter body: (body)  
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
-     */
-    open class func sendMessage(collectionId: String, deviceId: String, body: SendMessageRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: SendMessageResponse?, _ error: Error?) -> Void)) {
-        sendMessageWithRequestBuilder(collectionId: collectionId, deviceId: deviceId, body: body).execute(apiResponseQueue) { result -> Void in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
-    }
-
-    /**
-     Send message to a device.
-     - POST /collections/{collectionId}/devices/{deviceId}/to
-     - Send a message to the device
-     - API Key:
-       - type: apiKey X-API-Token 
-       - name: APIToken
-     - parameter collectionId: (path)  
-     - parameter deviceId: (path)  
-     - parameter body: (body)  
-     - returns: RequestBuilder<SendMessageResponse> 
-     */
-    open class func sendMessageWithRequestBuilder(collectionId: String, deviceId: String, body: SendMessageRequest) -> RequestBuilder<SendMessageResponse> {
-        var path = "/collections/{collectionId}/devices/{deviceId}/to"
-        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
-        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
-        let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
-        let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
-
-        let url = URLComponents(string: URLString)
-
-        let nillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
-
-        let requestBuilder: RequestBuilder<SendMessageResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
-
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
-    }
-
-    /**
-     Update device. The device can be moved from one collection to another by setting the collection ID field to the new collection. You must have administrative access to both collections.
+     Update device
      
      - parameter existingCollectionId: (path)  
      - parameter deviceId: (path)  
@@ -349,8 +607,9 @@ open class DevicesAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateDevice(existingCollectionId: String, deviceId: String, body: UpdateDeviceRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) {
-        updateDeviceWithRequestBuilder(existingCollectionId: existingCollectionId, deviceId: deviceId, body: body).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func updateDevice(existingCollectionId: String, deviceId: String, body: UpdateDeviceRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) -> RequestTask {
+        return updateDeviceWithRequestBuilder(existingCollectionId: existingCollectionId, deviceId: deviceId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -361,9 +620,9 @@ open class DevicesAPI {
     }
 
     /**
-     Update device. The device can be moved from one collection to another by setting the collection ID field to the new collection. You must have administrative access to both collections.
-     - PATCH /collections/{existingCollectionId}/devices/{deviceId}
-     - Update device. The device can be moved from one collection to another by setting the collection ID field to the new collection. You must have administrative access to both collections.
+     Update device
+     - PATCH /span/collections/{existingCollectionId}/devices/{deviceId}
+     - The device can be moved from one collection to another by setting the collection ID field to the new  collection. You must have administrative access to both collections.
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -373,27 +632,26 @@ open class DevicesAPI {
      - returns: RequestBuilder<Device> 
      */
     open class func updateDeviceWithRequestBuilder(existingCollectionId: String, deviceId: String, body: UpdateDeviceRequest) -> RequestBuilder<Device> {
-        var path = "/collections/{existingCollectionId}/devices/{deviceId}"
+        var localVariablePath = "/span/collections/{existingCollectionId}/devices/{deviceId}"
         let existingCollectionIdPreEscape = "\(APIHelper.mapValueToPathItem(existingCollectionId))"
         let existingCollectionIdPostEscape = existingCollectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{existingCollectionId}", with: existingCollectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{existingCollectionId}", with: existingCollectionIdPostEscape, options: .literal, range: nil)
         let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
         let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

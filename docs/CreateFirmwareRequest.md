@@ -3,7 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**collectionId** | **String** |  | [optional] 
 **image** | **Data** |  | [optional] 
 **version** | **String** |  | [optional] 
 **filename** | **String** |  | [optional] 

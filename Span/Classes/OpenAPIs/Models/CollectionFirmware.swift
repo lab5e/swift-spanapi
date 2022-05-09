@@ -6,19 +6,38 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct CollectionFirmware: Codable {
+/** This is the firmware configuration for a collection. */
+public struct CollectionFirmware: Codable, JSONEncodable, Hashable {
 
     /** The current firmware is the firmware that the devices are currently using. */
     public var currentFirmwareId: String?
-    /** The target firmware is set to the desired firmware image for the devices in this collection. If the management is set to \&quot;device\&quot; this will only be used if the target firmware isn&#39;t set on the device itself. */
+    /** The target firmware is set to the desired firmware image for the devices in this collection. If the management is set to \"device\" this will only be used if the target firmware isn't set on the device itself. */
     public var targetFirmwareId: String?
-    public var management: CollectionFirmwareFirmwareManagement?
+    public var management: FirmwareManagement?
 
-    public init(currentFirmwareId: String? = nil, targetFirmwareId: String? = nil, management: CollectionFirmwareFirmwareManagement? = nil) {
+    public init(currentFirmwareId: String? = nil, targetFirmwareId: String? = nil, management: FirmwareManagement? = nil) {
         self.currentFirmwareId = currentFirmwareId
         self.targetFirmwareId = targetFirmwareId
         self.management = management
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case currentFirmwareId
+        case targetFirmwareId
+        case management
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(currentFirmwareId, forKey: .currentFirmwareId)
+        try container.encodeIfPresent(targetFirmwareId, forKey: .targetFirmwareId)
+        try container.encodeIfPresent(management, forKey: .management)
+    }
 }
+

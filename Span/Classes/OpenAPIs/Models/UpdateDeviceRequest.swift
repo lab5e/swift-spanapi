@@ -6,29 +6,52 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct UpdateDeviceRequest: Codable {
+/** Updating the device */
+public struct UpdateDeviceRequest: Codable, JSONEncodable, Hashable {
 
-    public var existingCollectionId: String?
-    public var deviceId: String?
-    /** The collection id for the device. This field is optional and can be omitted if the collection id isn&#39;t changed. When changing to a new collection you must be an owner of the other collection, ie an administrator of the team that owns the new collection. */
+    /** The collection id for the device. This field is optional and can be omitted if the collection id isn't changed. When changing to a new collection you must be an owner of the other collection, ie an administrator of the team that owns the new collection. */
     public var collectionId: String?
-    /** The IMSI is the unique ID for the (e|nu|whatever)SIM card on your device. This is the primary identifier for your device on the network. */
+    /** Deprecated: this is replaced by the Config type The IMSI is the unique ID for the (e|nu|whatever)SIM card on your device. This is the primary identifier for your device on the network. */
     public var imsi: String?
-    /** The IMEI number is the unique ID for your hardware as seen by the network. Obviously you might have a completely different view on things. */
+    /** Deprecated: This is replaced by the Config type The IMEI number is the unique ID for your hardware as seen by the network. Obviously you might have a completely different view on things. */
     public var imei: String?
     /** Tags are metadata for the device that you can set. These are just strings. */
     public var tags: [String: String]?
     public var firmware: FirmwareMetadata?
+    public var config: DeviceConfig?
 
-    public init(existingCollectionId: String? = nil, deviceId: String? = nil, collectionId: String? = nil, imsi: String? = nil, imei: String? = nil, tags: [String: String]? = nil, firmware: FirmwareMetadata? = nil) {
-        self.existingCollectionId = existingCollectionId
-        self.deviceId = deviceId
+    public init(collectionId: String? = nil, imsi: String? = nil, imei: String? = nil, tags: [String: String]? = nil, firmware: FirmwareMetadata? = nil, config: DeviceConfig? = nil) {
         self.collectionId = collectionId
         self.imsi = imsi
         self.imei = imei
         self.tags = tags
         self.firmware = firmware
+        self.config = config
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case collectionId
+        case imsi
+        case imei
+        case tags
+        case firmware
+        case config
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(collectionId, forKey: .collectionId)
+        try container.encodeIfPresent(imsi, forKey: .imsi)
+        try container.encodeIfPresent(imei, forKey: .imei)
+        try container.encodeIfPresent(tags, forKey: .tags)
+        try container.encodeIfPresent(firmware, forKey: .firmware)
+        try container.encodeIfPresent(config, forKey: .config)
+    }
 }
+

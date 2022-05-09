@@ -6,11 +6,14 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-/** Operator holds information on the network operator. There might be several operators involved; one operator is running the network your devices are connected to and the SIM card in your device belongs to a different operator. */
-public struct NetworkOperator: Codable {
+/** Operator holds information on the network operator. There might be several operators involved; one operator is running the network your devices are connected to and the SIM card in your device belongs to a different operator.  Deprecated: Replaced by CellularIoTMetadata */
+public struct NetworkOperator: Codable, JSONEncodable, Hashable {
 
-    /** The Mobil Country Code for the operator. */
+    /** The Mobile Country Code for the operator. */
     public var mcc: Int?
     public var mnc: Int?
     public var country: String?
@@ -25,4 +28,23 @@ public struct NetworkOperator: Codable {
         self.countryCode = countryCode
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case mcc
+        case mnc
+        case country
+        case network
+        case countryCode
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(mcc, forKey: .mcc)
+        try container.encodeIfPresent(mnc, forKey: .mnc)
+        try container.encodeIfPresent(country, forKey: .country)
+        try container.encodeIfPresent(network, forKey: .network)
+        try container.encodeIfPresent(countryCode, forKey: .countryCode)
+    }
 }
+

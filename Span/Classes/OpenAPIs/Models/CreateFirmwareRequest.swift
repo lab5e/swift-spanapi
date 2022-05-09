@@ -6,21 +6,40 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct CreateFirmwareRequest: Codable {
+/** Create a new firmware image */
+public struct CreateFirmwareRequest: Codable, JSONEncodable, Hashable {
 
-    public var collectionId: String?
     public var image: Data?
     public var version: String?
     public var filename: String?
     public var tags: [String: String]?
 
-    public init(collectionId: String? = nil, image: Data? = nil, version: String? = nil, filename: String? = nil, tags: [String: String]? = nil) {
-        self.collectionId = collectionId
+    public init(image: Data? = nil, version: String? = nil, filename: String? = nil, tags: [String: String]? = nil) {
         self.image = image
         self.version = version
         self.filename = filename
         self.tags = tags
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case image
+        case version
+        case filename
+        case tags
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(image, forKey: .image)
+        try container.encodeIfPresent(version, forKey: .version)
+        try container.encodeIfPresent(filename, forKey: .filename)
+        try container.encodeIfPresent(tags, forKey: .tags)
+    }
 }
+

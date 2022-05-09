@@ -6,10 +6,14 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-/** Output configuration. */
-public struct OutputConfig: Codable {
+/** Configuration for outputs. */
+public struct OutputConfig: Codable, JSONEncodable, Hashable {
 
+    /** URL for the webhook. */
     public var url: String?
     public var basicAuthUser: String?
     public var basicAuthPass: String?
@@ -53,4 +57,51 @@ public struct OutputConfig: Codable {
         self.payloadTemplate = payloadTemplate
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case url
+        case basicAuthUser
+        case basicAuthPass
+        case customHeaderName
+        case customHeaderValue
+        case host
+        case port
+        case key
+        case eventName
+        case asIsPayload
+        case endpoint
+        case disableCertCheck
+        case username
+        case password
+        case clientId
+        case topicName
+        case topicTemplate
+        case payloadFormat
+        case payloadTemplate
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(url, forKey: .url)
+        try container.encodeIfPresent(basicAuthUser, forKey: .basicAuthUser)
+        try container.encodeIfPresent(basicAuthPass, forKey: .basicAuthPass)
+        try container.encodeIfPresent(customHeaderName, forKey: .customHeaderName)
+        try container.encodeIfPresent(customHeaderValue, forKey: .customHeaderValue)
+        try container.encodeIfPresent(host, forKey: .host)
+        try container.encodeIfPresent(port, forKey: .port)
+        try container.encodeIfPresent(key, forKey: .key)
+        try container.encodeIfPresent(eventName, forKey: .eventName)
+        try container.encodeIfPresent(asIsPayload, forKey: .asIsPayload)
+        try container.encodeIfPresent(endpoint, forKey: .endpoint)
+        try container.encodeIfPresent(disableCertCheck, forKey: .disableCertCheck)
+        try container.encodeIfPresent(username, forKey: .username)
+        try container.encodeIfPresent(password, forKey: .password)
+        try container.encodeIfPresent(clientId, forKey: .clientId)
+        try container.encodeIfPresent(topicName, forKey: .topicName)
+        try container.encodeIfPresent(topicTemplate, forKey: .topicTemplate)
+        try container.encodeIfPresent(payloadFormat, forKey: .payloadFormat)
+        try container.encodeIfPresent(payloadTemplate, forKey: .payloadTemplate)
+    }
 }
+

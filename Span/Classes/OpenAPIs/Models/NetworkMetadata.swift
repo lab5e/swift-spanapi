@@ -6,9 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-/** Network metadata for devices. */
-public struct NetworkMetadata: Codable {
+/** This is the network metadata for a device. */
+public struct NetworkMetadata: Codable, JSONEncodable, Hashable {
 
     /** Allocated IP address. */
     public var allocatedIp: String?
@@ -22,4 +25,19 @@ public struct NetworkMetadata: Codable {
         self.cellId = cellId
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case allocatedIp
+        case allocatedAt
+        case cellId
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(allocatedIp, forKey: .allocatedIp)
+        try container.encodeIfPresent(allocatedAt, forKey: .allocatedAt)
+        try container.encodeIfPresent(cellId, forKey: .cellId)
+    }
 }
+

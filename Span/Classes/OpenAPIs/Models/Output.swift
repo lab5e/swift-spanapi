@@ -6,9 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 /** Output resource. The configuration depends on the kind of output type. There are five outputs: Webhooks, UDP forwarding, IFTTT events, MQTT client and MQTT broker. The MQTT broker output is just used to configure the built-in MQTT broker in Span. */
-public struct Output: Codable {
+public struct Output: Codable, JSONEncodable, Hashable {
 
     public var outputId: String?
     public var collectionId: String?
@@ -26,4 +29,25 @@ public struct Output: Codable {
         self.tags = tags
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case outputId
+        case collectionId
+        case type
+        case config
+        case enabled
+        case tags
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(outputId, forKey: .outputId)
+        try container.encodeIfPresent(collectionId, forKey: .collectionId)
+        try container.encodeIfPresent(type, forKey: .type)
+        try container.encodeIfPresent(config, forKey: .config)
+        try container.encodeIfPresent(enabled, forKey: .enabled)
+        try container.encodeIfPresent(tags, forKey: .tags)
+    }
 }
+

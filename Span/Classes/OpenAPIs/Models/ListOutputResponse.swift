@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct ListOutputResponse: Codable {
+/** List outputs */
+public struct ListOutputResponse: Codable, JSONEncodable, Hashable {
 
     public var collectionId: String?
     public var outputs: [Output]?
@@ -17,4 +21,17 @@ public struct ListOutputResponse: Codable {
         self.outputs = outputs
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case collectionId
+        case outputs
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(collectionId, forKey: .collectionId)
+        try container.encodeIfPresent(outputs, forKey: .outputs)
+    }
 }
+

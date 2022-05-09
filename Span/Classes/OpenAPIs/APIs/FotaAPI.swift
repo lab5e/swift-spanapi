@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 open class FotaAPI {
+
     /**
      Clear FOTA error
      
@@ -16,8 +20,9 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func clearFirmwareError(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ClearFirmwareErrorResponse?, _ error: Error?) -> Void)) {
-        clearFirmwareErrorWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func clearFirmwareError(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ClearFirmwareErrorResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return clearFirmwareErrorWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -29,7 +34,7 @@ open class FotaAPI {
 
     /**
      Clear FOTA error
-     - DELETE /collections/{collectionId}/devices/{deviceId}/fwerror
+     - DELETE /span/collections/{collectionId}/devices/{deviceId}/fwerror
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -38,27 +43,27 @@ open class FotaAPI {
      - returns: RequestBuilder<ClearFirmwareErrorResponse> 
      */
     open class func clearFirmwareErrorWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<ClearFirmwareErrorResponse> {
-        var path = "/collections/{collectionId}/devices/{deviceId}/fwerror"
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}/fwerror"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
         let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ClearFirmwareErrorResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ClearFirmwareErrorResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -69,8 +74,9 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createFirmware(collectionId: String, body: CreateFirmwareRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
-        createFirmwareWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func createFirmware(collectionId: String, body: CreateFirmwareRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) -> RequestTask {
+        return createFirmwareWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -82,8 +88,7 @@ open class FotaAPI {
 
     /**
      Create firmware
-     - POST /collections/{collectionId}/firmware
-     - Create a new firmware image. This is also invoked by the custom HTTP uploader if the POST uses multipart/formdata for the request.
+     - POST /span/collections/{collectionId}/firmware
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -92,24 +97,24 @@ open class FotaAPI {
      - returns: RequestBuilder<Firmware> 
      */
     open class func createFirmwareWithRequestBuilder(collectionId: String, body: CreateFirmwareRequest) -> RequestBuilder<Firmware> {
-        var path = "/collections/{collectionId}/firmware"
+        var localVariablePath = "/span/collections/{collectionId}/firmware"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -120,8 +125,9 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteFirmware(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
-        deleteFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func deleteFirmware(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) -> RequestTask {
+        return deleteFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -133,7 +139,7 @@ open class FotaAPI {
 
     /**
      Delete firmware
-     - DELETE /collections/{collectionId}/firmware/{imageId}
+     - DELETE /span/collections/{collectionId}/firmware/{imageId}
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -142,27 +148,27 @@ open class FotaAPI {
      - returns: RequestBuilder<Firmware> 
      */
     open class func deleteFirmwareWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<Firmware> {
-        var path = "/collections/{collectionId}/firmware/{imageId}"
+        var localVariablePath = "/span/collections/{collectionId}/firmware/{imageId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let imageIdPreEscape = "\(APIHelper.mapValueToPathItem(imageId))"
         let imageIdPostEscape = imageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{imageId}", with: imageIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{imageId}", with: imageIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "DELETE", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -173,8 +179,9 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func firmwareUsage(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: FirmwareUsageResponse?, _ error: Error?) -> Void)) {
-        firmwareUsageWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func firmwareUsage(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: FirmwareUsageResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return firmwareUsageWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -186,8 +193,7 @@ open class FotaAPI {
 
     /**
      Firmware usage
-     - GET /collections/{collectionId}/firmware/{imageId}/usage
-     - Shows the firmware usage for devices in the collection
+     - GET /span/collections/{collectionId}/firmware/{imageId}/usage
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -196,27 +202,27 @@ open class FotaAPI {
      - returns: RequestBuilder<FirmwareUsageResponse> 
      */
     open class func firmwareUsageWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<FirmwareUsageResponse> {
-        var path = "/collections/{collectionId}/firmware/{imageId}/usage"
+        var localVariablePath = "/span/collections/{collectionId}/firmware/{imageId}/usage"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let imageIdPreEscape = "\(APIHelper.mapValueToPathItem(imageId))"
         let imageIdPostEscape = imageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{imageId}", with: imageIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{imageId}", with: imageIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<FirmwareUsageResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<FirmwareUsageResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -226,8 +232,9 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func listFirmware(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListFirmwareResponse?, _ error: Error?) -> Void)) {
-        listFirmwareWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func listFirmware(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListFirmwareResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return listFirmwareWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -239,8 +246,7 @@ open class FotaAPI {
 
     /**
      List firmware
-     - GET /collections/{collectionId}/firmware
-     - Lists available firmware images in collection
+     - GET /span/collections/{collectionId}/firmware
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -248,24 +254,24 @@ open class FotaAPI {
      - returns: RequestBuilder<ListFirmwareResponse> 
      */
     open class func listFirmwareWithRequestBuilder(collectionId: String) -> RequestBuilder<ListFirmwareResponse> {
-        var path = "/collections/{collectionId}/firmware"
+        var localVariablePath = "/span/collections/{collectionId}/firmware"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<ListFirmwareResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ListFirmwareResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
@@ -276,8 +282,9 @@ open class FotaAPI {
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func retrieveFirmware(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
-        retrieveFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func retrieveFirmware(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -289,8 +296,7 @@ open class FotaAPI {
 
     /**
      Retrieve firmware
-     - GET /collections/{collectionId}/firmware/{imageId}
-     - Retrieve information on a firmware image
+     - GET /span/collections/{collectionId}/firmware/{imageId}
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -299,40 +305,41 @@ open class FotaAPI {
      - returns: RequestBuilder<Firmware> 
      */
     open class func retrieveFirmwareWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<Firmware> {
-        var path = "/collections/{collectionId}/firmware/{imageId}"
+        var localVariablePath = "/span/collections/{collectionId}/firmware/{imageId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let imageIdPreEscape = "\(APIHelper.mapValueToPathItem(imageId))"
         let imageIdPostEscape = imageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{imageId}", with: imageIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters: [String: Any]? = nil
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{imageId}", with: imageIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 
     /**
-     Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
+     Update firmware
      
-     - parameter collectionId: (path) Collection ID  Collection ID for the collection owning the firmware image. 
-     - parameter imageId: (path) Firmware image ID 
+     - parameter existingCollectionId: (path)  
+     - parameter imageId: (path)  
      - parameter body: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateFirmware(collectionId: String, imageId: String, body: Firmware, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) {
-        updateFirmwareWithRequestBuilder(collectionId: collectionId, imageId: imageId, body: body).execute(apiResponseQueue) { result -> Void in
+    @discardableResult
+    open class func updateFirmware(existingCollectionId: String, imageId: String, body: UpdateFirmwareRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) -> RequestTask {
+        return updateFirmwareWithRequestBuilder(existingCollectionId: existingCollectionId, imageId: imageId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -343,38 +350,38 @@ open class FotaAPI {
     }
 
     /**
-     Update firmware. Only the version and tags fields can be updated. The other fields will be ignored..
-     - PATCH /collections/{collectionId}/firmware/{imageId}
+     Update firmware
+     - PATCH /span/collections/{existingCollectionId}/firmware/{imageId}
+     - Only the version and tags fields can be updated. The other fields will be ignored.
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
-     - parameter collectionId: (path) Collection ID  Collection ID for the collection owning the firmware image. 
-     - parameter imageId: (path) Firmware image ID 
+     - parameter existingCollectionId: (path)  
+     - parameter imageId: (path)  
      - parameter body: (body)  
      - returns: RequestBuilder<Firmware> 
      */
-    open class func updateFirmwareWithRequestBuilder(collectionId: String, imageId: String, body: Firmware) -> RequestBuilder<Firmware> {
-        var path = "/collections/{collectionId}/firmware/{imageId}"
-        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
-        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+    open class func updateFirmwareWithRequestBuilder(existingCollectionId: String, imageId: String, body: UpdateFirmwareRequest) -> RequestBuilder<Firmware> {
+        var localVariablePath = "/span/collections/{existingCollectionId}/firmware/{imageId}"
+        let existingCollectionIdPreEscape = "\(APIHelper.mapValueToPathItem(existingCollectionId))"
+        let existingCollectionIdPostEscape = existingCollectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{existingCollectionId}", with: existingCollectionIdPostEscape, options: .literal, range: nil)
         let imageIdPreEscape = "\(APIHelper.mapValueToPathItem(imageId))"
         let imageIdPostEscape = imageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        path = path.replacingOccurrences(of: "{imageId}", with: imageIdPostEscape, options: .literal, range: nil)
-        let URLString = SpanAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{imageId}", with: imageIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
 
-        let url = URLComponents(string: URLString)
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
-        let nillableHeaders: [String: Any?] = [
+        let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
 
-        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let requestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "PATCH", URLString: (url?.string ?? URLString), parameters: parameters, headers: headerParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
-
 }

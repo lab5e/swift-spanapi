@@ -6,8 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct OutputLogResponse: Codable {
+/** List logs for output */
+public struct OutputLogResponse: Codable, JSONEncodable, Hashable {
 
     public var logs: [OutputLogEntry]?
 
@@ -15,4 +19,15 @@ public struct OutputLogResponse: Codable {
         self.logs = logs
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case logs
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(logs, forKey: .logs)
+    }
 }
+

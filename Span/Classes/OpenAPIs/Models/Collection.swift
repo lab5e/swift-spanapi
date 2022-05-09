@@ -6,24 +6,43 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
-public struct Collection: Codable {
+/** This is a collection */
+public struct Collection: Codable, JSONEncodable, Hashable {
 
     /** The ID of the collection. This is assigned by the backend. */
     public var collectionId: String?
     /** The team ID that owns the collection. This field is required. When you create new collections the default is to use your private team ID. */
     public var teamId: String?
-    public var fieldMask: FieldMask?
     public var firmware: CollectionFirmware?
     /** Tags for the collection. Tags are metadata fields that you can assign to the collection. */
     public var tags: [String: String]?
 
-    public init(collectionId: String? = nil, teamId: String? = nil, fieldMask: FieldMask? = nil, firmware: CollectionFirmware? = nil, tags: [String: String]? = nil) {
+    public init(collectionId: String? = nil, teamId: String? = nil, firmware: CollectionFirmware? = nil, tags: [String: String]? = nil) {
         self.collectionId = collectionId
         self.teamId = teamId
-        self.fieldMask = fieldMask
         self.firmware = firmware
         self.tags = tags
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case collectionId
+        case teamId
+        case firmware
+        case tags
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(collectionId, forKey: .collectionId)
+        try container.encodeIfPresent(teamId, forKey: .teamId)
+        try container.encodeIfPresent(firmware, forKey: .firmware)
+        try container.encodeIfPresent(tags, forKey: .tags)
+    }
 }
+

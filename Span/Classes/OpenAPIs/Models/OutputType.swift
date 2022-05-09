@@ -6,12 +6,16 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
+/** Output types available   - undefined: The undefined output type is an invalid type */
 public enum OutputType: String, Codable, CaseIterable {
     case undefined = "undefined"
     case webhook = "webhook"
-    case udp = "udp"
-    case mqtt = "mqtt"
+    case udpout = "udpout"
+    case mqttclient = "mqttclient"
     case ifttt = "ifttt"
     case mqttbroker = "mqttbroker"
 }

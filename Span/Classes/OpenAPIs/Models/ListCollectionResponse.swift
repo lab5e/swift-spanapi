@@ -6,9 +6,12 @@
 //
 
 import Foundation
+#if canImport(AnyCodable)
+import AnyCodable
+#endif
 
 /** Collection list. The list contains all the collections you have access to. */
-public struct ListCollectionResponse: Codable {
+public struct ListCollectionResponse: Codable, JSONEncodable, Hashable {
 
     public var collections: [Collection]?
 
@@ -16,4 +19,15 @@ public struct ListCollectionResponse: Codable {
         self.collections = collections
     }
 
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case collections
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(collections, forKey: .collections)
+    }
 }
+
