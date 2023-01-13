@@ -26,7 +26,7 @@ Create a new collection
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import Span
 
-let body = CreateCollectionRequest(teamId: "teamId_example", firmware: CollectionFirmware(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", management: FirmwareManagement()), tags: "TODO") // CreateCollectionRequest | 
+let body = CreateCollectionRequest(teamId: "teamId_example", firmware: CollectionFirmware(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", management: FirmwareManagement()), tags: "TODO") // CreateCollectionRequest | Request object when creating a collection. The collect ID is assigned by the service.
 
 // Create collection
 CollectionsAPI.createCollection(body: body) { (response, error) in
@@ -45,7 +45,7 @@ CollectionsAPI.createCollection(body: body) { (response, error) in
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**CreateCollectionRequest**](CreateCollectionRequest.md) |  | 
+ **body** | [**CreateCollectionRequest**](CreateCollectionRequest.md) | Request object when creating a collection. The collect ID is assigned by the service. | 
 
 ### Return type
 

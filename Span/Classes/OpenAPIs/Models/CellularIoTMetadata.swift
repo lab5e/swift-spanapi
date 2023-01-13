@@ -14,10 +14,11 @@ import AnyCodable
 public struct CellularIoTMetadata: Codable, JSONEncodable, Hashable {
 
     public var gatewayId: String?
+    /** Allocated IP address. */
     public var allocatedIp: String?
     public var allocatedAt: String?
     public var cellId: String?
-    /** the provider in use. */
+    /** the provider in use.  The Mobile Country Code for the operator. */
     public var mcc: Int?
     public var mnc: Int?
     public var country: String?

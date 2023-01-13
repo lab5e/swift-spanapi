@@ -4,10 +4,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **gatewayId** | **String** |  | [optional] 
-**allocatedIp** | **String** |  | [optional] 
+**allocatedIp** | **String** | Allocated IP address. | [optional] 
 **allocatedAt** | **String** |  | [optional] 
 **cellId** | **String** |  | [optional] 
-**mcc** | **Int** | the provider in use. | [optional] 
+**mcc** | **Int** | the provider in use.  The Mobile Country Code for the operator. | [optional] 
 **mnc** | **Int** |  | [optional] 
 **country** | **String** |  | [optional] 
 **network** | **String** |  | [optional] 

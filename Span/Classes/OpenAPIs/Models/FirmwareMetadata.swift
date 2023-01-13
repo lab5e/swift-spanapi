@@ -20,6 +20,7 @@ public struct FirmwareMetadata: Codable, JSONEncodable, Hashable {
     public var serialNumber: String?
     public var modelNumber: String?
     public var manufacturer: String?
+    /** State of the firmware. */
     public var state: String?
     public var stateMessage: String?
 

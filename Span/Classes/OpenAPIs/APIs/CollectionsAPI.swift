@@ -15,7 +15,7 @@ open class CollectionsAPI {
     /**
      Create collection
      
-     - parameter body: (body)  
+     - parameter body: (body) Request object when creating a collection. The collect ID is assigned by the service. 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -38,7 +38,7 @@ open class CollectionsAPI {
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
-     - parameter body: (body)  
+     - parameter body: (body) Request object when creating a collection. The collect ID is assigned by the service. 
      - returns: RequestBuilder<Collection> 
      */
     open class func createCollectionWithRequestBuilder(body: CreateCollectionRequest) -> RequestBuilder<Collection> {

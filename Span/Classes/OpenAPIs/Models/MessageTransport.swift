@@ -15,4 +15,5 @@ public enum MessageTransport: String, Codable, CaseIterable {
     case unspecified = "unspecified"
     case udp = "udp"
     case coap = "coap"
+    case mqtt = "mqtt"
 }
