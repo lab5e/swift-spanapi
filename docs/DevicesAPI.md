@@ -84,7 +84,7 @@ Create device
 import Span
 
 let collectionId = "collectionId_example" // String | This is the containing collection
-let body = CreateDeviceRequest(tags: "TODO", firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example"), config: DeviceConfig(ciot: CellularIoTConfig(imsi: "imsi_example", imei: "imei_example")), metadata: DeviceMetadata(simOperator: NetworkOperator(mcc: 123, mnc: 123, country: "country_example", network: "network_example", countryCode: "countryCode_example"), ciot: CellularIoTMetadata(gatewayId: "gatewayId_example", allocatedIp: "allocatedIp_example", allocatedAt: "allocatedAt_example", cellId: "cellId_example", mcc: 123, mnc: 123, country: "country_example", network: "network_example", countryCode: "countryCode_example", lastUpdate: "lastUpdate_example"), inet: InetMetadata(gatewayId: "gatewayId_example", lastUpdate: "lastUpdate_example", remoteAddress: "remoteAddress_example", certificateSerial: "certificateSerial_example")), imsi: "imsi_example", imei: "imei_example", network: NetworkMetadata(allocatedIp: "allocatedIp_example", allocatedAt: "allocatedAt_example", cellId: "cellId_example")) // CreateDeviceRequest | 
+let body = CreateDeviceRequest(tags: "TODO", firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example"), config: DeviceConfig(ciot: CellularIoTConfig(imsi: "imsi_example", imei: "imei_example"), inet: "TODO", gateway: "TODO"), metadata: DeviceMetadata(simOperator: NetworkOperator(mcc: 123, mnc: 123, country: "country_example", network: "network_example", countryCode: "countryCode_example"), ciot: CellularIoTMetadata(gatewayId: "gatewayId_example", allocatedIp: "allocatedIp_example", allocatedAt: "allocatedAt_example", cellId: "cellId_example", mcc: 123, mnc: 123, country: "country_example", network: "network_example", countryCode: "countryCode_example", lastUpdate: "lastUpdate_example"), inet: InetMetadata(gatewayId: "gatewayId_example", lastUpdate: "lastUpdate_example", remoteAddress: "remoteAddress_example", certificateSerial: "certificateSerial_example"), gateway: GatewayDeviceMetadata(gatewayId: "gatewayId_example", lastUpdate: "lastUpdate_example", params: "TODO")), imsi: "imsi_example", imei: "imei_example", network: NetworkMetadata(allocatedIp: "allocatedIp_example", allocatedAt: "allocatedAt_example", cellId: "cellId_example")) // CreateDeviceRequest | 
 
 // Create device
 DevicesAPI.createDevice(collectionId: collectionId, body: body) { (response, error) in
@@ -282,7 +282,7 @@ Name | Type | Description  | Notes
 
 Retrieve data from device
 
-List the data received from the device. Use the query parameters to control what data you retrieve. The  maximum number of data points is 100.
+List the data received from the device. Use the query parameters to control what data you retrieve. The maximum number of data points is 100.
 
 ### Example
 ```swift
@@ -450,7 +450,7 @@ Name | Type | Description  | Notes
 
 List incoming messages
 
-Retrieve a list of incoming (ie upstream) messages, ie messages sent from the device to the service.  These messages are buffered in the service until they expire.   Use the query parameters to limit the number of messages to return. If no limit is specified the default limit of 250 is used.
+Retrieve a list of incoming (ie upstream) messages, ie messages sent from the device to the service. These messages are buffered in the service until they expire.  Use the query parameters to limit the number of messages to return. If no limit is specified the default limit of 250 is used.
 
 ### Example
 ```swift
@@ -560,7 +560,7 @@ Name | Type | Description  | Notes
 
 Update device
 
-The device can be moved from one collection to another by setting the collection ID field to the new  collection. You must have administrative access to both collections.
+The device can be moved from one collection to another by setting the collection ID field to the new collection. You must have administrative access to both collections. A note on gateway configurations: Empty gateway configuration blocks are deleted. If the configuration block contains a gateway ID it will be updated  with the new values. All values must be submitted in the request.
 
 ### Example
 ```swift
@@ -569,7 +569,7 @@ import Span
 
 let existingCollectionId = "existingCollectionId_example" // String | 
 let deviceId = "deviceId_example" // String | 
-let body = UpdateDeviceRequest(collectionId: "collectionId_example", imsi: "imsi_example", imei: "imei_example", tags: "TODO", firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example"), config: DeviceConfig(ciot: CellularIoTConfig(imsi: "imsi_example", imei: "imei_example"))) // UpdateDeviceRequest | 
+let body = UpdateDeviceRequest(collectionId: "collectionId_example", imsi: "imsi_example", imei: "imei_example", tags: "TODO", firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example"), config: DeviceConfig(ciot: CellularIoTConfig(imsi: "imsi_example", imei: "imei_example"), inet: "TODO", gateway: "TODO")) // UpdateDeviceRequest | 
 
 // Update device
 DevicesAPI.updateDevice(existingCollectionId: existingCollectionId, deviceId: deviceId, body: body) { (response, error) in

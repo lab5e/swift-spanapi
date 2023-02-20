@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-/** Metadata for devices connected via the internet gateway. This metadata shows the configuration for the  last message transmission. */
+/** Metadata for devices connected via the internet gateway. This metadata shows the configuration for the last message transmission. */
 public struct InetMetadata: Codable, JSONEncodable, Hashable {
 
     public var gatewayId: String?

@@ -16,17 +16,20 @@ public struct DeviceMetadata: Codable, JSONEncodable, Hashable {
     public var simOperator: NetworkOperator?
     public var ciot: CellularIoTMetadata?
     public var inet: InetMetadata?
+    public var gateway: GatewayDeviceMetadata?
 
-    public init(simOperator: NetworkOperator? = nil, ciot: CellularIoTMetadata? = nil, inet: InetMetadata? = nil) {
+    public init(simOperator: NetworkOperator? = nil, ciot: CellularIoTMetadata? = nil, inet: InetMetadata? = nil, gateway: GatewayDeviceMetadata? = nil) {
         self.simOperator = simOperator
         self.ciot = ciot
         self.inet = inet
+        self.gateway = gateway
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case simOperator
         case ciot
         case inet
+        case gateway
     }
 
     // Encodable protocol methods
@@ -36,6 +39,7 @@ public struct DeviceMetadata: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(simOperator, forKey: .simOperator)
         try container.encodeIfPresent(ciot, forKey: .ciot)
         try container.encodeIfPresent(inet, forKey: .inet)
+        try container.encodeIfPresent(gateway, forKey: .gateway)
     }
 }
 

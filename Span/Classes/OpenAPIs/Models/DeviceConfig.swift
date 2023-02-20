@@ -14,13 +14,20 @@ import AnyCodable
 public struct DeviceConfig: Codable, JSONEncodable, Hashable {
 
     public var ciot: CellularIoTConfig?
+    /** This is the configuration for an internet-connected device. There are currently no configuration options for internet devices; the device is identified via the clientcertificate.  This is empty since there's no configuration required for the internet  gateway */
+    public var inet: AnyCodable?
+    public var gateway: [String: GatewayDeviceConfig]?
 
-    public init(ciot: CellularIoTConfig? = nil) {
+    public init(ciot: CellularIoTConfig? = nil, inet: AnyCodable? = nil, gateway: [String: GatewayDeviceConfig]? = nil) {
         self.ciot = ciot
+        self.inet = inet
+        self.gateway = gateway
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case ciot
+        case inet
+        case gateway
     }
 
     // Encodable protocol methods
@@ -28,6 +35,8 @@ public struct DeviceConfig: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(ciot, forKey: .ciot)
+        try container.encodeIfPresent(inet, forKey: .inet)
+        try container.encodeIfPresent(gateway, forKey: .gateway)
     }
 }
 

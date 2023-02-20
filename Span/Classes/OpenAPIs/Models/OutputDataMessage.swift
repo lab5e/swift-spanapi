@@ -23,8 +23,10 @@ public struct OutputDataMessage: Codable, JSONEncodable, Hashable {
     public var coapMetaData: CoAPMetadata?
     public var messageId: String?
     public var mqttMetaData: MQTTMetadata?
+    public var gatewayMetaData: GatewayMetadata?
+    public var gatewayId: String?
 
-    public init(type: OutputMessageType? = nil, device: Device? = nil, payload: Data? = nil, received: String? = nil, transport: String? = nil, udpMetaData: UDPMetadata? = nil, coapMetaData: CoAPMetadata? = nil, messageId: String? = nil, mqttMetaData: MQTTMetadata? = nil) {
+    public init(type: OutputMessageType? = nil, device: Device? = nil, payload: Data? = nil, received: String? = nil, transport: String? = nil, udpMetaData: UDPMetadata? = nil, coapMetaData: CoAPMetadata? = nil, messageId: String? = nil, mqttMetaData: MQTTMetadata? = nil, gatewayMetaData: GatewayMetadata? = nil, gatewayId: String? = nil) {
         self.type = type
         self.device = device
         self.payload = payload
@@ -34,6 +36,8 @@ public struct OutputDataMessage: Codable, JSONEncodable, Hashable {
         self.coapMetaData = coapMetaData
         self.messageId = messageId
         self.mqttMetaData = mqttMetaData
+        self.gatewayMetaData = gatewayMetaData
+        self.gatewayId = gatewayId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -46,6 +50,8 @@ public struct OutputDataMessage: Codable, JSONEncodable, Hashable {
         case coapMetaData
         case messageId
         case mqttMetaData
+        case gatewayMetaData
+        case gatewayId
     }
 
     // Encodable protocol methods
@@ -61,6 +67,8 @@ public struct OutputDataMessage: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(coapMetaData, forKey: .coapMetaData)
         try container.encodeIfPresent(messageId, forKey: .messageId)
         try container.encodeIfPresent(mqttMetaData, forKey: .mqttMetaData)
+        try container.encodeIfPresent(gatewayMetaData, forKey: .gatewayMetaData)
+        try container.encodeIfPresent(gatewayId, forKey: .gatewayId)
     }
 }
 

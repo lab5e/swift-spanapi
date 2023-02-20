@@ -1,0 +1,12 @@
+# GatewayInetConfig
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**dtlsEndpoint** | **String** |  | [optional] 
+**coapEndpoint** | **String** |  | [optional] 
+**mqttEndpoint** | **String** |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

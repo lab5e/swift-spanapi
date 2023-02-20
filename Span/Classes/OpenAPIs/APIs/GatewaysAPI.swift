@@ -13,15 +13,176 @@ import AnyCodable
 open class GatewaysAPI {
 
     /**
-     List gateways
+     Create gateway
      
-     - parameter networkId: (path)  
+     - parameter collectionId: (path)  
+     - parameter body: (body)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func listGateways(networkId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListGatewayResponse?, _ error: Error?) -> Void)) -> RequestTask {
-        return listGatewaysWithRequestBuilder(networkId: networkId).execute(apiResponseQueue) { result in
+    open class func createGateway(collectionId: String, body: InlineObject, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
+        return createGatewayWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Create gateway
+     - POST /span/collections/{collectionId}/gateways
+     - Create a new gateway.
+     - API Key:
+       - type: apiKey X-API-Token 
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter body: (body)  
+     - returns: RequestBuilder<Gateway> 
+     */
+    open class func createGatewayWithRequestBuilder(collectionId: String, body: InlineObject) -> RequestBuilder<Gateway> {
+        var localVariablePath = "/span/collections/{collectionId}/gateways"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Gateway>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
+     Delete gateway
+     
+     - parameter collectionId: (path)  
+     - parameter gatewayId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func deleteGateway(collectionId: String, gatewayId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
+        return deleteGatewayWithRequestBuilder(collectionId: collectionId, gatewayId: gatewayId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Delete gateway
+     - DELETE /span/collections/{collectionId}/gateways/{gatewayId}
+     - Remove a gateway from Span.
+     - API Key:
+       - type: apiKey X-API-Token 
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter gatewayId: (path)  
+     - returns: RequestBuilder<Gateway> 
+     */
+    open class func deleteGatewayWithRequestBuilder(collectionId: String, gatewayId: String) -> RequestBuilder<Gateway> {
+        var localVariablePath = "/span/collections/{collectionId}/gateways/{gatewayId}"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let gatewayIdPreEscape = "\(APIHelper.mapValueToPathItem(gatewayId))"
+        let gatewayIdPostEscape = gatewayIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{gatewayId}", with: gatewayIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Gateway>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
+     Get issued certificate(s) for gateway
+     
+     - parameter collectionId: (path)  
+     - parameter gatewayId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func gatewayCertificates(collectionId: String, gatewayId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: GatewayCertificateResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return gatewayCertificatesWithRequestBuilder(collectionId: collectionId, gatewayId: gatewayId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Get issued certificate(s) for gateway
+     - GET /span/collections/{collectionId}/gateways/{gatewayId}/certs
+     - API Key:
+       - type: apiKey X-API-Token 
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter gatewayId: (path)  
+     - returns: RequestBuilder<GatewayCertificateResponse> 
+     */
+    open class func gatewayCertificatesWithRequestBuilder(collectionId: String, gatewayId: String) -> RequestBuilder<GatewayCertificateResponse> {
+        var localVariablePath = "/span/collections/{collectionId}/gateways/{gatewayId}/certs"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let gatewayIdPreEscape = "\(APIHelper.mapValueToPathItem(gatewayId))"
+        let gatewayIdPostEscape = gatewayIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{gatewayId}", with: gatewayIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<GatewayCertificateResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
+     List gateways
+     
+     - parameter collectionId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func listGateways(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListGatewayResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return listGatewaysWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -33,19 +194,19 @@ open class GatewaysAPI {
 
     /**
      List gateways
-     - GET /span/networks/{networkId}/gateways
-     - List the gatways for the network. Some of the gatways are built into Span and can't be deleted.
+     - GET /span/collections/{collectionId}/gateways
+     - List the user's gatways, including built-in gateways.
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
-     - parameter networkId: (path)  
+     - parameter collectionId: (path)  
      - returns: RequestBuilder<ListGatewayResponse> 
      */
-    open class func listGatewaysWithRequestBuilder(networkId: String) -> RequestBuilder<ListGatewayResponse> {
-        var localVariablePath = "/span/networks/{networkId}/gateways"
-        let networkIdPreEscape = "\(APIHelper.mapValueToPathItem(networkId))"
-        let networkIdPostEscape = networkIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{networkId}", with: networkIdPostEscape, options: .literal, range: nil)
+    open class func listGatewaysWithRequestBuilder(collectionId: String) -> RequestBuilder<ListGatewayResponse> {
+        var localVariablePath = "/span/collections/{collectionId}/gateways"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = SpanAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
@@ -63,61 +224,16 @@ open class GatewaysAPI {
     }
 
     /**
-     List networks
-     
-     - parameter apiResponseQueue: The queue on which api response is dispatched.
-     - parameter completion: completion handler to receive the data and the error objects
-     */
-    @discardableResult
-    open class func listNetworks(apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListNetworkResponse?, _ error: Error?) -> Void)) -> RequestTask {
-        return listNetworksWithRequestBuilder().execute(apiResponseQueue) { result in
-            switch result {
-            case let .success(response):
-                completion(response.body, nil)
-            case let .failure(error):
-                completion(nil, error)
-            }
-        }
-    }
-
-    /**
-     List networks
-     - GET /span/networks
-     - List networks available to the collection. This will include the built-in networks in Span.
-     - API Key:
-       - type: apiKey X-API-Token 
-       - name: APIToken
-     - returns: RequestBuilder<ListNetworkResponse> 
-     */
-    open class func listNetworksWithRequestBuilder() -> RequestBuilder<ListNetworkResponse> {
-        let localVariablePath = "/span/networks"
-        let localVariableURLString = SpanAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<ListNetworkResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
-
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
-    }
-
-    /**
      Retrieve gateway
      
-     - parameter networkId: (path)  
+     - parameter collectionId: (path)  
      - parameter gatewayId: (path)  
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func retrieveGateway(networkId: String, gatewayId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
-        return retrieveGatewayWithRequestBuilder(networkId: networkId, gatewayId: gatewayId).execute(apiResponseQueue) { result in
+    open class func retrieveGateway(collectionId: String, gatewayId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveGatewayWithRequestBuilder(collectionId: collectionId, gatewayId: gatewayId).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -129,20 +245,20 @@ open class GatewaysAPI {
 
     /**
      Retrieve gateway
-     - GET /span/networks/{networkId}/gateways/{gatewayId}
+     - GET /span/collections/{collectionId}/gateways/{gatewayId}
      - Get gateway information
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
-     - parameter networkId: (path)  
+     - parameter collectionId: (path)  
      - parameter gatewayId: (path)  
      - returns: RequestBuilder<Gateway> 
      */
-    open class func retrieveGatewayWithRequestBuilder(networkId: String, gatewayId: String) -> RequestBuilder<Gateway> {
-        var localVariablePath = "/span/networks/{networkId}/gateways/{gatewayId}"
-        let networkIdPreEscape = "\(APIHelper.mapValueToPathItem(networkId))"
-        let networkIdPostEscape = networkIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{networkId}", with: networkIdPostEscape, options: .literal, range: nil)
+    open class func retrieveGatewayWithRequestBuilder(collectionId: String, gatewayId: String) -> RequestBuilder<Gateway> {
+        var localVariablePath = "/span/collections/{collectionId}/gateways/{gatewayId}"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
         let gatewayIdPreEscape = "\(APIHelper.mapValueToPathItem(gatewayId))"
         let gatewayIdPostEscape = gatewayIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{gatewayId}", with: gatewayIdPostEscape, options: .literal, range: nil)
@@ -160,5 +276,62 @@ open class GatewaysAPI {
         let localVariableRequestBuilder: RequestBuilder<Gateway>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+    }
+
+    /**
+     Update gateway
+     
+     - parameter existingCollectionId: (path)  
+     - parameter gatewayId: (path)  
+     - parameter body: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func updateGateway(existingCollectionId: String, gatewayId: String, body: InlineObject1, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
+        return updateGatewayWithRequestBuilder(existingCollectionId: existingCollectionId, gatewayId: gatewayId, body: body).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Update gateway
+     - PATCH /span/collections/{existingCollectionId}/gateways/{gatewayId}
+     - Update a gateway in Span
+     - API Key:
+       - type: apiKey X-API-Token 
+       - name: APIToken
+     - parameter existingCollectionId: (path)  
+     - parameter gatewayId: (path)  
+     - parameter body: (body)  
+     - returns: RequestBuilder<Gateway> 
+     */
+    open class func updateGatewayWithRequestBuilder(existingCollectionId: String, gatewayId: String, body: InlineObject1) -> RequestBuilder<Gateway> {
+        var localVariablePath = "/span/collections/{existingCollectionId}/gateways/{gatewayId}"
+        let existingCollectionIdPreEscape = "\(APIHelper.mapValueToPathItem(existingCollectionId))"
+        let existingCollectionIdPostEscape = existingCollectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{existingCollectionId}", with: existingCollectionIdPostEscape, options: .literal, range: nil)
+        let gatewayIdPreEscape = "\(APIHelper.mapValueToPathItem(gatewayId))"
+        let gatewayIdPostEscape = gatewayIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{gatewayId}", with: gatewayIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Gateway>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
     }
 }

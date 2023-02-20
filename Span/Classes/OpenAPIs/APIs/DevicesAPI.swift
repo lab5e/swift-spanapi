@@ -315,7 +315,7 @@ open class DevicesAPI {
     /**
      Retrieve data from device
      - GET /span/collections/{collectionId}/devices/{deviceId}/data
-     - List the data received from the device. Use the query parameters to control what data you retrieve. The  maximum number of data points is 100.
+     - List the data received from the device. Use the query parameters to control what data you retrieve. The maximum number of data points is 100.
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -502,7 +502,7 @@ open class DevicesAPI {
     /**
      List incoming messages
      - GET /span/collections/{collectionId}/devices/{deviceId}/inbox
-     - Retrieve a list of incoming (ie upstream) messages, ie messages sent from the device to the service.  These messages are buffered in the service until they expire.   Use the query parameters to limit the number of messages to return. If no limit is specified the default limit of 250 is used.
+     - Retrieve a list of incoming (ie upstream) messages, ie messages sent from the device to the service. These messages are buffered in the service until they expire.  Use the query parameters to limit the number of messages to return. If no limit is specified the default limit of 250 is used.
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken
@@ -622,7 +622,7 @@ open class DevicesAPI {
     /**
      Update device
      - PATCH /span/collections/{existingCollectionId}/devices/{deviceId}
-     - The device can be moved from one collection to another by setting the collection ID field to the new  collection. You must have administrative access to both collections.
+     - The device can be moved from one collection to another by setting the collection ID field to the new collection. You must have administrative access to both collections. A note on gateway configurations: Empty gateway configuration blocks are deleted. If the configuration block contains a gateway ID it will be updated  with the new values. All values must be submitted in the request.
      - API Key:
        - type: apiKey X-API-Token 
        - name: APIToken

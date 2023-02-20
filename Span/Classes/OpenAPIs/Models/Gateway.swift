@@ -15,21 +15,33 @@ public struct Gateway: Codable, JSONEncodable, Hashable {
 
     public var gatewayId: String?
     public var collectionId: String?
-    public var networkId: String?
+    public var name: String?
+    public var builtIn: Bool?
+    public var type: GatewayType?
+    public var config: GatewayConfig?
     public var tags: [String: String]?
+    public var status: GatewayStatus?
 
-    public init(gatewayId: String? = nil, collectionId: String? = nil, networkId: String? = nil, tags: [String: String]? = nil) {
+    public init(gatewayId: String? = nil, collectionId: String? = nil, name: String? = nil, builtIn: Bool? = nil, type: GatewayType? = nil, config: GatewayConfig? = nil, tags: [String: String]? = nil, status: GatewayStatus? = nil) {
         self.gatewayId = gatewayId
         self.collectionId = collectionId
-        self.networkId = networkId
+        self.name = name
+        self.builtIn = builtIn
+        self.type = type
+        self.config = config
         self.tags = tags
+        self.status = status
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case gatewayId
         case collectionId
-        case networkId
+        case name
+        case builtIn
+        case type
+        case config
         case tags
+        case status
     }
 
     // Encodable protocol methods
@@ -38,8 +50,12 @@ public struct Gateway: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(gatewayId, forKey: .gatewayId)
         try container.encodeIfPresent(collectionId, forKey: .collectionId)
-        try container.encodeIfPresent(networkId, forKey: .networkId)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(builtIn, forKey: .builtIn)
+        try container.encodeIfPresent(type, forKey: .type)
+        try container.encodeIfPresent(config, forKey: .config)
         try container.encodeIfPresent(tags, forKey: .tags)
+        try container.encodeIfPresent(status, forKey: .status)
     }
 }
 
