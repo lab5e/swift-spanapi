@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.11'
   s.tvos.deployment_target = '9.0'
   s.watchos.deployment_target = '3.0'
-  s.version = '4.4.0'
+  s.version = '4.4.1'
   s.source = https://github.com/lab5e/swift-spanapi
   s.authors = 'releases@lab5e.com'
   s.license = BSD
