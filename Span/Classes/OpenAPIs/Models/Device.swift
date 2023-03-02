@@ -21,22 +21,22 @@ public struct Device: Codable, JSONEncodable, Hashable {
     public var firmware: FirmwareMetadata?
     public var config: DeviceConfig?
     public var metadata: DeviceMetadata?
-    /** The IMSI is the unique ID for the (e|nu|whatever)SIM card on your device. This is the primary identifier for your device on the network.  Deprecated: The IMSI is replaced by CellularIoTMetadata */
-    public var imsi: String?
-    /** The IMEI number is the unique ID for your hardware as seen by the network. Obviously you might have a completely different view on things.  Deprecated: The IMEI is replaced by CellularIoTMetadata */
-    public var imei: String?
-    public var network: NetworkMetadata?
+    public var lastGatewayId: String?
+    public var lastTransport: MessageTransport?
+    public var lastReceived: String?
+    public var lastPayload: Data?
 
-    public init(deviceId: String? = nil, collectionId: String? = nil, tags: [String: String]? = nil, firmware: FirmwareMetadata? = nil, config: DeviceConfig? = nil, metadata: DeviceMetadata? = nil, imsi: String? = nil, imei: String? = nil, network: NetworkMetadata? = nil) {
+    public init(deviceId: String? = nil, collectionId: String? = nil, tags: [String: String]? = nil, firmware: FirmwareMetadata? = nil, config: DeviceConfig? = nil, metadata: DeviceMetadata? = nil, lastGatewayId: String? = nil, lastTransport: MessageTransport? = nil, lastReceived: String? = nil, lastPayload: Data? = nil) {
         self.deviceId = deviceId
         self.collectionId = collectionId
         self.tags = tags
         self.firmware = firmware
         self.config = config
         self.metadata = metadata
-        self.imsi = imsi
-        self.imei = imei
-        self.network = network
+        self.lastGatewayId = lastGatewayId
+        self.lastTransport = lastTransport
+        self.lastReceived = lastReceived
+        self.lastPayload = lastPayload
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -46,9 +46,10 @@ public struct Device: Codable, JSONEncodable, Hashable {
         case firmware
         case config
         case metadata
-        case imsi
-        case imei
-        case network
+        case lastGatewayId
+        case lastTransport
+        case lastReceived
+        case lastPayload
     }
 
     // Encodable protocol methods
@@ -61,9 +62,10 @@ public struct Device: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(firmware, forKey: .firmware)
         try container.encodeIfPresent(config, forKey: .config)
         try container.encodeIfPresent(metadata, forKey: .metadata)
-        try container.encodeIfPresent(imsi, forKey: .imsi)
-        try container.encodeIfPresent(imei, forKey: .imei)
-        try container.encodeIfPresent(network, forKey: .network)
+        try container.encodeIfPresent(lastGatewayId, forKey: .lastGatewayId)
+        try container.encodeIfPresent(lastTransport, forKey: .lastTransport)
+        try container.encodeIfPresent(lastReceived, forKey: .lastReceived)
+        try container.encodeIfPresent(lastPayload, forKey: .lastPayload)
     }
 }
 

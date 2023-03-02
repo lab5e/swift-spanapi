@@ -73,8 +73,6 @@ Span/Classes/OpenAPIs/Models/MessageState.swift
 Span/Classes/OpenAPIs/Models/MessageTransport.swift
 Span/Classes/OpenAPIs/Models/MessageUpstream.swift
 Span/Classes/OpenAPIs/Models/ModelAny.swift
-Span/Classes/OpenAPIs/Models/NetworkMetadata.swift
-Span/Classes/OpenAPIs/Models/NetworkOperator.swift
 Span/Classes/OpenAPIs/Models/Output.swift
 Span/Classes/OpenAPIs/Models/OutputConfig.swift
 Span/Classes/OpenAPIs/Models/OutputDataMessage.swift
@@ -158,8 +156,6 @@ docs/MessageState.md
 docs/MessageTransport.md
 docs/MessageUpstream.md
 docs/ModelAny.md
-docs/NetworkMetadata.md
-docs/NetworkOperator.md
 docs/Output.md
 docs/OutputConfig.md
 docs/OutputDataMessage.md

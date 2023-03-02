@@ -18,20 +18,12 @@ public struct CreateDeviceRequest: Codable, JSONEncodable, Hashable {
     public var firmware: FirmwareMetadata?
     public var config: DeviceConfig?
     public var metadata: DeviceMetadata?
-    /** Deprecated: The IMSI is replaced by CellularIoTMetadata */
-    public var imsi: String?
-    /** The IMEI number is the unique ID for your hardware as seen by the network. Obviously you might have a completely different view on things. This field is deprecated.  Deprecated: The IMEI is replaced by CellularIoTMetadata */
-    public var imei: String?
-    public var network: NetworkMetadata?
 
-    public init(tags: [String: String]? = nil, firmware: FirmwareMetadata? = nil, config: DeviceConfig? = nil, metadata: DeviceMetadata? = nil, imsi: String? = nil, imei: String? = nil, network: NetworkMetadata? = nil) {
+    public init(tags: [String: String]? = nil, firmware: FirmwareMetadata? = nil, config: DeviceConfig? = nil, metadata: DeviceMetadata? = nil) {
         self.tags = tags
         self.firmware = firmware
         self.config = config
         self.metadata = metadata
-        self.imsi = imsi
-        self.imei = imei
-        self.network = network
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -39,9 +31,6 @@ public struct CreateDeviceRequest: Codable, JSONEncodable, Hashable {
         case firmware
         case config
         case metadata
-        case imsi
-        case imei
-        case network
     }
 
     // Encodable protocol methods
@@ -52,9 +41,6 @@ public struct CreateDeviceRequest: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(firmware, forKey: .firmware)
         try container.encodeIfPresent(config, forKey: .config)
         try container.encodeIfPresent(metadata, forKey: .metadata)
-        try container.encodeIfPresent(imsi, forKey: .imsi)
-        try container.encodeIfPresent(imei, forKey: .imei)
-        try container.encodeIfPresent(network, forKey: .network)
     }
 }
 

@@ -13,20 +13,17 @@ import AnyCodable
 /** This is the metadata for devices. */
 public struct DeviceMetadata: Codable, JSONEncodable, Hashable {
 
-    public var simOperator: NetworkOperator?
     public var ciot: CellularIoTMetadata?
     public var inet: InetMetadata?
     public var gateway: GatewayDeviceMetadata?
 
-    public init(simOperator: NetworkOperator? = nil, ciot: CellularIoTMetadata? = nil, inet: InetMetadata? = nil, gateway: GatewayDeviceMetadata? = nil) {
-        self.simOperator = simOperator
+    public init(ciot: CellularIoTMetadata? = nil, inet: InetMetadata? = nil, gateway: GatewayDeviceMetadata? = nil) {
         self.ciot = ciot
         self.inet = inet
         self.gateway = gateway
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case simOperator
         case ciot
         case inet
         case gateway
@@ -36,7 +33,6 @@ public struct DeviceMetadata: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(simOperator, forKey: .simOperator)
         try container.encodeIfPresent(ciot, forKey: .ciot)
         try container.encodeIfPresent(inet, forKey: .inet)
         try container.encodeIfPresent(gateway, forKey: .gateway)
