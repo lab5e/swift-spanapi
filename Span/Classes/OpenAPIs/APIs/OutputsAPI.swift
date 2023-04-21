@@ -36,7 +36,7 @@ open class OutputsAPI {
      Create output
      - POST /span/collections/{collectionId}/outputs
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter body: (body)  
@@ -60,7 +60,7 @@ open class OutputsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -87,7 +87,7 @@ open class OutputsAPI {
      Delete output
      - DELETE /span/collections/{collectionId}/outputs/{outputId}
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter outputId: (path)  
@@ -114,7 +114,7 @@ open class OutputsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -140,7 +140,7 @@ open class OutputsAPI {
      List outputs
      - GET /span/collections/{collectionId}/outputs
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - returns: RequestBuilder<ListOutputResponse> 
@@ -163,7 +163,7 @@ open class OutputsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListOutputResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -190,7 +190,7 @@ open class OutputsAPI {
      Output logs
      - GET /span/collections/{collectionId}/outputs/{outputId}/logs
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter outputId: (path)  
@@ -217,7 +217,7 @@ open class OutputsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<OutputLogResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -244,7 +244,7 @@ open class OutputsAPI {
      Retrieve output
      - GET /span/collections/{collectionId}/outputs/{outputId}
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter outputId: (path)  
@@ -271,7 +271,7 @@ open class OutputsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -298,7 +298,7 @@ open class OutputsAPI {
      Output status
      - GET /span/collections/{collectionId}/outputs/{outputId}/status
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter outputId: (path)  
@@ -325,7 +325,7 @@ open class OutputsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<OutputStatusResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -353,7 +353,7 @@ open class OutputsAPI {
      Update output
      - PATCH /span/collections/{existingCollectionId}/outputs/{outputId}
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter existingCollectionId: (path)  
      - parameter outputId: (path)  
@@ -381,6 +381,6 @@ open class OutputsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Output>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 }

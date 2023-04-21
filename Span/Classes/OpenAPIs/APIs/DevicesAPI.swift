@@ -38,7 +38,7 @@ open class DevicesAPI {
      - POST /span/collections/{collectionId}/devices/{deviceId}/outbox
      - Add a new message in the outgoing queue to the device. If there is other messages in the outbox these messages will be sent first.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
@@ -66,7 +66,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<MessageDownstream>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -93,7 +93,7 @@ open class DevicesAPI {
      Create device
      - POST /span/collections/{collectionId}/devices
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path) This is the containing collection 
      - parameter body: (body)  
@@ -117,7 +117,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -144,7 +144,7 @@ open class DevicesAPI {
      Remove device.
      - DELETE /span/collections/{collectionId}/devices/{deviceId}
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path) This is the containing collection 
      - parameter deviceId: (path) The device ID is assigned by the backend. 
@@ -171,7 +171,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -200,7 +200,7 @@ open class DevicesAPI {
      - DELETE /span/collections/{collectionId}/devices/{deviceId}/outbox/{messageId}
      - Delete an outgoing (ie downstream) message from the outbox.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
@@ -231,7 +231,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<DeleteDownstreamMessageResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -258,7 +258,7 @@ open class DevicesAPI {
      Get issued certificate(s) for device
      - GET /span/collections/{collectionId}/devices/{deviceId}/certs
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
@@ -285,7 +285,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<DeviceCertificateResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -317,7 +317,7 @@ open class DevicesAPI {
      - GET /span/collections/{collectionId}/devices/{deviceId}/data
      - List the data received from the device. Use the query parameters to control what data you retrieve. The maximum number of data points is 100.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path) The collection ID. This is included in the request path. 
      - parameter deviceId: (path) The device ID. This is included in the request path. 
@@ -340,10 +340,10 @@ open class DevicesAPI {
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(),
-            "start": start?.encodeToJSON(),
-            "end": end?.encodeToJSON(),
-            "offset": offset?.encodeToJSON(),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: false),
+            "start": (wrappedValue: start?.encodeToJSON(), isExplode: false),
+            "end": (wrappedValue: end?.encodeToJSON(), isExplode: false),
+            "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: false),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -354,7 +354,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListDataResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -380,7 +380,7 @@ open class DevicesAPI {
      List devices in collection.
      - GET /span/collections/{collectionId}/devices
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - returns: RequestBuilder<ListDevicesResponse> 
@@ -403,7 +403,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListDevicesResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -435,7 +435,7 @@ open class DevicesAPI {
      - GET /span/collections/{collectionId}/devices/{deviceId}/outbox
      - List messages that should be sent to the device when it connects to the service. The messages are sent to the device when it connects to the service and either sends a message (via UDP or CoAP) or requests a message via CoAP GET request.option
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
@@ -458,10 +458,10 @@ open class DevicesAPI {
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(),
-            "start": start?.encodeToJSON(),
-            "end": end?.encodeToJSON(),
-            "offset": offset?.encodeToJSON(),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: false),
+            "start": (wrappedValue: start?.encodeToJSON(), isExplode: false),
+            "end": (wrappedValue: end?.encodeToJSON(), isExplode: false),
+            "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: false),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -472,7 +472,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListDownstreamMessagesResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -504,7 +504,7 @@ open class DevicesAPI {
      - GET /span/collections/{collectionId}/devices/{deviceId}/inbox
      - Retrieve a list of incoming (ie upstream) messages, ie messages sent from the device to the service. These messages are buffered in the service until they expire.  Use the query parameters to limit the number of messages to return. If no limit is specified the default limit of 250 is used.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
@@ -527,10 +527,10 @@ open class DevicesAPI {
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(),
-            "start": start?.encodeToJSON(),
-            "end": end?.encodeToJSON(),
-            "offset": offset?.encodeToJSON(),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: false),
+            "start": (wrappedValue: start?.encodeToJSON(), isExplode: false),
+            "end": (wrappedValue: end?.encodeToJSON(), isExplode: false),
+            "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: false),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -541,7 +541,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListUpstreamMessagesResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -568,7 +568,7 @@ open class DevicesAPI {
      Retrieve device
      - GET /span/collections/{collectionId}/devices/{deviceId}
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path) This is the containing collection 
      - parameter deviceId: (path) The device ID is assigned by the backend. 
@@ -595,7 +595,7 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -624,7 +624,7 @@ open class DevicesAPI {
      - PATCH /span/collections/{existingCollectionId}/devices/{deviceId}
      - The device can be moved from one collection to another by setting the collection ID field to the new collection. You must have administrative access to both collections. A note on gateway configurations: Empty gateway configuration blocks are deleted. If the configuration block contains a gateway ID it will be updated  with the new values. All values must be submitted in the request.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter existingCollectionId: (path)  
      - parameter deviceId: (path)  
@@ -652,6 +652,6 @@ open class DevicesAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 }

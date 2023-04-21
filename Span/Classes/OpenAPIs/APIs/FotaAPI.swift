@@ -36,7 +36,7 @@ open class FotaAPI {
      Clear FOTA error
      - DELETE /span/collections/{collectionId}/devices/{deviceId}/fwerror
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter deviceId: (path)  
@@ -63,7 +63,7 @@ open class FotaAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ClearFirmwareErrorResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -89,8 +89,9 @@ open class FotaAPI {
     /**
      Create firmware
      - POST /span/collections/{collectionId}/firmware
+     - Firmware images must have unique version numbers and have an unique checksum. The checksum is calculated when the firmware image is uploaded.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter body: (body)  
@@ -114,7 +115,7 @@ open class FotaAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -141,7 +142,7 @@ open class FotaAPI {
      Delete firmware
      - DELETE /span/collections/{collectionId}/firmware/{imageId}
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter imageId: (path)  
@@ -168,7 +169,7 @@ open class FotaAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -195,7 +196,7 @@ open class FotaAPI {
      Firmware usage
      - GET /span/collections/{collectionId}/firmware/{imageId}/usage
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter imageId: (path)  
@@ -222,7 +223,7 @@ open class FotaAPI {
 
         let localVariableRequestBuilder: RequestBuilder<FirmwareUsageResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -248,7 +249,7 @@ open class FotaAPI {
      List firmware
      - GET /span/collections/{collectionId}/firmware
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - returns: RequestBuilder<ListFirmwareResponse> 
@@ -271,7 +272,7 @@ open class FotaAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListFirmwareResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -298,7 +299,7 @@ open class FotaAPI {
      Retrieve firmware
      - GET /span/collections/{collectionId}/firmware/{imageId}
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter imageId: (path)  
@@ -325,7 +326,7 @@ open class FotaAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -354,7 +355,7 @@ open class FotaAPI {
      - PATCH /span/collections/{existingCollectionId}/firmware/{imageId}
      - Only the version and tags fields can be updated. The other fields will be ignored.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter existingCollectionId: (path)  
      - parameter imageId: (path)  
@@ -382,6 +383,6 @@ open class FotaAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Firmware>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 }

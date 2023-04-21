@@ -1,4 +1,4 @@
-# InlineObject
+# CreateGatewayRequest
 
 ## Properties
 Name | Type | Description | Notes

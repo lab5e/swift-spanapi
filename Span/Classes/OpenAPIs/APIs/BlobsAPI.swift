@@ -37,7 +37,7 @@ open class BlobsAPI {
      - DELETE /span/collections/{collectionId}/blobs/{blobId}
      - Remove a blob stored on the collection.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter blobId: (path)  
@@ -64,7 +64,7 @@ open class BlobsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<AnyCodable>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -92,7 +92,7 @@ open class BlobsAPI {
      - GET /span/collections/{collectionId}/blobs
      - Retrieve a list of all the blobs stored on this collection. Blobs are uploaded by the devices through one of the blob endpoints.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter limit: (query)  (optional)
@@ -108,7 +108,7 @@ open class BlobsAPI {
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: false),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -119,6 +119,6 @@ open class BlobsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListBlobResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 }

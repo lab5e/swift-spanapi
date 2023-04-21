@@ -10,10 +10,6 @@ protocol JSONEncodable {
     func encodeToJSON() -> Any
 }
 
-extension JSONEncodable {
-    func encodeToJSON() -> Any { self }
-}
-
 /// An enum where the last case value can be used as a default catch-all.
 protocol CaseIterableDefaultsLast: Decodable & CaseIterable & RawRepresentable
 where RawValue: Decodable, AllCases: BidirectionalCollection {}
@@ -90,14 +86,16 @@ open class Response<T> {
     public let statusCode: Int
     public let header: [String: String]
     public let body: T
+    public let bodyData: Data?
 
-    public init(statusCode: Int, header: [String: String], body: T) {
+    public init(statusCode: Int, header: [String: String], body: T, bodyData: Data?) {
         self.statusCode = statusCode
         self.header = header
         self.body = body
+        self.bodyData = bodyData
     }
 
-    public convenience init(response: HTTPURLResponse, body: T) {
+    public convenience init(response: HTTPURLResponse, body: T, bodyData: Data?) {
         let rawHeader = response.allHeaderFields
         var header = [String: String]()
         for (key, value) in rawHeader {
@@ -105,18 +103,23 @@ open class Response<T> {
                 header[key] = value
             }
         }
-        self.init(statusCode: response.statusCode, header: header, body: body)
+        self.init(statusCode: response.statusCode, header: header, body: body, bodyData: bodyData)
     }
 }
 
 public final class RequestTask {
+    private var lock = NSRecursiveLock()
     private var task: URLSessionTask?
 
     internal func set(task: URLSessionTask) {
+        lock.lock()
+        defer { lock.unlock() }
         self.task = task
     }
 
     public func cancel() {
+        lock.lock()
+        defer { lock.unlock() }
         task?.cancel()
         task = nil
     }

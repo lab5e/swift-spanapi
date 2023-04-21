@@ -1,4 +1,4 @@
-# InlineObject1
+# UpdateGatewayRequest
 
 ## Properties
 Name | Type | Description | Notes

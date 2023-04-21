@@ -20,12 +20,16 @@ public struct Collection: Codable, JSONEncodable, Hashable {
     public var firmware: CollectionFirmware?
     /** Tags for the collection. Tags are metadata fields that you can assign to the collection. */
     public var tags: [String: String]?
+    public var upstreamTimestamps: [String]?
+    public var downstreamTimestamps: [String]?
 
-    public init(collectionId: String? = nil, teamId: String? = nil, firmware: CollectionFirmware? = nil, tags: [String: String]? = nil) {
+    public init(collectionId: String? = nil, teamId: String? = nil, firmware: CollectionFirmware? = nil, tags: [String: String]? = nil, upstreamTimestamps: [String]? = nil, downstreamTimestamps: [String]? = nil) {
         self.collectionId = collectionId
         self.teamId = teamId
         self.firmware = firmware
         self.tags = tags
+        self.upstreamTimestamps = upstreamTimestamps
+        self.downstreamTimestamps = downstreamTimestamps
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -33,6 +37,8 @@ public struct Collection: Codable, JSONEncodable, Hashable {
         case teamId
         case firmware
         case tags
+        case upstreamTimestamps
+        case downstreamTimestamps
     }
 
     // Encodable protocol methods
@@ -43,6 +49,8 @@ public struct Collection: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(teamId, forKey: .teamId)
         try container.encodeIfPresent(firmware, forKey: .firmware)
         try container.encodeIfPresent(tags, forKey: .tags)
+        try container.encodeIfPresent(upstreamTimestamps, forKey: .upstreamTimestamps)
+        try container.encodeIfPresent(downstreamTimestamps, forKey: .downstreamTimestamps)
     }
 }
 

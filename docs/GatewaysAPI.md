@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 # **createGateway**
 ```swift
-    open class func createGateway(collectionId: String, body: InlineObject, completion: @escaping (_ data: Gateway?, _ error: Error?) -> Void)
+    open class func createGateway(collectionId: String, body: CreateGatewayRequest, completion: @escaping (_ data: Gateway?, _ error: Error?) -> Void)
 ```
 
 Create gateway
@@ -27,7 +27,7 @@ Create a new gateway.
 import Span
 
 let collectionId = "collectionId_example" // String | 
-let body = inline_object(name: "name_example", type: GatewayType(), config: GatewayConfig(ciot: GatewayCIoTConfig(apn: "apn_example", udpEndpoint: "udpEndpoint_example", coapEndpoint: "coapEndpoint_example"), inet: GatewayInetConfig(dtlsEndpoint: "dtlsEndpoint_example", coapEndpoint: "coapEndpoint_example", mqttEndpoint: "mqttEndpoint_example"), user: GatewayCustomConfig(params: "TODO")), tags: "TODO") // InlineObject | 
+let body = CreateGateway_request(name: "name_example", type: GatewayType(), config: GatewayConfig(ciot: GatewayCIoTConfig(apn: "apn_example", udpEndpoint: "udpEndpoint_example", coapEndpoint: "coapEndpoint_example"), inet: GatewayInetConfig(dtlsEndpoint: "dtlsEndpoint_example", coapEndpoint: "coapEndpoint_example", mqttEndpoint: "mqttEndpoint_example"), user: GatewayCustomConfig(params: "TODO")), tags: "TODO") // CreateGatewayRequest | 
 
 // Create gateway
 GatewaysAPI.createGateway(collectionId: collectionId, body: body) { (response, error) in
@@ -47,7 +47,7 @@ GatewaysAPI.createGateway(collectionId: collectionId, body: body) { (response, e
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** |  | 
- **body** | [**InlineObject**](InlineObject.md) |  | 
+ **body** | [**CreateGatewayRequest**](CreateGatewayRequest.md) |  | 
 
 ### Return type
 
@@ -270,7 +270,7 @@ Name | Type | Description  | Notes
 
 # **updateGateway**
 ```swift
-    open class func updateGateway(existingCollectionId: String, gatewayId: String, body: InlineObject1, completion: @escaping (_ data: Gateway?, _ error: Error?) -> Void)
+    open class func updateGateway(existingCollectionId: String, gatewayId: String, body: UpdateGatewayRequest, completion: @escaping (_ data: Gateway?, _ error: Error?) -> Void)
 ```
 
 Update gateway
@@ -284,7 +284,7 @@ import Span
 
 let existingCollectionId = "existingCollectionId_example" // String | 
 let gatewayId = "gatewayId_example" // String | 
-let body = inline_object_1(name: "name_example", collectionId: "collectionId_example", type: GatewayType(), config: GatewayConfig(ciot: GatewayCIoTConfig(apn: "apn_example", udpEndpoint: "udpEndpoint_example", coapEndpoint: "coapEndpoint_example"), inet: GatewayInetConfig(dtlsEndpoint: "dtlsEndpoint_example", coapEndpoint: "coapEndpoint_example", mqttEndpoint: "mqttEndpoint_example"), user: GatewayCustomConfig(params: "TODO")), tags: "TODO") // InlineObject1 | 
+let body = UpdateGateway_request(name: "name_example", collectionId: "collectionId_example", type: GatewayType(), config: GatewayConfig(ciot: GatewayCIoTConfig(apn: "apn_example", udpEndpoint: "udpEndpoint_example", coapEndpoint: "coapEndpoint_example"), inet: GatewayInetConfig(dtlsEndpoint: "dtlsEndpoint_example", coapEndpoint: "coapEndpoint_example", mqttEndpoint: "mqttEndpoint_example"), user: GatewayCustomConfig(params: "TODO")), tags: "TODO") // UpdateGatewayRequest | 
 
 // Update gateway
 GatewaysAPI.updateGateway(existingCollectionId: existingCollectionId, gatewayId: gatewayId, body: body) { (response, error) in
@@ -305,7 +305,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **existingCollectionId** | **String** |  | 
  **gatewayId** | **String** |  | 
- **body** | [**InlineObject1**](InlineObject1.md) |  | 
+ **body** | [**UpdateGatewayRequest**](UpdateGatewayRequest.md) |  | 
 
 ### Return type
 

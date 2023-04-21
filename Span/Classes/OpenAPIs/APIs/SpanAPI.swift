@@ -35,7 +35,7 @@ open class SpanAPI {
      - GET /span/system
      - Get system information. This will show the current version of the API that you are using.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - returns: RequestBuilder<SystemInfoResponse> 
      */
@@ -54,6 +54,6 @@ open class SpanAPI {
 
         let localVariableRequestBuilder: RequestBuilder<SystemInfoResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 }

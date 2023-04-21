@@ -21,7 +21,7 @@ open class GatewaysAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func createGateway(collectionId: String, body: InlineObject, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func createGateway(collectionId: String, body: CreateGatewayRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
         return createGatewayWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -37,13 +37,13 @@ open class GatewaysAPI {
      - POST /span/collections/{collectionId}/gateways
      - Create a new gateway.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter body: (body)  
      - returns: RequestBuilder<Gateway> 
      */
-    open class func createGatewayWithRequestBuilder(collectionId: String, body: InlineObject) -> RequestBuilder<Gateway> {
+    open class func createGatewayWithRequestBuilder(collectionId: String, body: CreateGatewayRequest) -> RequestBuilder<Gateway> {
         var localVariablePath = "/span/collections/{collectionId}/gateways"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -61,7 +61,7 @@ open class GatewaysAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Gateway>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -89,7 +89,7 @@ open class GatewaysAPI {
      - DELETE /span/collections/{collectionId}/gateways/{gatewayId}
      - Remove a gateway from Span.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter gatewayId: (path)  
@@ -116,7 +116,7 @@ open class GatewaysAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Gateway>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -143,7 +143,7 @@ open class GatewaysAPI {
      Get issued certificate(s) for gateway
      - GET /span/collections/{collectionId}/gateways/{gatewayId}/certs
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter gatewayId: (path)  
@@ -170,7 +170,7 @@ open class GatewaysAPI {
 
         let localVariableRequestBuilder: RequestBuilder<GatewayCertificateResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -197,7 +197,7 @@ open class GatewaysAPI {
      - GET /span/collections/{collectionId}/gateways
      - List the user's gatways, including built-in gateways.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - returns: RequestBuilder<ListGatewayResponse> 
@@ -220,7 +220,7 @@ open class GatewaysAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListGatewayResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -248,7 +248,7 @@ open class GatewaysAPI {
      - GET /span/collections/{collectionId}/gateways/{gatewayId}
      - Get gateway information
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path)  
      - parameter gatewayId: (path)  
@@ -275,7 +275,7 @@ open class GatewaysAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Gateway>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -288,7 +288,7 @@ open class GatewaysAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func updateGateway(existingCollectionId: String, gatewayId: String, body: InlineObject1, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func updateGateway(existingCollectionId: String, gatewayId: String, body: UpdateGatewayRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
         return updateGatewayWithRequestBuilder(existingCollectionId: existingCollectionId, gatewayId: gatewayId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -304,14 +304,14 @@ open class GatewaysAPI {
      - PATCH /span/collections/{existingCollectionId}/gateways/{gatewayId}
      - Update a gateway in Span
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter existingCollectionId: (path)  
      - parameter gatewayId: (path)  
      - parameter body: (body)  
      - returns: RequestBuilder<Gateway> 
      */
-    open class func updateGatewayWithRequestBuilder(existingCollectionId: String, gatewayId: String, body: InlineObject1) -> RequestBuilder<Gateway> {
+    open class func updateGatewayWithRequestBuilder(existingCollectionId: String, gatewayId: String, body: UpdateGatewayRequest) -> RequestBuilder<Gateway> {
         var localVariablePath = "/span/collections/{existingCollectionId}/gateways/{gatewayId}"
         let existingCollectionIdPreEscape = "\(APIHelper.mapValueToPathItem(existingCollectionId))"
         let existingCollectionIdPostEscape = existingCollectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -332,6 +332,6 @@ open class GatewaysAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Gateway>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 }

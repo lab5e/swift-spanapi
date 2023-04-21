@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 
 List collections
 
-Lists all the collections that one of your teams owns.
+Lists all the collections that one of your teams owns. The collections returned includes only the data on the collection and not the summary information
 
 ### Example
 ```swift
@@ -218,10 +218,12 @@ This endpoint does not need any parameter.
 
 # **retrieveCollection**
 ```swift
-    open class func retrieveCollection(collectionId: String, completion: @escaping (_ data: Collection?, _ error: Error?) -> Void)
+    open class func retrieveCollection(collectionId: String, upstream: Bool? = nil, downstream: Bool? = nil, completion: @escaping (_ data: Collection?, _ error: Error?) -> Void)
 ```
 
 Retrieve collection
+
+Retrieve collection information. This includes a list of the most recent messages in the inbox. The upstream and downstream parameters are optional and if set to true will include the timestamps for up to 100 messages up- and downstream for the last hour.
 
 ### Example
 ```swift
@@ -229,9 +231,11 @@ Retrieve collection
 import Span
 
 let collectionId = "collectionId_example" // String | The collection ID of the collection you are requesting
+let upstream = true // Bool |  (optional)
+let downstream = true // Bool |  (optional)
 
 // Retrieve collection
-CollectionsAPI.retrieveCollection(collectionId: collectionId) { (response, error) in
+CollectionsAPI.retrieveCollection(collectionId: collectionId, upstream: upstream, downstream: downstream) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -248,6 +252,8 @@ CollectionsAPI.retrieveCollection(collectionId: collectionId) { (response, error
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** | The collection ID of the collection you are requesting | 
+ **upstream** | **Bool** |  | [optional] 
+ **downstream** | **Bool** |  | [optional] 
 
 ### Return type
 

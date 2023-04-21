@@ -36,7 +36,7 @@ open class CollectionsAPI {
      - POST /span/collections
      - Create a new collection
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter body: (body) Request object when creating a collection. The collect ID is assigned by the service. 
      - returns: RequestBuilder<Collection> 
@@ -56,7 +56,7 @@ open class CollectionsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Collection>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -83,7 +83,7 @@ open class CollectionsAPI {
      - DELETE /span/collections/{collectionId}
      - Remove the collection. Devices, firmware images, outputs and all other related resources must be removed from the collection before it can be deleted.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path) The ID of the collection you want to delete 
      - returns: RequestBuilder<Collection> 
@@ -106,7 +106,7 @@ open class CollectionsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Collection>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -137,7 +137,7 @@ open class CollectionsAPI {
      - GET /span/collections/{collectionId}/data
      - Retrieve data sent by the devices in the collection. The maximum number of data points is 100.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path) The collection ID requested. This is included in the request path. 
      - parameter limit: (query) Limit the number of payloads to return. The default is 512. (optional)
@@ -156,10 +156,10 @@ open class CollectionsAPI {
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "limit": limit?.encodeToJSON(),
-            "start": start?.encodeToJSON(),
-            "end": end?.encodeToJSON(),
-            "offset": offset?.encodeToJSON(),
+            "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: false),
+            "start": (wrappedValue: start?.encodeToJSON(), isExplode: false),
+            "end": (wrappedValue: end?.encodeToJSON(), isExplode: false),
+            "offset": (wrappedValue: offset?.encodeToJSON(), isExplode: false),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -170,7 +170,7 @@ open class CollectionsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListDataResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -194,9 +194,9 @@ open class CollectionsAPI {
     /**
      List collections
      - GET /span/collections
-     - Lists all the collections that one of your teams owns.
+     - Lists all the collections that one of your teams owns. The collections returned includes only the data on the collection and not the summary information
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - returns: RequestBuilder<ListCollectionResponse> 
      */
@@ -215,19 +215,21 @@ open class CollectionsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<ListCollectionResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
      Retrieve collection
      
      - parameter collectionId: (path) The collection ID of the collection you are requesting 
+     - parameter upstream: (query)  (optional)
+     - parameter downstream: (query)  (optional)
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func retrieveCollection(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Collection?, _ error: Error?) -> Void)) -> RequestTask {
-        return retrieveCollectionWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result in
+    open class func retrieveCollection(collectionId: String, upstream: Bool? = nil, downstream: Bool? = nil, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Collection?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveCollectionWithRequestBuilder(collectionId: collectionId, upstream: upstream, downstream: downstream).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
                 completion(response.body, nil)
@@ -240,13 +242,16 @@ open class CollectionsAPI {
     /**
      Retrieve collection
      - GET /span/collections/{collectionId}
+     - Retrieve collection information. This includes a list of the most recent messages in the inbox. The upstream and downstream parameters are optional and if set to true will include the timestamps for up to 100 messages up- and downstream for the last hour.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path) The collection ID of the collection you are requesting 
+     - parameter upstream: (query)  (optional)
+     - parameter downstream: (query)  (optional)
      - returns: RequestBuilder<Collection> 
      */
-    open class func retrieveCollectionWithRequestBuilder(collectionId: String) -> RequestBuilder<Collection> {
+    open class func retrieveCollectionWithRequestBuilder(collectionId: String, upstream: Bool? = nil, downstream: Bool? = nil) -> RequestBuilder<Collection> {
         var localVariablePath = "/span/collections/{collectionId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -254,7 +259,11 @@ open class CollectionsAPI {
         let localVariableURLString = SpanAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "upstream": (wrappedValue: upstream?.encodeToJSON(), isExplode: false),
+            "downstream": (wrappedValue: downstream?.encodeToJSON(), isExplode: false),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
@@ -264,7 +273,7 @@ open class CollectionsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Collection>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
@@ -292,7 +301,7 @@ open class CollectionsAPI {
      - PATCH /span/collections/{collectionId}
      - Update a collection.
      - API Key:
-       - type: apiKey X-API-Token 
+       - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path) The ID of the collection. This is assigned by the backend. 
      - parameter body: (body)  
@@ -316,6 +325,6 @@ open class CollectionsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Collection>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 }

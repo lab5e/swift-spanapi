@@ -70,6 +70,8 @@ Name | Type | Description  | Notes
 
 Create firmware
 
+Firmware images must have unique version numbers and have an unique checksum. The checksum is calculated when the firmware image is uploaded.
+
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new

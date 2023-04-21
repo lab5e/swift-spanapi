@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.11'
   s.tvos.deployment_target = '9.0'
   s.watchos.deployment_target = '3.0'
-  s.version = '4.4.2'
+  s.version = '4.5.0'
   s.source = https://github.com/lab5e/swift-spanapi
   s.authors = 'releases@lab5e.com'
   s.license = BSD
@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.description = 'Lab5e Span API Client'
   s.documentation_url = 'https://docs.labe5e.com/'
   s.source_files = 'Span/Classes/**/*.swift'
-  s.dependency 'AnyCodable-FlightSchool', '~> 0.6.1'
+  s.dependency 'AnyCodable-FlightSchool', '~> 0.6'
 end
