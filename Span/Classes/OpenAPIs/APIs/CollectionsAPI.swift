@@ -277,6 +277,56 @@ open class CollectionsAPI {
     }
 
     /**
+     Retrieve collection statistics
+     
+     - parameter collectionId: (path) The collection ID of the collection you are requesting 
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func retrieveCollectionStats(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: CollectionStats?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveCollectionStatsWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Retrieve collection statistics
+     - GET /span/collections/{collectionId}/stats
+     - Retrieve statistics for the collection. This is the aggregated metrics for devices, outputs, firmware images, blobs and gateways in the collection
+     - API Key:
+       - type: apiKey X-API-Token (HEADER)
+       - name: APIToken
+     - parameter collectionId: (path) The collection ID of the collection you are requesting 
+     - returns: RequestBuilder<CollectionStats> 
+     */
+    open class func retrieveCollectionStatsWithRequestBuilder(collectionId: String) -> RequestBuilder<CollectionStats> {
+        var localVariablePath = "/span/collections/{collectionId}/stats"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<CollectionStats>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Update collection
      
      - parameter collectionId: (path) The ID of the collection. This is assigned by the backend. 

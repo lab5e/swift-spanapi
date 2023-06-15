@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**listCollectionData**](CollectionsAPI.md#listcollectiondata) | **GET** /span/collections/{collectionId}/data | Retrieve data from devices
 [**listCollections**](CollectionsAPI.md#listcollections) | **GET** /span/collections | List collections
 [**retrieveCollection**](CollectionsAPI.md#retrievecollection) | **GET** /span/collections/{collectionId} | Retrieve collection
+[**retrieveCollectionStats**](CollectionsAPI.md#retrievecollectionstats) | **GET** /span/collections/{collectionId}/stats | Retrieve collection statistics
 [**updateCollection**](CollectionsAPI.md#updatecollection) | **PATCH** /span/collections/{collectionId} | Update collection
 
 
@@ -258,6 +259,56 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Collection**](Collection.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **retrieveCollectionStats**
+```swift
+    open class func retrieveCollectionStats(collectionId: String, completion: @escaping (_ data: CollectionStats?, _ error: Error?) -> Void)
+```
+
+Retrieve collection statistics
+
+Retrieve statistics for the collection. This is the aggregated metrics for devices, outputs, firmware images, blobs and gateways in the collection
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | The collection ID of the collection you are requesting
+
+// Retrieve collection statistics
+CollectionsAPI.retrieveCollectionStats(collectionId: collectionId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** | The collection ID of the collection you are requesting | 
+
+### Return type
+
+[**CollectionStats**](CollectionStats.md)
 
 ### Authorization
 

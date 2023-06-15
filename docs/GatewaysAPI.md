@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**gatewayCertificates**](GatewaysAPI.md#gatewaycertificates) | **GET** /span/collections/{collectionId}/gateways/{gatewayId}/certs | Get issued certificate(s) for gateway
 [**listGateways**](GatewaysAPI.md#listgateways) | **GET** /span/collections/{collectionId}/gateways | List gateways
 [**retrieveGateway**](GatewaysAPI.md#retrievegateway) | **GET** /span/collections/{collectionId}/gateways/{gatewayId} | Retrieve gateway
+[**retrieveGatewayStats**](GatewaysAPI.md#retrievegatewaystats) | **GET** /span/collections/{collectionId}/gateways/{gatewayId}/stats | Retrieve gateway statistics
 [**updateGateway**](GatewaysAPI.md#updategateway) | **PATCH** /span/collections/{existingCollectionId}/gateways/{gatewayId} | Update gateway
 
 
@@ -256,6 +257,58 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Gateway**](Gateway.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **retrieveGatewayStats**
+```swift
+    open class func retrieveGatewayStats(collectionId: String, gatewayId: String, completion: @escaping (_ data: GatewayStats?, _ error: Error?) -> Void)
+```
+
+Retrieve gateway statistics
+
+Get statistics for gateway
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+let gatewayId = "gatewayId_example" // String | 
+
+// Retrieve gateway statistics
+GatewaysAPI.retrieveGatewayStats(collectionId: collectionId, gatewayId: gatewayId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+ **gatewayId** | **String** |  | 
+
+### Return type
+
+[**GatewayStats**](GatewayStats.md)
 
 ### Authorization
 

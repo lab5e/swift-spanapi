@@ -548,7 +548,7 @@ open class DevicesAPI {
      Retrieve device
      
      - parameter collectionId: (path) This is the containing collection 
-     - parameter deviceId: (path) The device ID is assigned by the backend. 
+     - parameter deviceId: (path) The device identifier 
      - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
@@ -571,7 +571,7 @@ open class DevicesAPI {
        - type: apiKey X-API-Token (HEADER)
        - name: APIToken
      - parameter collectionId: (path) This is the containing collection 
-     - parameter deviceId: (path) The device ID is assigned by the backend. 
+     - parameter deviceId: (path) The device identifier 
      - returns: RequestBuilder<Device> 
      */
     open class func retrieveDeviceWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<Device> {
@@ -594,6 +594,60 @@ open class DevicesAPI {
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<Device>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     Retrieve device statistics
+     
+     - parameter collectionId: (path) This is the containing collection 
+     - parameter deviceId: (path) The device identifier 
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func retrieveDeviceStats(collectionId: String, deviceId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: DeviceStats?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveDeviceStatsWithRequestBuilder(collectionId: collectionId, deviceId: deviceId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Retrieve device statistics
+     - GET /span/collections/{collectionId}/devices/{deviceId}/stats
+     - API Key:
+       - type: apiKey X-API-Token (HEADER)
+       - name: APIToken
+     - parameter collectionId: (path) This is the containing collection 
+     - parameter deviceId: (path) The device identifier 
+     - returns: RequestBuilder<DeviceStats> 
+     */
+    open class func retrieveDeviceStatsWithRequestBuilder(collectionId: String, deviceId: String) -> RequestBuilder<DeviceStats> {
+        var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}/stats"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let deviceIdPreEscape = "\(APIHelper.mapValueToPathItem(deviceId))"
+        let deviceIdPostEscape = deviceIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{deviceId}", with: deviceIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<DeviceStats>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**listDownstreamMessages**](DevicesAPI.md#listdownstreammessages) | **GET** /span/collections/{collectionId}/devices/{deviceId}/outbox | List the messages in the outbox
 [**listUpstreamMessages**](DevicesAPI.md#listupstreammessages) | **GET** /span/collections/{collectionId}/devices/{deviceId}/inbox | List incoming messages
 [**retrieveDevice**](DevicesAPI.md#retrievedevice) | **GET** /span/collections/{collectionId}/devices/{deviceId} | Retrieve device
+[**retrieveDeviceStats**](DevicesAPI.md#retrievedevicestats) | **GET** /span/collections/{collectionId}/devices/{deviceId}/stats | Retrieve device statistics
 [**updateDevice**](DevicesAPI.md#updatedevice) | **PATCH** /span/collections/{existingCollectionId}/devices/{deviceId} | Update device
 
 
@@ -516,7 +517,7 @@ Retrieve device
 import Span
 
 let collectionId = "collectionId_example" // String | This is the containing collection
-let deviceId = "deviceId_example" // String | The device ID is assigned by the backend.
+let deviceId = "deviceId_example" // String | The device identifier
 
 // Retrieve device
 DevicesAPI.retrieveDevice(collectionId: collectionId, deviceId: deviceId) { (response, error) in
@@ -536,11 +537,61 @@ DevicesAPI.retrieveDevice(collectionId: collectionId, deviceId: deviceId) { (res
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** | This is the containing collection | 
- **deviceId** | **String** | The device ID is assigned by the backend. | 
+ **deviceId** | **String** | The device identifier | 
 
 ### Return type
 
 [**Device**](Device.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **retrieveDeviceStats**
+```swift
+    open class func retrieveDeviceStats(collectionId: String, deviceId: String, completion: @escaping (_ data: DeviceStats?, _ error: Error?) -> Void)
+```
+
+Retrieve device statistics
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | This is the containing collection
+let deviceId = "deviceId_example" // String | The device identifier
+
+// Retrieve device statistics
+DevicesAPI.retrieveDeviceStats(collectionId: collectionId, deviceId: deviceId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** | This is the containing collection | 
+ **deviceId** | **String** | The device identifier | 
+
+### Return type
+
+[**DeviceStats**](DeviceStats.md)
 
 ### Authorization
 

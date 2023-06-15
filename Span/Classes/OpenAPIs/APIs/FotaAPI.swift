@@ -330,6 +330,60 @@ open class FotaAPI {
     }
 
     /**
+     Retrieve firmware statistics
+     
+     - parameter collectionId: (path)  
+     - parameter imageId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func retrieveFirmwareStats(collectionId: String, imageId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: FirmwareStats?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveFirmwareStatsWithRequestBuilder(collectionId: collectionId, imageId: imageId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Retrieve firmware statistics
+     - GET /span/collections/{collectionId}/firmware/{imageId}/stats
+     - API Key:
+       - type: apiKey X-API-Token (HEADER)
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter imageId: (path)  
+     - returns: RequestBuilder<FirmwareStats> 
+     */
+    open class func retrieveFirmwareStatsWithRequestBuilder(collectionId: String, imageId: String) -> RequestBuilder<FirmwareStats> {
+        var localVariablePath = "/span/collections/{collectionId}/firmware/{imageId}/stats"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let imageIdPreEscape = "\(APIHelper.mapValueToPathItem(imageId))"
+        let imageIdPostEscape = imageIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{imageId}", with: imageIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<FirmwareStats>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Update firmware
      
      - parameter existingCollectionId: (path)  

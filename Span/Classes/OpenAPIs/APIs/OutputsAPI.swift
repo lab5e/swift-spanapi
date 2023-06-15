@@ -275,6 +275,60 @@ open class OutputsAPI {
     }
 
     /**
+     Retrieve output statistics
+     
+     - parameter collectionId: (path)  
+     - parameter outputId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func retrieveOutputStats(collectionId: String, outputId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: OutputStats?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveOutputStatsWithRequestBuilder(collectionId: collectionId, outputId: outputId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Retrieve output statistics
+     - GET /span/collections/{collectionId}/outputs/{outputId}/stats
+     - API Key:
+       - type: apiKey X-API-Token (HEADER)
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter outputId: (path)  
+     - returns: RequestBuilder<OutputStats> 
+     */
+    open class func retrieveOutputStatsWithRequestBuilder(collectionId: String, outputId: String) -> RequestBuilder<OutputStats> {
+        var localVariablePath = "/span/collections/{collectionId}/outputs/{outputId}/stats"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let outputIdPreEscape = "\(APIHelper.mapValueToPathItem(outputId))"
+        let outputIdPostEscape = outputIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{outputId}", with: outputIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<OutputStats>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Output status
      
      - parameter collectionId: (path)  

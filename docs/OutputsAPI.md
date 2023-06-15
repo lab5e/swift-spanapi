@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**listOutputs**](OutputsAPI.md#listoutputs) | **GET** /span/collections/{collectionId}/outputs | List outputs
 [**logs**](OutputsAPI.md#logs) | **GET** /span/collections/{collectionId}/outputs/{outputId}/logs | Output logs
 [**retrieveOutput**](OutputsAPI.md#retrieveoutput) | **GET** /span/collections/{collectionId}/outputs/{outputId} | Retrieve output
+[**retrieveOutputStats**](OutputsAPI.md#retrieveoutputstats) | **GET** /span/collections/{collectionId}/outputs/{outputId}/stats | Retrieve output statistics
 [**status**](OutputsAPI.md#status) | **GET** /span/collections/{collectionId}/outputs/{outputId}/status | Output status
 [**updateOutput**](OutputsAPI.md#updateoutput) | **PATCH** /span/collections/{existingCollectionId}/outputs/{outputId} | Update output
 
@@ -249,6 +250,56 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Output**](Output.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **retrieveOutputStats**
+```swift
+    open class func retrieveOutputStats(collectionId: String, outputId: String, completion: @escaping (_ data: OutputStats?, _ error: Error?) -> Void)
+```
+
+Retrieve output statistics
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+let outputId = "outputId_example" // String | 
+
+// Retrieve output statistics
+OutputsAPI.retrieveOutputStats(collectionId: collectionId, outputId: outputId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+ **outputId** | **String** |  | 
+
+### Return type
+
+[**OutputStats**](OutputStats.md)
 
 ### Authorization
 

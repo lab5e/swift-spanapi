@@ -279,6 +279,61 @@ open class GatewaysAPI {
     }
 
     /**
+     Retrieve gateway statistics
+     
+     - parameter collectionId: (path)  
+     - parameter gatewayId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func retrieveGatewayStats(collectionId: String, gatewayId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: GatewayStats?, _ error: Error?) -> Void)) -> RequestTask {
+        return retrieveGatewayStatsWithRequestBuilder(collectionId: collectionId, gatewayId: gatewayId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     Retrieve gateway statistics
+     - GET /span/collections/{collectionId}/gateways/{gatewayId}/stats
+     - Get statistics for gateway
+     - API Key:
+       - type: apiKey X-API-Token (HEADER)
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter gatewayId: (path)  
+     - returns: RequestBuilder<GatewayStats> 
+     */
+    open class func retrieveGatewayStatsWithRequestBuilder(collectionId: String, gatewayId: String) -> RequestBuilder<GatewayStats> {
+        var localVariablePath = "/span/collections/{collectionId}/gateways/{gatewayId}/stats"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let gatewayIdPreEscape = "\(APIHelper.mapValueToPathItem(gatewayId))"
+        let gatewayIdPostEscape = gatewayIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{gatewayId}", with: gatewayIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<GatewayStats>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Update gateway
      
      - parameter existingCollectionId: (path)  

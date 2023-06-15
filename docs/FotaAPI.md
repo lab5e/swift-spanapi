@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**firmwareUsage**](FotaAPI.md#firmwareusage) | **GET** /span/collections/{collectionId}/firmware/{imageId}/usage | Firmware usage
 [**listFirmware**](FotaAPI.md#listfirmware) | **GET** /span/collections/{collectionId}/firmware | List firmware
 [**retrieveFirmware**](FotaAPI.md#retrievefirmware) | **GET** /span/collections/{collectionId}/firmware/{imageId} | Retrieve firmware
+[**retrieveFirmwareStats**](FotaAPI.md#retrievefirmwarestats) | **GET** /span/collections/{collectionId}/firmware/{imageId}/stats | Retrieve firmware statistics
 [**updateFirmware**](FotaAPI.md#updatefirmware) | **PATCH** /span/collections/{existingCollectionId}/firmware/{imageId} | Update firmware
 
 
@@ -301,6 +302,56 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Firmware**](Firmware.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **retrieveFirmwareStats**
+```swift
+    open class func retrieveFirmwareStats(collectionId: String, imageId: String, completion: @escaping (_ data: FirmwareStats?, _ error: Error?) -> Void)
+```
+
+Retrieve firmware statistics
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+let imageId = "imageId_example" // String | 
+
+// Retrieve firmware statistics
+FotaAPI.retrieveFirmwareStats(collectionId: collectionId, imageId: imageId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+ **imageId** | **String** |  | 
+
+### Return type
+
+[**FirmwareStats**](FirmwareStats.md)
 
 ### Authorization
 
