@@ -357,7 +357,7 @@ open class GatewaysAPI {
     /**
      Update gateway
      - PATCH /span/collections/{existingCollectionId}/gateways/{gatewayId}
-     - Update a gateway in Span
+     - Update configuration for a gateway. If you want to remove or move a gateway from the collection the devices in the collection must not have any gateway configuration. The certificates for the gateway are unchanged when the gateway is moved.
      - API Key:
        - type: apiKey X-API-Token (HEADER)
        - name: APIToken
