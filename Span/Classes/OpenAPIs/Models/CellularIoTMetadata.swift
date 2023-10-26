@@ -25,8 +25,10 @@ public struct CellularIoTMetadata: Codable, JSONEncodable, Hashable {
     public var network: String?
     public var countryCode: String?
     public var lastUpdate: String?
+    public var lastImsi: String?
+    public var lastImei: String?
 
-    public init(gatewayId: String? = nil, allocatedIp: String? = nil, allocatedAt: String? = nil, cellId: String? = nil, mcc: Int? = nil, mnc: Int? = nil, country: String? = nil, network: String? = nil, countryCode: String? = nil, lastUpdate: String? = nil) {
+    public init(gatewayId: String? = nil, allocatedIp: String? = nil, allocatedAt: String? = nil, cellId: String? = nil, mcc: Int? = nil, mnc: Int? = nil, country: String? = nil, network: String? = nil, countryCode: String? = nil, lastUpdate: String? = nil, lastImsi: String? = nil, lastImei: String? = nil) {
         self.gatewayId = gatewayId
         self.allocatedIp = allocatedIp
         self.allocatedAt = allocatedAt
@@ -37,6 +39,8 @@ public struct CellularIoTMetadata: Codable, JSONEncodable, Hashable {
         self.network = network
         self.countryCode = countryCode
         self.lastUpdate = lastUpdate
+        self.lastImsi = lastImsi
+        self.lastImei = lastImei
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -50,6 +54,8 @@ public struct CellularIoTMetadata: Codable, JSONEncodable, Hashable {
         case network
         case countryCode
         case lastUpdate
+        case lastImsi
+        case lastImei
     }
 
     // Encodable protocol methods
@@ -66,6 +72,8 @@ public struct CellularIoTMetadata: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(network, forKey: .network)
         try container.encodeIfPresent(countryCode, forKey: .countryCode)
         try container.encodeIfPresent(lastUpdate, forKey: .lastUpdate)
+        try container.encodeIfPresent(lastImsi, forKey: .lastImsi)
+        try container.encodeIfPresent(lastImei, forKey: .lastImei)
     }
 }
 

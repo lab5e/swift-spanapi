@@ -14,7 +14,6 @@ import AnyCodable
 public struct CellularIoTConfig: Codable, JSONEncodable, Hashable {
 
     public var imsi: String?
-    /** on your device. This is the primary identifier for your device on the network.  The IMEI number is the unique ID for your hardware as */
     public var imei: String?
 
     public init(imsi: String? = nil, imei: String? = nil) {
