@@ -13,21 +13,21 @@ import AnyCodable
 /** Statistics for a single blob */
 public struct BlobStats: Codable, JSONEncodable, Hashable {
 
-    public var blobBytesMb: Float?
+    public var blobBytes: String?
 
-    public init(blobBytesMb: Float? = nil) {
-        self.blobBytesMb = blobBytesMb
+    public init(blobBytes: String? = nil) {
+        self.blobBytes = blobBytes
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case blobBytesMb
+        case blobBytes
     }
 
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(blobBytesMb, forKey: .blobBytesMb)
+        try container.encodeIfPresent(blobBytes, forKey: .blobBytes)
     }
 }
 

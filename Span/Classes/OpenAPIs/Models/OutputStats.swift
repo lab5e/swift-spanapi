@@ -14,19 +14,19 @@ import AnyCodable
 public struct OutputStats: Codable, JSONEncodable, Hashable {
 
     public var forwardErrors: Int?
-    public var messagesForwarded: Int?
-    public var bytesForwardedMb: Float?
+    public var messagesForwarded: String?
+    public var bytesForwarded: String?
 
-    public init(forwardErrors: Int? = nil, messagesForwarded: Int? = nil, bytesForwardedMb: Float? = nil) {
+    public init(forwardErrors: Int? = nil, messagesForwarded: String? = nil, bytesForwarded: String? = nil) {
         self.forwardErrors = forwardErrors
         self.messagesForwarded = messagesForwarded
-        self.bytesForwardedMb = bytesForwardedMb
+        self.bytesForwarded = bytesForwarded
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case forwardErrors
         case messagesForwarded
-        case bytesForwardedMb
+        case bytesForwarded
     }
 
     // Encodable protocol methods
@@ -35,7 +35,7 @@ public struct OutputStats: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(forwardErrors, forKey: .forwardErrors)
         try container.encodeIfPresent(messagesForwarded, forKey: .messagesForwarded)
-        try container.encodeIfPresent(bytesForwardedMb, forKey: .bytesForwardedMb)
+        try container.encodeIfPresent(bytesForwarded, forKey: .bytesForwarded)
     }
 }
 

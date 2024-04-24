@@ -13,23 +13,23 @@ import AnyCodable
 /** This is the statistics for a single device */
 public struct DeviceStats: Codable, JSONEncodable, Hashable {
 
-    public var bytesUpstreamMb: Float?
-    public var bytesDownstreamMb: Float?
-    public var messagesUpstream: Int?
-    public var messagesDownstream: Int?
+    public var bytesUpstream: String?
+    public var bytesDownstream: String?
+    public var messagesUpstream: String?
+    public var messagesDownstream: String?
     public var sessionCount: Int?
 
-    public init(bytesUpstreamMb: Float? = nil, bytesDownstreamMb: Float? = nil, messagesUpstream: Int? = nil, messagesDownstream: Int? = nil, sessionCount: Int? = nil) {
-        self.bytesUpstreamMb = bytesUpstreamMb
-        self.bytesDownstreamMb = bytesDownstreamMb
+    public init(bytesUpstream: String? = nil, bytesDownstream: String? = nil, messagesUpstream: String? = nil, messagesDownstream: String? = nil, sessionCount: Int? = nil) {
+        self.bytesUpstream = bytesUpstream
+        self.bytesDownstream = bytesDownstream
         self.messagesUpstream = messagesUpstream
         self.messagesDownstream = messagesDownstream
         self.sessionCount = sessionCount
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
-        case bytesUpstreamMb
-        case bytesDownstreamMb
+        case bytesUpstream
+        case bytesDownstream
         case messagesUpstream
         case messagesDownstream
         case sessionCount
@@ -39,8 +39,8 @@ public struct DeviceStats: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(bytesUpstreamMb, forKey: .bytesUpstreamMb)
-        try container.encodeIfPresent(bytesDownstreamMb, forKey: .bytesDownstreamMb)
+        try container.encodeIfPresent(bytesUpstream, forKey: .bytesUpstream)
+        try container.encodeIfPresent(bytesDownstream, forKey: .bytesDownstream)
         try container.encodeIfPresent(messagesUpstream, forKey: .messagesUpstream)
         try container.encodeIfPresent(messagesDownstream, forKey: .messagesDownstream)
         try container.encodeIfPresent(sessionCount, forKey: .sessionCount)

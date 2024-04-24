@@ -13,23 +13,23 @@ import AnyCodable
 /** This is statistics for a single gateway */
 public struct GatewayStats: Codable, JSONEncodable, Hashable {
 
-    public var messagesUpstream: Int?
-    public var messagesDownstream: Int?
-    public var bytesUpstreamMb: Float?
-    public var bytesDownstreamMb: Float?
+    public var messagesUpstream: String?
+    public var messagesDownstream: String?
+    public var bytesUpstream: String?
+    public var bytesDownstream: String?
 
-    public init(messagesUpstream: Int? = nil, messagesDownstream: Int? = nil, bytesUpstreamMb: Float? = nil, bytesDownstreamMb: Float? = nil) {
+    public init(messagesUpstream: String? = nil, messagesDownstream: String? = nil, bytesUpstream: String? = nil, bytesDownstream: String? = nil) {
         self.messagesUpstream = messagesUpstream
         self.messagesDownstream = messagesDownstream
-        self.bytesUpstreamMb = bytesUpstreamMb
-        self.bytesDownstreamMb = bytesDownstreamMb
+        self.bytesUpstream = bytesUpstream
+        self.bytesDownstream = bytesDownstream
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case messagesUpstream
         case messagesDownstream
-        case bytesUpstreamMb
-        case bytesDownstreamMb
+        case bytesUpstream
+        case bytesDownstream
     }
 
     // Encodable protocol methods
@@ -38,8 +38,8 @@ public struct GatewayStats: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(messagesUpstream, forKey: .messagesUpstream)
         try container.encodeIfPresent(messagesDownstream, forKey: .messagesDownstream)
-        try container.encodeIfPresent(bytesUpstreamMb, forKey: .bytesUpstreamMb)
-        try container.encodeIfPresent(bytesDownstreamMb, forKey: .bytesDownstreamMb)
+        try container.encodeIfPresent(bytesUpstream, forKey: .bytesUpstream)
+        try container.encodeIfPresent(bytesDownstream, forKey: .bytesDownstream)
     }
 }
 
