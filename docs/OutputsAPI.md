@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 # **createOutput**
 ```swift
-    open class func createOutput(collectionId: String, body: CreateOutputRequest, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
+    open class func createOutput(collectionId: String, body: CreateOutputBody, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
 ```
 
 Create output
@@ -27,7 +27,7 @@ Create output
 import Span
 
 let collectionId = "collectionId_example" // String | 
-let body = CreateOutputRequest(type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example", topicTemplate: 123, payloadFormat: "payloadFormat_example", payloadTemplate: 123), enabled: false, tags: "TODO") // CreateOutputRequest | 
+let body = CreateOutputBody(type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example", topicTemplate: 123, payloadFormat: "payloadFormat_example", payloadTemplate: 123), enabled: false, tags: "TODO") // CreateOutputBody | 
 
 // Create output
 OutputsAPI.createOutput(collectionId: collectionId, body: body) { (response, error) in
@@ -47,7 +47,7 @@ OutputsAPI.createOutput(collectionId: collectionId, body: body) { (response, err
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** |  | 
- **body** | [**CreateOutputRequest**](CreateOutputRequest.md) |  | 
+ **body** | [**CreateOutputBody**](CreateOutputBody.md) |  | 
 
 ### Return type
 
@@ -364,7 +364,7 @@ Name | Type | Description  | Notes
 
 # **updateOutput**
 ```swift
-    open class func updateOutput(existingCollectionId: String, outputId: String, body: UpdateOutputRequest, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
+    open class func updateOutput(existingCollectionId: String, outputId: String, body: UpdateOutputBody, completion: @escaping (_ data: Output?, _ error: Error?) -> Void)
 ```
 
 Update output
@@ -376,7 +376,7 @@ import Span
 
 let existingCollectionId = "existingCollectionId_example" // String | 
 let outputId = "outputId_example" // String | 
-let body = UpdateOutputRequest(collectionId: "collectionId_example", type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example", topicTemplate: 123, payloadFormat: "payloadFormat_example", payloadTemplate: 123), enabled: false, tags: "TODO") // UpdateOutputRequest | 
+let body = UpdateOutputBody(collectionId: "collectionId_example", type: OutputType(), config: OutputConfig(url: "url_example", basicAuthUser: "basicAuthUser_example", basicAuthPass: "basicAuthPass_example", customHeaderName: "customHeaderName_example", customHeaderValue: "customHeaderValue_example", host: "host_example", port: 123, key: "key_example", eventName: "eventName_example", asIsPayload: false, endpoint: "endpoint_example", disableCertCheck: false, username: "username_example", password: "password_example", clientId: "clientId_example", topicName: "topicName_example", topicTemplate: 123, payloadFormat: "payloadFormat_example", payloadTemplate: 123), enabled: false, tags: "TODO") // UpdateOutputBody | 
 
 // Update output
 OutputsAPI.updateOutput(existingCollectionId: existingCollectionId, outputId: outputId, body: body) { (response, error) in
@@ -397,7 +397,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **existingCollectionId** | **String** |  | 
  **outputId** | **String** |  | 
- **body** | [**UpdateOutputRequest**](UpdateOutputRequest.md) |  | 
+ **body** | [**UpdateOutputBody**](UpdateOutputBody.md) |  | 
 
 ### Return type
 

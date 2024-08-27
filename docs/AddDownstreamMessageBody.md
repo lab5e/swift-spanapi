@@ -1,4 +1,4 @@
-# AddDownstreamMessageRequest
+# AddDownstreamMessageBody
 
 ## Properties
 Name | Type | Description | Notes

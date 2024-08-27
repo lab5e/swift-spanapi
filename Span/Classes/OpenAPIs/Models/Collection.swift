@@ -22,14 +22,17 @@ public struct Collection: Codable, JSONEncodable, Hashable {
     public var tags: [String: String]?
     public var upstreamTimestamps: [String]?
     public var downstreamTimestamps: [String]?
+    /** Disabled flag for collection. If the collection is disabled it is in effect read only and inactive. You can't update a disabled collection. */
+    public var enabled: Bool?
 
-    public init(collectionId: String? = nil, teamId: String? = nil, firmware: CollectionFirmware? = nil, tags: [String: String]? = nil, upstreamTimestamps: [String]? = nil, downstreamTimestamps: [String]? = nil) {
+    public init(collectionId: String? = nil, teamId: String? = nil, firmware: CollectionFirmware? = nil, tags: [String: String]? = nil, upstreamTimestamps: [String]? = nil, downstreamTimestamps: [String]? = nil, enabled: Bool? = nil) {
         self.collectionId = collectionId
         self.teamId = teamId
         self.firmware = firmware
         self.tags = tags
         self.upstreamTimestamps = upstreamTimestamps
         self.downstreamTimestamps = downstreamTimestamps
+        self.enabled = enabled
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -39,6 +42,7 @@ public struct Collection: Codable, JSONEncodable, Hashable {
         case tags
         case upstreamTimestamps
         case downstreamTimestamps
+        case enabled
     }
 
     // Encodable protocol methods
@@ -51,6 +55,7 @@ public struct Collection: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(tags, forKey: .tags)
         try container.encodeIfPresent(upstreamTimestamps, forKey: .upstreamTimestamps)
         try container.encodeIfPresent(downstreamTimestamps, forKey: .downstreamTimestamps)
+        try container.encodeIfPresent(enabled, forKey: .enabled)
     }
 }
 

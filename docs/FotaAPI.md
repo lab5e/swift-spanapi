@@ -66,7 +66,7 @@ Name | Type | Description  | Notes
 
 # **createFirmware**
 ```swift
-    open class func createFirmware(collectionId: String, body: CreateFirmwareRequest, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
+    open class func createFirmware(collectionId: String, body: CreateFirmwareBody, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
 ```
 
 Create firmware
@@ -79,7 +79,7 @@ Firmware images must have unique version numbers and have an unique checksum. Th
 import Span
 
 let collectionId = "collectionId_example" // String | 
-let body = CreateFirmwareRequest(image: 123, version: "version_example", filename: "filename_example", tags: "TODO") // CreateFirmwareRequest | 
+let body = CreateFirmwareBody(image: 123, version: "version_example", filename: "filename_example", tags: "TODO") // CreateFirmwareBody | 
 
 // Create firmware
 FotaAPI.createFirmware(collectionId: collectionId, body: body) { (response, error) in
@@ -99,7 +99,7 @@ FotaAPI.createFirmware(collectionId: collectionId, body: body) { (response, erro
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** |  | 
- **body** | [**CreateFirmwareRequest**](CreateFirmwareRequest.md) |  | 
+ **body** | [**CreateFirmwareBody**](CreateFirmwareBody.md) |  | 
 
 ### Return type
 
@@ -366,7 +366,7 @@ Name | Type | Description  | Notes
 
 # **updateFirmware**
 ```swift
-    open class func updateFirmware(existingCollectionId: String, imageId: String, body: UpdateFirmwareRequest, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
+    open class func updateFirmware(existingCollectionId: String, imageId: String, body: UpdateFirmwareBody, completion: @escaping (_ data: Firmware?, _ error: Error?) -> Void)
 ```
 
 Update firmware
@@ -380,7 +380,7 @@ import Span
 
 let existingCollectionId = "existingCollectionId_example" // String | 
 let imageId = "imageId_example" // String | 
-let body = UpdateFirmwareRequest(collectionId: "collectionId_example", version: "version_example", tags: "TODO") // UpdateFirmwareRequest | 
+let body = UpdateFirmwareBody(collectionId: "collectionId_example", version: "version_example", tags: "TODO", enabled: false) // UpdateFirmwareBody | 
 
 // Update firmware
 FotaAPI.updateFirmware(existingCollectionId: existingCollectionId, imageId: imageId, body: body) { (response, error) in
@@ -401,7 +401,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **existingCollectionId** | **String** |  | 
  **imageId** | **String** |  | 
- **body** | [**UpdateFirmwareRequest**](UpdateFirmwareRequest.md) |  | 
+ **body** | [**UpdateFirmwareBody**](UpdateFirmwareBody.md) |  | 
 
 ### Return type
 

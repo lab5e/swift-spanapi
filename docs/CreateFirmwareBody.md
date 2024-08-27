@@ -1,4 +1,4 @@
-# CreateFirmwareRequest
+# CreateFirmwareBody
 
 ## Properties
 Name | Type | Description | Notes

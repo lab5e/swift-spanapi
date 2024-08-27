@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **config** | [**GatewayConfig**](GatewayConfig.md) |  | [optional] 
 **tags** | **[String: String]** |  | [optional] 
 **status** | [**GatewayStatus**](GatewayStatus.md) |  | [optional] 
+**enabled** | **Bool** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

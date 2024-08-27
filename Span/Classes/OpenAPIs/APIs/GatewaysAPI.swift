@@ -21,7 +21,7 @@ open class GatewaysAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func createGateway(collectionId: String, body: CreateGatewayRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func createGateway(collectionId: String, body: CreateGatewayBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
         return createGatewayWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -43,7 +43,7 @@ open class GatewaysAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Gateway> 
      */
-    open class func createGatewayWithRequestBuilder(collectionId: String, body: CreateGatewayRequest) -> RequestBuilder<Gateway> {
+    open class func createGatewayWithRequestBuilder(collectionId: String, body: CreateGatewayBody) -> RequestBuilder<Gateway> {
         var localVariablePath = "/span/collections/{collectionId}/gateways"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -343,7 +343,7 @@ open class GatewaysAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func updateGateway(existingCollectionId: String, gatewayId: String, body: UpdateGatewayRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func updateGateway(existingCollectionId: String, gatewayId: String, body: UpdateGatewayBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Gateway?, _ error: Error?) -> Void)) -> RequestTask {
         return updateGatewayWithRequestBuilder(existingCollectionId: existingCollectionId, gatewayId: gatewayId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -366,7 +366,7 @@ open class GatewaysAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Gateway> 
      */
-    open class func updateGatewayWithRequestBuilder(existingCollectionId: String, gatewayId: String, body: UpdateGatewayRequest) -> RequestBuilder<Gateway> {
+    open class func updateGatewayWithRequestBuilder(existingCollectionId: String, gatewayId: String, body: UpdateGatewayBody) -> RequestBuilder<Gateway> {
         var localVariablePath = "/span/collections/{existingCollectionId}/gateways/{gatewayId}"
         let existingCollectionIdPreEscape = "\(APIHelper.mapValueToPathItem(existingCollectionId))"
         let existingCollectionIdPostEscape = existingCollectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""

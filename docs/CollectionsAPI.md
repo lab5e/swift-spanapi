@@ -323,7 +323,7 @@ Name | Type | Description  | Notes
 
 # **updateCollection**
 ```swift
-    open class func updateCollection(collectionId: String, body: UpdateCollectionRequest, completion: @escaping (_ data: Collection?, _ error: Error?) -> Void)
+    open class func updateCollection(collectionId: String, body: UpdateCollectionBody, completion: @escaping (_ data: Collection?, _ error: Error?) -> Void)
 ```
 
 Update collection
@@ -336,7 +336,7 @@ Update a collection.
 import Span
 
 let collectionId = "collectionId_example" // String | The ID of the collection. This is assigned by the backend.
-let body = UpdateCollectionRequest(teamId: "teamId_example", firmware: CollectionFirmware(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", management: FirmwareManagement()), tags: "TODO") // UpdateCollectionRequest | 
+let body = UpdateCollectionBody(teamId: "teamId_example", firmware: CollectionFirmware(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", management: FirmwareManagement()), tags: "TODO", enabled: false) // UpdateCollectionBody | 
 
 // Update collection
 CollectionsAPI.updateCollection(collectionId: collectionId, body: body) { (response, error) in
@@ -356,7 +356,7 @@ CollectionsAPI.updateCollection(collectionId: collectionId, body: body) { (respo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** | The ID of the collection. This is assigned by the backend. | 
- **body** | [**UpdateCollectionRequest**](UpdateCollectionRequest.md) |  | 
+ **body** | [**UpdateCollectionBody**](UpdateCollectionBody.md) |  | 
 
 ### Return type
 

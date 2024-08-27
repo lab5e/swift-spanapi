@@ -1,4 +1,4 @@
-# UpdateOutputRequest
+# UpdateOutputBody
 
 ## Properties
 Name | Type | Description | Notes

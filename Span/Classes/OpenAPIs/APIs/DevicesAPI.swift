@@ -22,7 +22,7 @@ open class DevicesAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func addDownstreamMessage(collectionId: String, deviceId: String, body: AddDownstreamMessageRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: MessageDownstream?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func addDownstreamMessage(collectionId: String, deviceId: String, body: AddDownstreamMessageBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: MessageDownstream?, _ error: Error?) -> Void)) -> RequestTask {
         return addDownstreamMessageWithRequestBuilder(collectionId: collectionId, deviceId: deviceId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -45,7 +45,7 @@ open class DevicesAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<MessageDownstream> 
      */
-    open class func addDownstreamMessageWithRequestBuilder(collectionId: String, deviceId: String, body: AddDownstreamMessageRequest) -> RequestBuilder<MessageDownstream> {
+    open class func addDownstreamMessageWithRequestBuilder(collectionId: String, deviceId: String, body: AddDownstreamMessageBody) -> RequestBuilder<MessageDownstream> {
         var localVariablePath = "/span/collections/{collectionId}/devices/{deviceId}/outbox"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -78,7 +78,7 @@ open class DevicesAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func createDevice(collectionId: String, body: CreateDeviceRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func createDevice(collectionId: String, body: CreateDeviceBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) -> RequestTask {
         return createDeviceWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -99,7 +99,7 @@ open class DevicesAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Device> 
      */
-    open class func createDeviceWithRequestBuilder(collectionId: String, body: CreateDeviceRequest) -> RequestBuilder<Device> {
+    open class func createDeviceWithRequestBuilder(collectionId: String, body: CreateDeviceBody) -> RequestBuilder<Device> {
         var localVariablePath = "/span/collections/{collectionId}/devices"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -662,7 +662,7 @@ open class DevicesAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func updateDevice(existingCollectionId: String, deviceId: String, body: UpdateDeviceRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func updateDevice(existingCollectionId: String, deviceId: String, body: UpdateDeviceBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Device?, _ error: Error?) -> Void)) -> RequestTask {
         return updateDeviceWithRequestBuilder(existingCollectionId: existingCollectionId, deviceId: deviceId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -685,7 +685,7 @@ open class DevicesAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Device> 
      */
-    open class func updateDeviceWithRequestBuilder(existingCollectionId: String, deviceId: String, body: UpdateDeviceRequest) -> RequestBuilder<Device> {
+    open class func updateDeviceWithRequestBuilder(existingCollectionId: String, deviceId: String, body: UpdateDeviceBody) -> RequestBuilder<Device> {
         var localVariablePath = "/span/collections/{existingCollectionId}/devices/{deviceId}"
         let existingCollectionIdPreEscape = "\(APIHelper.mapValueToPathItem(existingCollectionId))"
         let existingCollectionIdPostEscape = existingCollectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""

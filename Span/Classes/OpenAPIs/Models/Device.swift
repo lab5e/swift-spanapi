@@ -25,8 +25,9 @@ public struct Device: Codable, JSONEncodable, Hashable {
     public var lastTransport: MessageTransport?
     public var lastReceived: String?
     public var lastPayload: Data?
+    public var enabled: Bool?
 
-    public init(deviceId: String? = nil, collectionId: String? = nil, tags: [String: String]? = nil, firmware: FirmwareMetadata? = nil, config: DeviceConfig? = nil, metadata: DeviceMetadata? = nil, lastGatewayId: String? = nil, lastTransport: MessageTransport? = nil, lastReceived: String? = nil, lastPayload: Data? = nil) {
+    public init(deviceId: String? = nil, collectionId: String? = nil, tags: [String: String]? = nil, firmware: FirmwareMetadata? = nil, config: DeviceConfig? = nil, metadata: DeviceMetadata? = nil, lastGatewayId: String? = nil, lastTransport: MessageTransport? = nil, lastReceived: String? = nil, lastPayload: Data? = nil, enabled: Bool? = nil) {
         self.deviceId = deviceId
         self.collectionId = collectionId
         self.tags = tags
@@ -37,6 +38,7 @@ public struct Device: Codable, JSONEncodable, Hashable {
         self.lastTransport = lastTransport
         self.lastReceived = lastReceived
         self.lastPayload = lastPayload
+        self.enabled = enabled
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -50,6 +52,7 @@ public struct Device: Codable, JSONEncodable, Hashable {
         case lastTransport
         case lastReceived
         case lastPayload
+        case enabled
     }
 
     // Encodable protocol methods
@@ -66,6 +69,7 @@ public struct Device: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(lastTransport, forKey: .lastTransport)
         try container.encodeIfPresent(lastReceived, forKey: .lastReceived)
         try container.encodeIfPresent(lastPayload, forKey: .lastPayload)
+        try container.encodeIfPresent(enabled, forKey: .enabled)
     }
 }
 

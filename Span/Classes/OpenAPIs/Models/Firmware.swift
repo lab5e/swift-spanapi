@@ -26,8 +26,9 @@ public struct Firmware: Codable, JSONEncodable, Hashable {
     public var created: String?
     /** Tags for firmware image. */
     public var tags: [String: String]?
+    public var enabled: Bool?
 
-    public init(imageId: String? = nil, version: String? = nil, filename: String? = nil, sha256: String? = nil, length: Int? = nil, collectionId: String? = nil, created: String? = nil, tags: [String: String]? = nil) {
+    public init(imageId: String? = nil, version: String? = nil, filename: String? = nil, sha256: String? = nil, length: Int? = nil, collectionId: String? = nil, created: String? = nil, tags: [String: String]? = nil, enabled: Bool? = nil) {
         self.imageId = imageId
         self.version = version
         self.filename = filename
@@ -36,6 +37,7 @@ public struct Firmware: Codable, JSONEncodable, Hashable {
         self.collectionId = collectionId
         self.created = created
         self.tags = tags
+        self.enabled = enabled
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -47,6 +49,7 @@ public struct Firmware: Codable, JSONEncodable, Hashable {
         case collectionId
         case created
         case tags
+        case enabled
     }
 
     // Encodable protocol methods
@@ -61,6 +64,7 @@ public struct Firmware: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(collectionId, forKey: .collectionId)
         try container.encodeIfPresent(created, forKey: .created)
         try container.encodeIfPresent(tags, forKey: .tags)
+        try container.encodeIfPresent(enabled, forKey: .enabled)
     }
 }
 

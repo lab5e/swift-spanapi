@@ -335,7 +335,7 @@ open class CollectionsAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func updateCollection(collectionId: String, body: UpdateCollectionRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Collection?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func updateCollection(collectionId: String, body: UpdateCollectionBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Collection?, _ error: Error?) -> Void)) -> RequestTask {
         return updateCollectionWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -357,7 +357,7 @@ open class CollectionsAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Collection> 
      */
-    open class func updateCollectionWithRequestBuilder(collectionId: String, body: UpdateCollectionRequest) -> RequestBuilder<Collection> {
+    open class func updateCollectionWithRequestBuilder(collectionId: String, body: UpdateCollectionBody) -> RequestBuilder<Collection> {
         var localVariablePath = "/span/collections/{collectionId}"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""

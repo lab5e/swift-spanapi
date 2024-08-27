@@ -1,4 +1,4 @@
-# SignCertificateRequest
+# SignCertificateBody
 
 ## Properties
 Name | Type | Description | Notes

@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 # **addDownstreamMessage**
 ```swift
-    open class func addDownstreamMessage(collectionId: String, deviceId: String, body: AddDownstreamMessageRequest, completion: @escaping (_ data: MessageDownstream?, _ error: Error?) -> Void)
+    open class func addDownstreamMessage(collectionId: String, deviceId: String, body: AddDownstreamMessageBody, completion: @escaping (_ data: MessageDownstream?, _ error: Error?) -> Void)
 ```
 
 Add message to oubox
@@ -34,7 +34,7 @@ import Span
 
 let collectionId = "collectionId_example" // String | 
 let deviceId = "deviceId_example" // String | 
-let body = AddDownstreamMessageRequest(payload: 123) // AddDownstreamMessageRequest | 
+let body = AddDownstreamMessageBody(payload: 123) // AddDownstreamMessageBody | 
 
 // Add message to oubox
 DevicesAPI.addDownstreamMessage(collectionId: collectionId, deviceId: deviceId, body: body) { (response, error) in
@@ -55,7 +55,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** |  | 
  **deviceId** | **String** |  | 
- **body** | [**AddDownstreamMessageRequest**](AddDownstreamMessageRequest.md) |  | 
+ **body** | [**AddDownstreamMessageBody**](AddDownstreamMessageBody.md) |  | 
 
 ### Return type
 
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 # **createDevice**
 ```swift
-    open class func createDevice(collectionId: String, body: CreateDeviceRequest, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
+    open class func createDevice(collectionId: String, body: CreateDeviceBody, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
 ```
 
 Create device
@@ -85,7 +85,7 @@ Create device
 import Span
 
 let collectionId = "collectionId_example" // String | This is the containing collection
-let body = CreateDeviceRequest(tags: "TODO", firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example"), config: DeviceConfig(ciot: CellularIoTConfig(imsi: "imsi_example", imei: "imei_example"), inet: "TODO", gateway: "TODO"), metadata: DeviceMetadata(ciot: CellularIoTMetadata(gatewayId: "gatewayId_example", allocatedIp: "allocatedIp_example", allocatedAt: "allocatedAt_example", cellId: "cellId_example", mcc: 123, mnc: 123, country: "country_example", network: "network_example", countryCode: "countryCode_example", lastUpdate: "lastUpdate_example", lastImsi: "lastImsi_example", lastImei: "lastImei_example"), inet: InetMetadata(gatewayId: "gatewayId_example", lastUpdate: "lastUpdate_example", remoteAddress: "remoteAddress_example", certificateSerial: "certificateSerial_example"), gateway: GatewayDeviceMetadata(gatewayId: "gatewayId_example", lastUpdate: "lastUpdate_example", params: "TODO"))) // CreateDeviceRequest | 
+let body = CreateDeviceBody(tags: "TODO", firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example"), config: DeviceConfig(ciot: CellularIoTConfig(imsi: "imsi_example", imei: "imei_example"), inet: "TODO", gateway: "TODO"), metadata: DeviceMetadata(ciot: CellularIoTMetadata(gatewayId: "gatewayId_example", allocatedIp: "allocatedIp_example", allocatedAt: "allocatedAt_example", cellId: "cellId_example", mcc: 123, mnc: 123, country: "country_example", network: "network_example", countryCode: "countryCode_example", lastUpdate: "lastUpdate_example", lastImsi: "lastImsi_example", lastImei: "lastImei_example"), inet: InetMetadata(gatewayId: "gatewayId_example", lastUpdate: "lastUpdate_example", remoteAddress: "remoteAddress_example", certificateSerial: "certificateSerial_example"), gateway: GatewayDeviceMetadata(gatewayId: "gatewayId_example", lastUpdate: "lastUpdate_example", params: "TODO"))) // CreateDeviceBody | 
 
 // Create device
 DevicesAPI.createDevice(collectionId: collectionId, body: body) { (response, error) in
@@ -105,7 +105,7 @@ DevicesAPI.createDevice(collectionId: collectionId, body: body) { (response, err
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** | This is the containing collection | 
- **body** | [**CreateDeviceRequest**](CreateDeviceRequest.md) |  | 
+ **body** | [**CreateDeviceBody**](CreateDeviceBody.md) |  | 
 
 ### Return type
 
@@ -606,7 +606,7 @@ Name | Type | Description  | Notes
 
 # **updateDevice**
 ```swift
-    open class func updateDevice(existingCollectionId: String, deviceId: String, body: UpdateDeviceRequest, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
+    open class func updateDevice(existingCollectionId: String, deviceId: String, body: UpdateDeviceBody, completion: @escaping (_ data: Device?, _ error: Error?) -> Void)
 ```
 
 Update device
@@ -620,7 +620,7 @@ import Span
 
 let existingCollectionId = "existingCollectionId_example" // String | 
 let deviceId = "deviceId_example" // String | 
-let body = UpdateDeviceRequest(collectionId: "collectionId_example", tags: "TODO", firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example"), config: DeviceConfig(ciot: CellularIoTConfig(imsi: "imsi_example", imei: "imei_example"), inet: "TODO", gateway: "TODO")) // UpdateDeviceRequest | 
+let body = UpdateDeviceBody(collectionId: "collectionId_example", tags: "TODO", firmware: FirmwareMetadata(currentFirmwareId: "currentFirmwareId_example", targetFirmwareId: "targetFirmwareId_example", firmwareVersion: "firmwareVersion_example", serialNumber: "serialNumber_example", modelNumber: "modelNumber_example", manufacturer: "manufacturer_example", state: "state_example", stateMessage: "stateMessage_example"), config: DeviceConfig(ciot: CellularIoTConfig(imsi: "imsi_example", imei: "imei_example"), inet: "TODO", gateway: "TODO"), enabled: false) // UpdateDeviceBody | 
 
 // Update device
 DevicesAPI.updateDevice(existingCollectionId: existingCollectionId, deviceId: deviceId, body: body) { (response, error) in
@@ -641,7 +641,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **existingCollectionId** | **String** |  | 
  **deviceId** | **String** |  | 
- **body** | [**UpdateDeviceRequest**](UpdateDeviceRequest.md) |  | 
+ **body** | [**UpdateDeviceBody**](UpdateDeviceBody.md) |  | 
 
 ### Return type
 

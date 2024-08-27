@@ -1,4 +1,4 @@
-# VerifyCertificateRequest
+# VerifyCertificateBody
 
 ## Properties
 Name | Type | Description | Notes

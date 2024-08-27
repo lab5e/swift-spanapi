@@ -1,4 +1,4 @@
-# CreateDeviceRequest
+# CreateDeviceBody
 
 ## Properties
 Name | Type | Description | Notes

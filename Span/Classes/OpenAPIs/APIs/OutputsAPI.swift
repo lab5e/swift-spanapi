@@ -21,7 +21,7 @@ open class OutputsAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func createOutput(collectionId: String, body: CreateOutputRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func createOutput(collectionId: String, body: CreateOutputBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) -> RequestTask {
         return createOutputWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -42,7 +42,7 @@ open class OutputsAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Output> 
      */
-    open class func createOutputWithRequestBuilder(collectionId: String, body: CreateOutputRequest) -> RequestBuilder<Output> {
+    open class func createOutputWithRequestBuilder(collectionId: String, body: CreateOutputBody) -> RequestBuilder<Output> {
         var localVariablePath = "/span/collections/{collectionId}/outputs"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -392,7 +392,7 @@ open class OutputsAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func updateOutput(existingCollectionId: String, outputId: String, body: UpdateOutputRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func updateOutput(existingCollectionId: String, outputId: String, body: UpdateOutputBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Output?, _ error: Error?) -> Void)) -> RequestTask {
         return updateOutputWithRequestBuilder(existingCollectionId: existingCollectionId, outputId: outputId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -414,7 +414,7 @@ open class OutputsAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Output> 
      */
-    open class func updateOutputWithRequestBuilder(existingCollectionId: String, outputId: String, body: UpdateOutputRequest) -> RequestBuilder<Output> {
+    open class func updateOutputWithRequestBuilder(existingCollectionId: String, outputId: String, body: UpdateOutputBody) -> RequestBuilder<Output> {
         var localVariablePath = "/span/collections/{existingCollectionId}/outputs/{outputId}"
         let existingCollectionIdPreEscape = "\(APIHelper.mapValueToPathItem(existingCollectionId))"
         let existingCollectionIdPostEscape = existingCollectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""

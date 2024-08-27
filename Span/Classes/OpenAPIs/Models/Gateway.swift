@@ -21,8 +21,9 @@ public struct Gateway: Codable, JSONEncodable, Hashable {
     public var config: GatewayConfig?
     public var tags: [String: String]?
     public var status: GatewayStatus?
+    public var enabled: Bool?
 
-    public init(gatewayId: String? = nil, collectionId: String? = nil, name: String? = nil, builtIn: Bool? = nil, type: GatewayType? = nil, config: GatewayConfig? = nil, tags: [String: String]? = nil, status: GatewayStatus? = nil) {
+    public init(gatewayId: String? = nil, collectionId: String? = nil, name: String? = nil, builtIn: Bool? = nil, type: GatewayType? = nil, config: GatewayConfig? = nil, tags: [String: String]? = nil, status: GatewayStatus? = nil, enabled: Bool? = nil) {
         self.gatewayId = gatewayId
         self.collectionId = collectionId
         self.name = name
@@ -31,6 +32,7 @@ public struct Gateway: Codable, JSONEncodable, Hashable {
         self.config = config
         self.tags = tags
         self.status = status
+        self.enabled = enabled
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -42,6 +44,7 @@ public struct Gateway: Codable, JSONEncodable, Hashable {
         case config
         case tags
         case status
+        case enabled
     }
 
     // Encodable protocol methods
@@ -56,6 +59,7 @@ public struct Gateway: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(config, forKey: .config)
         try container.encodeIfPresent(tags, forKey: .tags)
         try container.encodeIfPresent(status, forKey: .status)
+        try container.encodeIfPresent(enabled, forKey: .enabled)
     }
 }
 

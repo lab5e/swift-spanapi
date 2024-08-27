@@ -75,7 +75,7 @@ open class FotaAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func createFirmware(collectionId: String, body: CreateFirmwareRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func createFirmware(collectionId: String, body: CreateFirmwareBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) -> RequestTask {
         return createFirmwareWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -97,7 +97,7 @@ open class FotaAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Firmware> 
      */
-    open class func createFirmwareWithRequestBuilder(collectionId: String, body: CreateFirmwareRequest) -> RequestBuilder<Firmware> {
+    open class func createFirmwareWithRequestBuilder(collectionId: String, body: CreateFirmwareBody) -> RequestBuilder<Firmware> {
         var localVariablePath = "/span/collections/{collectionId}/firmware"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -393,7 +393,7 @@ open class FotaAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func updateFirmware(existingCollectionId: String, imageId: String, body: UpdateFirmwareRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func updateFirmware(existingCollectionId: String, imageId: String, body: UpdateFirmwareBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: Firmware?, _ error: Error?) -> Void)) -> RequestTask {
         return updateFirmwareWithRequestBuilder(existingCollectionId: existingCollectionId, imageId: imageId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -416,7 +416,7 @@ open class FotaAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<Firmware> 
      */
-    open class func updateFirmwareWithRequestBuilder(existingCollectionId: String, imageId: String, body: UpdateFirmwareRequest) -> RequestBuilder<Firmware> {
+    open class func updateFirmwareWithRequestBuilder(existingCollectionId: String, imageId: String, body: UpdateFirmwareBody) -> RequestBuilder<Firmware> {
         var localVariablePath = "/span/collections/{existingCollectionId}/firmware/{imageId}"
         let existingCollectionIdPreEscape = "\(APIHelper.mapValueToPathItem(existingCollectionId))"
         let existingCollectionIdPostEscape = existingCollectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""

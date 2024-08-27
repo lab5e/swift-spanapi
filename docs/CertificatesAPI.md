@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 # **createCertificate**
 ```swift
-    open class func createCertificate(collectionId: String, body: CreateCertificateRequest, completion: @escaping (_ data: CreateCertificateResponse?, _ error: Error?) -> Void)
+    open class func createCertificate(collectionId: String, body: CreateCertificateBody, completion: @escaping (_ data: CreateCertificateResponse?, _ error: Error?) -> Void)
 ```
 
 Create certificate
@@ -25,7 +25,7 @@ Create a new device or gateway (client) certificate for an internet-connected de
 import Span
 
 let collectionId = "collectionId_example" // String | 
-let body = CreateCertificateRequest(gatewayId: "gatewayId_example", deviceId: "deviceId_example") // CreateCertificateRequest | 
+let body = CreateCertificateBody(gatewayId: "gatewayId_example", deviceId: "deviceId_example") // CreateCertificateBody | 
 
 // Create certificate
 CertificatesAPI.createCertificate(collectionId: collectionId, body: body) { (response, error) in
@@ -45,7 +45,7 @@ CertificatesAPI.createCertificate(collectionId: collectionId, body: body) { (res
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** |  | 
- **body** | [**CreateCertificateRequest**](CreateCertificateRequest.md) |  | 
+ **body** | [**CreateCertificateBody**](CreateCertificateBody.md) |  | 
 
 ### Return type
 
@@ -118,7 +118,7 @@ Name | Type | Description  | Notes
 
 # **signCertificate**
 ```swift
-    open class func signCertificate(collectionId: String, body: SignCertificateRequest, completion: @escaping (_ data: SignCertificateResponse?, _ error: Error?) -> Void)
+    open class func signCertificate(collectionId: String, body: SignCertificateBody, completion: @escaping (_ data: SignCertificateResponse?, _ error: Error?) -> Void)
 ```
 
 Sign certificate
@@ -131,7 +131,7 @@ Sign a device or gateway (aka client) certificate. The certificate is a X509 Cer
 import Span
 
 let collectionId = "collectionId_example" // String | 
-let body = SignCertificateRequest(gatewayId: "gatewayId_example", deviceId: "deviceId_example", csr: 123) // SignCertificateRequest | 
+let body = SignCertificateBody(gatewayId: "gatewayId_example", deviceId: "deviceId_example", csr: 123) // SignCertificateBody | 
 
 // Sign certificate
 CertificatesAPI.signCertificate(collectionId: collectionId, body: body) { (response, error) in
@@ -151,7 +151,7 @@ CertificatesAPI.signCertificate(collectionId: collectionId, body: body) { (respo
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** |  | 
- **body** | [**SignCertificateRequest**](SignCertificateRequest.md) |  | 
+ **body** | [**SignCertificateBody**](SignCertificateBody.md) |  | 
 
 ### Return type
 
@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
 
 # **verifyCertificate**
 ```swift
-    open class func verifyCertificate(collectionId: String, body: VerifyCertificateRequest, completion: @escaping (_ data: VerifyCertificateResponse?, _ error: Error?) -> Void)
+    open class func verifyCertificate(collectionId: String, body: VerifyCertificateBody, completion: @escaping (_ data: VerifyCertificateResponse?, _ error: Error?) -> Void)
 ```
 
 Verify certificate
@@ -183,7 +183,7 @@ Verify client certificate. If a client certificate fails it can be tricky to pin
 import Span
 
 let collectionId = "collectionId_example" // String | 
-let body = VerifyCertificateRequest(gatewayId: "gatewayId_example", deviceId: "deviceId_example", certificate: 123) // VerifyCertificateRequest | 
+let body = VerifyCertificateBody(gatewayId: "gatewayId_example", deviceId: "deviceId_example", certificate: 123) // VerifyCertificateBody | 
 
 // Verify certificate
 CertificatesAPI.verifyCertificate(collectionId: collectionId, body: body) { (response, error) in
@@ -203,7 +203,7 @@ CertificatesAPI.verifyCertificate(collectionId: collectionId, body: body) { (res
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **collectionId** | **String** |  | 
- **body** | [**VerifyCertificateRequest**](VerifyCertificateRequest.md) |  | 
+ **body** | [**VerifyCertificateBody**](VerifyCertificateBody.md) |  | 
 
 ### Return type
 

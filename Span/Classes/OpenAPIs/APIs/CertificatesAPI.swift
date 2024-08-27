@@ -21,7 +21,7 @@ open class CertificatesAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func createCertificate(collectionId: String, body: CreateCertificateRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: CreateCertificateResponse?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func createCertificate(collectionId: String, body: CreateCertificateBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: CreateCertificateResponse?, _ error: Error?) -> Void)) -> RequestTask {
         return createCertificateWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -43,7 +43,7 @@ open class CertificatesAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<CreateCertificateResponse> 
      */
-    open class func createCertificateWithRequestBuilder(collectionId: String, body: CreateCertificateRequest) -> RequestBuilder<CreateCertificateResponse> {
+    open class func createCertificateWithRequestBuilder(collectionId: String, body: CreateCertificateBody) -> RequestBuilder<CreateCertificateResponse> {
         var localVariablePath = "/span/collections/{collectionId}/certificates/create"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -131,7 +131,7 @@ open class CertificatesAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func signCertificate(collectionId: String, body: SignCertificateRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: SignCertificateResponse?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func signCertificate(collectionId: String, body: SignCertificateBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: SignCertificateResponse?, _ error: Error?) -> Void)) -> RequestTask {
         return signCertificateWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -153,7 +153,7 @@ open class CertificatesAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<SignCertificateResponse> 
      */
-    open class func signCertificateWithRequestBuilder(collectionId: String, body: SignCertificateRequest) -> RequestBuilder<SignCertificateResponse> {
+    open class func signCertificateWithRequestBuilder(collectionId: String, body: SignCertificateBody) -> RequestBuilder<SignCertificateResponse> {
         var localVariablePath = "/span/collections/{collectionId}/certificates/sign"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -183,7 +183,7 @@ open class CertificatesAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func verifyCertificate(collectionId: String, body: VerifyCertificateRequest, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: VerifyCertificateResponse?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func verifyCertificate(collectionId: String, body: VerifyCertificateBody, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: VerifyCertificateResponse?, _ error: Error?) -> Void)) -> RequestTask {
         return verifyCertificateWithRequestBuilder(collectionId: collectionId, body: body).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -205,7 +205,7 @@ open class CertificatesAPI {
      - parameter body: (body)  
      - returns: RequestBuilder<VerifyCertificateResponse> 
      */
-    open class func verifyCertificateWithRequestBuilder(collectionId: String, body: VerifyCertificateRequest) -> RequestBuilder<VerifyCertificateResponse> {
+    open class func verifyCertificateWithRequestBuilder(collectionId: String, body: VerifyCertificateBody) -> RequestBuilder<VerifyCertificateResponse> {
         var localVariablePath = "/span/collections/{collectionId}/certificates/verify"
         let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
         let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
