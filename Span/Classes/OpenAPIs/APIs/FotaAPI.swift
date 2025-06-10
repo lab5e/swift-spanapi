@@ -119,6 +119,82 @@ open class FotaAPI {
     }
 
     /**
+     BETA: Create a labeled firmware image
+     
+     - parameter collectionId: (path)  
+     - parameter version: (query)  (optional)
+     - parameter label: (query)  (optional)
+     - parameter imageRefImageRef: (query)  (optional)
+     - parameter imageRefCreatedAt: (query)  (optional)
+     - parameter imageRefFileName: (query)  (optional)
+     - parameter imageRefLength: (query)  (optional)
+     - parameter imageRefChecksum: (query)  (optional)
+     - parameter imageRefSha256: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func createLabeledFirmware(collectionId: String, version: String? = nil, label: String? = nil, imageRefImageRef: String? = nil, imageRefCreatedAt: String? = nil, imageRefFileName: String? = nil, imageRefLength: String? = nil, imageRefChecksum: String? = nil, imageRefSha256: String? = nil, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: CreateLabeledFirmwareResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return createLabeledFirmwareWithRequestBuilder(collectionId: collectionId, version: version, label: label, imageRefImageRef: imageRefImageRef, imageRefCreatedAt: imageRefCreatedAt, imageRefFileName: imageRefFileName, imageRefLength: imageRefLength, imageRefChecksum: imageRefChecksum, imageRefSha256: imageRefSha256).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     BETA: Create a labeled firmware image
+     - POST /span/collections/{collectionId}/firmware/labeled
+     - Devices might need several different firmware images, depending on their configuration. Low-power devices usually have just a single firmware image but more complex devices might need several firmware images for their  subsystems. The firmware image must be uploaded prior to the call and the  returned data structure is included in the request.
+     - API Key:
+       - type: apiKey X-API-Token (HEADER)
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - parameter version: (query)  (optional)
+     - parameter label: (query)  (optional)
+     - parameter imageRefImageRef: (query)  (optional)
+     - parameter imageRefCreatedAt: (query)  (optional)
+     - parameter imageRefFileName: (query)  (optional)
+     - parameter imageRefLength: (query)  (optional)
+     - parameter imageRefChecksum: (query)  (optional)
+     - parameter imageRefSha256: (query)  (optional)
+     - returns: RequestBuilder<CreateLabeledFirmwareResponse> 
+     */
+    open class func createLabeledFirmwareWithRequestBuilder(collectionId: String, version: String? = nil, label: String? = nil, imageRefImageRef: String? = nil, imageRefCreatedAt: String? = nil, imageRefFileName: String? = nil, imageRefLength: String? = nil, imageRefChecksum: String? = nil, imageRefSha256: String? = nil) -> RequestBuilder<CreateLabeledFirmwareResponse> {
+        var localVariablePath = "/span/collections/{collectionId}/firmware/labeled"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "version": (wrappedValue: version?.encodeToJSON(), isExplode: false),
+            "label": (wrappedValue: label?.encodeToJSON(), isExplode: false),
+            "imageRef.imageRef": (wrappedValue: imageRefImageRef?.encodeToJSON(), isExplode: false),
+            "imageRef.createdAt": (wrappedValue: imageRefCreatedAt?.encodeToJSON(), isExplode: false),
+            "imageRef.fileName": (wrappedValue: imageRefFileName?.encodeToJSON(), isExplode: false),
+            "imageRef.length": (wrappedValue: imageRefLength?.encodeToJSON(), isExplode: false),
+            "imageRef.checksum": (wrappedValue: imageRefChecksum?.encodeToJSON(), isExplode: false),
+            "imageRef.sha256": (wrappedValue: imageRefSha256?.encodeToJSON(), isExplode: false),
+        ])
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<CreateLabeledFirmwareResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Delete firmware
      
      - parameter collectionId: (path)  
@@ -271,6 +347,55 @@ open class FotaAPI {
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<ListFirmwareResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
+     BETA: List the labeled firmware images for a collection
+     
+     - parameter collectionId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func listLabeledFirmware(collectionId: String, apiResponseQueue: DispatchQueue = SpanAPI.apiResponseQueue, completion: @escaping ((_ data: ListLabeledFirmwareResponse?, _ error: Error?) -> Void)) -> RequestTask {
+        return listLabeledFirmwareWithRequestBuilder(collectionId: collectionId).execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     BETA: List the labeled firmware images for a collection
+     - GET /span/collections/{collectionId}/firmware/labeled
+     - API Key:
+       - type: apiKey X-API-Token (HEADER)
+       - name: APIToken
+     - parameter collectionId: (path)  
+     - returns: RequestBuilder<ListLabeledFirmwareResponse> 
+     */
+    open class func listLabeledFirmwareWithRequestBuilder(collectionId: String) -> RequestBuilder<ListLabeledFirmwareResponse> {
+        var localVariablePath = "/span/collections/{collectionId}/firmware/labeled"
+        let collectionIdPreEscape = "\(APIHelper.mapValueToPathItem(collectionId))"
+        let collectionIdPostEscape = collectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{collectionId}", with: collectionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = SpanAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<ListLabeledFirmwareResponse>.Type = SpanAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

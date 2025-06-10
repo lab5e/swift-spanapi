@@ -6,9 +6,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**clearFirmwareError**](FotaAPI.md#clearfirmwareerror) | **DELETE** /span/collections/{collectionId}/devices/{deviceId}/fwerror | Clear FOTA error
 [**createFirmware**](FotaAPI.md#createfirmware) | **POST** /span/collections/{collectionId}/firmware | Create firmware
+[**createLabeledFirmware**](FotaAPI.md#createlabeledfirmware) | **POST** /span/collections/{collectionId}/firmware/labeled | BETA: Create a labeled firmware image
 [**deleteFirmware**](FotaAPI.md#deletefirmware) | **DELETE** /span/collections/{collectionId}/firmware/{imageId} | Delete firmware
 [**firmwareUsage**](FotaAPI.md#firmwareusage) | **GET** /span/collections/{collectionId}/firmware/{imageId}/usage | Firmware usage
 [**listFirmware**](FotaAPI.md#listfirmware) | **GET** /span/collections/{collectionId}/firmware | List firmware
+[**listLabeledFirmware**](FotaAPI.md#listlabeledfirmware) | **GET** /span/collections/{collectionId}/firmware/labeled | BETA: List the labeled firmware images for a collection
 [**retrieveFirmware**](FotaAPI.md#retrievefirmware) | **GET** /span/collections/{collectionId}/firmware/{imageId} | Retrieve firmware
 [**retrieveFirmwareStats**](FotaAPI.md#retrievefirmwarestats) | **GET** /span/collections/{collectionId}/firmware/{imageId}/stats | Retrieve firmware statistics
 [**updateFirmware**](FotaAPI.md#updatefirmware) | **PATCH** /span/collections/{existingCollectionId}/firmware/{imageId} | Update firmware
@@ -112,6 +114,72 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **createLabeledFirmware**
+```swift
+    open class func createLabeledFirmware(collectionId: String, version: String? = nil, label: String? = nil, imageRefImageRef: String? = nil, imageRefCreatedAt: String? = nil, imageRefFileName: String? = nil, imageRefLength: String? = nil, imageRefChecksum: String? = nil, imageRefSha256: String? = nil, completion: @escaping (_ data: CreateLabeledFirmwareResponse?, _ error: Error?) -> Void)
+```
+
+BETA: Create a labeled firmware image
+
+Devices might need several different firmware images, depending on their configuration. Low-power devices usually have just a single firmware image but more complex devices might need several firmware images for their  subsystems. The firmware image must be uploaded prior to the call and the  returned data structure is included in the request.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+let version = "version_example" // String |  (optional)
+let label = "label_example" // String |  (optional)
+let imageRefImageRef = "imageRefImageRef_example" // String |  (optional)
+let imageRefCreatedAt = "imageRefCreatedAt_example" // String |  (optional)
+let imageRefFileName = "imageRefFileName_example" // String |  (optional)
+let imageRefLength = "imageRefLength_example" // String |  (optional)
+let imageRefChecksum = "imageRefChecksum_example" // String |  (optional)
+let imageRefSha256 = "imageRefSha256_example" // String |  (optional)
+
+// BETA: Create a labeled firmware image
+FotaAPI.createLabeledFirmware(collectionId: collectionId, version: version, label: label, imageRefImageRef: imageRefImageRef, imageRefCreatedAt: imageRefCreatedAt, imageRefFileName: imageRefFileName, imageRefLength: imageRefLength, imageRefChecksum: imageRefChecksum, imageRefSha256: imageRefSha256) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+ **version** | **String** |  | [optional] 
+ **label** | **String** |  | [optional] 
+ **imageRefImageRef** | **String** |  | [optional] 
+ **imageRefCreatedAt** | **String** |  | [optional] 
+ **imageRefFileName** | **String** |  | [optional] 
+ **imageRefLength** | **String** |  | [optional] 
+ **imageRefChecksum** | **String** |  | [optional] 
+ **imageRefSha256** | **String** |  | [optional] 
+
+### Return type
+
+[**CreateLabeledFirmwareResponse**](CreateLabeledFirmwareResponse.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -252,6 +320,54 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListFirmwareResponse**](ListFirmwareResponse.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **listLabeledFirmware**
+```swift
+    open class func listLabeledFirmware(collectionId: String, completion: @escaping (_ data: ListLabeledFirmwareResponse?, _ error: Error?) -> Void)
+```
+
+BETA: List the labeled firmware images for a collection
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+
+// BETA: List the labeled firmware images for a collection
+FotaAPI.listLabeledFirmware(collectionId: collectionId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+
+### Return type
+
+[**ListLabeledFirmwareResponse**](ListLabeledFirmwareResponse.md)
 
 ### Authorization
 
