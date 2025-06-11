@@ -4,17 +4,78 @@ All URIs are relative to *https://api.lab5e.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**assignTargetImage**](FotaAPI.md#assigntargetimage) | **PATCH** /span/collections/{collectionId}/firmware/labeled/{imageId}/assign | BETA: Assign a target image
 [**clearFirmwareError**](FotaAPI.md#clearfirmwareerror) | **DELETE** /span/collections/{collectionId}/devices/{deviceId}/fwerror | Clear FOTA error
 [**createFirmware**](FotaAPI.md#createfirmware) | **POST** /span/collections/{collectionId}/firmware | Create firmware
 [**createLabeledFirmware**](FotaAPI.md#createlabeledfirmware) | **POST** /span/collections/{collectionId}/firmware/labeled | BETA: Create a labeled firmware image
 [**deleteFirmware**](FotaAPI.md#deletefirmware) | **DELETE** /span/collections/{collectionId}/firmware/{imageId} | Delete firmware
+[**deleteLabeledImage**](FotaAPI.md#deletelabeledimage) | **DELETE** /span/collections/{collectionId}/firmware/labeled/{imageId} | BETA: Remove a tagged firmware image
 [**firmwareUsage**](FotaAPI.md#firmwareusage) | **GET** /span/collections/{collectionId}/firmware/{imageId}/usage | Firmware usage
+[**getImageState**](FotaAPI.md#getimagestate) | **PATCH** /span/collections/{collectionId}/devices/{deviceId}/fotastate | BETA: Get state for a single device
 [**listFirmware**](FotaAPI.md#listfirmware) | **GET** /span/collections/{collectionId}/firmware | List firmware
+[**listImageStates**](FotaAPI.md#listimagestates) | **GET** /span/collections/{collectionId}/firmware/labeled/states | BETA: List image assignments plus states
+[**listImageVersionHistory**](FotaAPI.md#listimageversionhistory) | **PATCH** /span/collections/{collectionId}/devices/{deviceId}/fotalog | BETA: List version history for a single device
 [**listLabeledFirmware**](FotaAPI.md#listlabeledfirmware) | **GET** /span/collections/{collectionId}/firmware/labeled | BETA: List the labeled firmware images for a collection
 [**retrieveFirmware**](FotaAPI.md#retrievefirmware) | **GET** /span/collections/{collectionId}/firmware/{imageId} | Retrieve firmware
 [**retrieveFirmwareStats**](FotaAPI.md#retrievefirmwarestats) | **GET** /span/collections/{collectionId}/firmware/{imageId}/stats | Retrieve firmware statistics
 [**updateFirmware**](FotaAPI.md#updatefirmware) | **PATCH** /span/collections/{existingCollectionId}/firmware/{imageId} | Update firmware
 
+
+# **assignTargetImage**
+```swift
+    open class func assignTargetImage(collectionId: String, imageId: String, label: String? = nil, deviceId: String? = nil, completion: @escaping (_ data: AssignTargetImageResponse?, _ error: Error?) -> Void)
+```
+
+BETA: Assign a target image
+
+Assign a particular labeled image to a device or a collection
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+let imageId = "imageId_example" // String | 
+let label = "label_example" // String |  (optional)
+let deviceId = "deviceId_example" // String |  (optional)
+
+// BETA: Assign a target image
+FotaAPI.assignTargetImage(collectionId: collectionId, imageId: imageId, label: label, deviceId: deviceId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+ **imageId** | **String** |  | 
+ **label** | **String** |  | [optional] 
+ **deviceId** | **String** |  | [optional] 
+
+### Return type
+
+[**AssignTargetImageResponse**](AssignTargetImageResponse.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **clearFirmwareError**
 ```swift
@@ -120,7 +181,7 @@ Name | Type | Description  | Notes
 
 # **createLabeledFirmware**
 ```swift
-    open class func createLabeledFirmware(collectionId: String, version: String? = nil, label: String? = nil, imageRefImageRef: String? = nil, imageRefCreatedAt: String? = nil, imageRefFileName: String? = nil, imageRefLength: String? = nil, imageRefChecksum: String? = nil, imageRefSha256: String? = nil, completion: @escaping (_ data: CreateLabeledFirmwareResponse?, _ error: Error?) -> Void)
+    open class func createLabeledFirmware(collectionId: String, version: String? = nil, label: String? = nil, imageRef: String? = nil, completion: @escaping (_ data: CreateLabeledFirmwareResponse?, _ error: Error?) -> Void)
 ```
 
 BETA: Create a labeled firmware image
@@ -135,15 +196,10 @@ import Span
 let collectionId = "collectionId_example" // String | 
 let version = "version_example" // String |  (optional)
 let label = "label_example" // String |  (optional)
-let imageRefImageRef = "imageRefImageRef_example" // String |  (optional)
-let imageRefCreatedAt = "imageRefCreatedAt_example" // String |  (optional)
-let imageRefFileName = "imageRefFileName_example" // String |  (optional)
-let imageRefLength = "imageRefLength_example" // String |  (optional)
-let imageRefChecksum = "imageRefChecksum_example" // String |  (optional)
-let imageRefSha256 = "imageRefSha256_example" // String |  (optional)
+let imageRef = "imageRef_example" // String |  (optional)
 
 // BETA: Create a labeled firmware image
-FotaAPI.createLabeledFirmware(collectionId: collectionId, version: version, label: label, imageRefImageRef: imageRefImageRef, imageRefCreatedAt: imageRefCreatedAt, imageRefFileName: imageRefFileName, imageRefLength: imageRefLength, imageRefChecksum: imageRefChecksum, imageRefSha256: imageRefSha256) { (response, error) in
+FotaAPI.createLabeledFirmware(collectionId: collectionId, version: version, label: label, imageRef: imageRef) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -162,12 +218,7 @@ Name | Type | Description  | Notes
  **collectionId** | **String** |  | 
  **version** | **String** |  | [optional] 
  **label** | **String** |  | [optional] 
- **imageRefImageRef** | **String** |  | [optional] 
- **imageRefCreatedAt** | **String** |  | [optional] 
- **imageRefFileName** | **String** |  | [optional] 
- **imageRefLength** | **String** |  | [optional] 
- **imageRefChecksum** | **String** |  | [optional] 
- **imageRefSha256** | **String** |  | [optional] 
+ **imageRef** | **String** |  | [optional] 
 
 ### Return type
 
@@ -234,6 +285,58 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **deleteLabeledImage**
+```swift
+    open class func deleteLabeledImage(collectionId: String, imageId: String, completion: @escaping (_ data: AnyCodable?, _ error: Error?) -> Void)
+```
+
+BETA: Remove a tagged firmware image
+
+Remove a tagged firmware image from the backing store and it's metadata
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+let imageId = "imageId_example" // String | 
+
+// BETA: Remove a tagged firmware image
+FotaAPI.deleteLabeledImage(collectionId: collectionId, imageId: imageId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+ **imageId** | **String** |  | 
+
+### Return type
+
+[**AnyCodable**](AnyCodable.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **firmwareUsage**
 ```swift
     open class func firmwareUsage(collectionId: String, imageId: String, completion: @escaping (_ data: FirmwareUsageResponse?, _ error: Error?) -> Void)
@@ -284,6 +387,56 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **getImageState**
+```swift
+    open class func getImageState(collectionId: String, deviceId: String, completion: @escaping (_ data: GetImageStateResponse?, _ error: Error?) -> Void)
+```
+
+BETA: Get state for a single device
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+let deviceId = "deviceId_example" // String | 
+
+// BETA: Get state for a single device
+FotaAPI.getImageState(collectionId: collectionId, deviceId: deviceId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+ **deviceId** | **String** |  | 
+
+### Return type
+
+[**GetImageStateResponse**](GetImageStateResponse.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **listFirmware**
 ```swift
     open class func listFirmware(collectionId: String, completion: @escaping (_ data: ListFirmwareResponse?, _ error: Error?) -> Void)
@@ -320,6 +473,106 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ListFirmwareResponse**](ListFirmwareResponse.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **listImageStates**
+```swift
+    open class func listImageStates(collectionId: String, completion: @escaping (_ data: ListImageStatesResponse?, _ error: Error?) -> Void)
+```
+
+BETA: List image assignments plus states
+
+List the status for the labeled firmware images in the collection
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+
+// BETA: List image assignments plus states
+FotaAPI.listImageStates(collectionId: collectionId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+
+### Return type
+
+[**ListImageStatesResponse**](ListImageStatesResponse.md)
+
+### Authorization
+
+[APIToken](../README.md#APIToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **listImageVersionHistory**
+```swift
+    open class func listImageVersionHistory(collectionId: String, deviceId: String, completion: @escaping (_ data: ListImageVersionHistoryResponse?, _ error: Error?) -> Void)
+```
+
+BETA: List version history for a single device
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import Span
+
+let collectionId = "collectionId_example" // String | 
+let deviceId = "deviceId_example" // String | 
+
+// BETA: List version history for a single device
+FotaAPI.listImageVersionHistory(collectionId: collectionId, deviceId: deviceId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **collectionId** | **String** |  | 
+ **deviceId** | **String** |  | 
+
+### Return type
+
+[**ListImageVersionHistoryResponse**](ListImageVersionHistoryResponse.md)
 
 ### Authorization
 
